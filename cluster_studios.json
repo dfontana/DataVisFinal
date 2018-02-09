@@ -1,6 +1,5 @@
 {
   "meow": [{
-    "studios": [{
       "name": "pixar",
       "id": 1
     },
@@ -11,60 +10,52 @@
     {
       "name": "FOX",
       "id": 3
-    }],
-  }],
+    }
+  ],
   "rawr": [{
-    "studios": [{
-      "name": "pixar",
-      "id": 1
-    }],
+    "name": "pixar",
+    "id": 1
   }],
   "dog": [{
-    "studios": [{
       "name": "Sony",
       "id": 5
     },
     {
       "name": "Disney",
       "id": 2
-    }],
-  }],
+    }
+  ],
   "kitty": [{
-     "studios": [{
-      "name": "Lionsgate",
-      "id": 7
-    }],
+    "name": "Lionsgate",
+    "id": 7
   }],
   "dance": [{
-     "studios": [{
       "name": "MGM",
       "id": 9
     },
     {
       "name": "Sony",
       "id": 5
-    }
+    },
     {
       "name": "Disney",
       "id": 2
-    }
+    },
     {
       "name": "pixar",
       "id": 1
-    }],
-  }],
+    }
+  ],
   "village": [{
-     "studios": [{
       "name": "Paramount",
       "id": 11
     },
     {
       "name": "Disney",
       "id": 2
-    }],
-  }],
+    }
+  ],
   "herd": [{
-     "studios": [{
       "name": "pixar",
       "id": 1
     },
@@ -75,176 +66,153 @@
     {
       "name": "FOX",
       "id": 3
-    }],
-  }],
+    }
+  ],
   "feast": [{
-      "studios": [{
       "name": "Sony",
       "id": 5
     },
     {
       "name": "Disney",
       "id": 2
-    }],
-  }],
+    }
+  ],
   "rocket": [{
-    "studios": [{
-      "name": "Lionsgate",
-      "id": 7
-    }],
+    "name": "Lionsgate",
+    "id": 7
   }],
   "march": [{
-     "studios": [{
-      "name": "pixar",
-      "id": 1
-    }],
+    "name": "pixar",
+    "id": 1
   }],
   "cow": [{
-     "studios": [{
-      "name": "pixar",
-      "id": 1
-    }],
+
+    "name": "pixar",
+    "id": 1
   }],
   "wife": [{
-     "studios": [{
-      "name": "pixar",
-      "id": 1
-    }],
+
+    "name": "pixar",
+    "id": 1
   }],
   "ship": [{
-    "studios": [{
-      "name": "pixar",
-      "id": 1
-    }],
+    "name": "pixar",
+    "id": 1
   }],
   "bee": [{
-     "studios": [{
-      "name": "pixar",
-      "id": 1
-    }],
+
+    "name": "pixar",
+    "id": 1
   }],
   "ocean": [{
-     "studios": [{
       "name": "Sony",
       "id": 5
     },
     {
       "name": "Disney",
       "id": 2
-    }],
-  }],
+    }
+  ],
   "compass": [{
-    "studios": [{
       "name": "MGM",
       "id": 9
     },
     {
       "name": "Sony",
       "id": 5
-    }
+    },
     {
       "name": "Disney",
       "id": 2
-    }
+    },
     {
       "name": "pixar",
       "id": 1
-    }],
-  }],
+    }
+  ],
   "enemy": [{
-     "studios": [{
       "name": "MGM",
       "id": 9
     },
     {
       "name": "Sony",
       "id": 5
-    }
+    },
     {
       "name": "Disney",
       "id": 2
-    }
+    },
     {
       "name": "pixar",
       "id": 1
-    }],
-  }],
+    }
+  ],
   "anomalies": [{
-     "studios": [{
-      "name": "pixar",
-      "id": 1
-    }],
+    "name": "pixar",
+    "id": 1
   }],
   "pie": [{
-     "studios": [{
-      "name": "Lionsgate",
-      "id": 7
-    }],
+
+    "name": "Lionsgate",
+    "id": 7
   }],
   "suites": [{
-     "studios": [{
       "name": "MGM",
       "id": 9
     },
     {
       "name": "Sony",
       "id": 5
-    }
+    },
     {
       "name": "Disney",
       "id": 2
-    }
+    },
     {
       "name": "pixar",
       "id": 1
-    }],
-  }],
+    }
+  ],
   "cards": [{
-     "studios": [{
-      "name": "pixar",
-      "id": 1
-    }],
+    "name": "pixar",
+    "id": 1
   }],
   "dealer": [{
-     "studios": [{
-      "name": "pixar",
-      "id": 1
-    }],
+    "name": "pixar",
+    "id": 1
   }],
   "flat": [{
-     "studios": [{
       "name": "MGM",
       "id": 9
     },
     {
       "name": "Sony",
       "id": 5
-    }
+    },
     {
       "name": "Disney",
       "id": 2
-    }
+    },
     {
       "name": "pixar",
       "id": 1
-    }],
-  }],
+    }
+  ],
   "space": [{
-    "studios": [{
       "name": "MGM",
       "id": 9
     },
     {
       "name": "Sony",
       "id": 5
-    }
+    },
     {
       "name": "Disney",
       "id": 2
-    }
+    },
     {
       "name": "pixar",
       "id": 1
-    }],
-  }]
+    }
+  ]
 }
