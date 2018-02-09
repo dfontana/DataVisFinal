@@ -72,23 +72,78 @@
     }]
   }],
   "dance": [{
-    "name": "little yeller",
-    "id": 1,
-    "studios": [{
-      "name": "pixar",
-      "id": 4
-    }],
-    "actors": [{
-      "name": "jack black",
-      "id": 1
-    }, {
-      "name": "cory",
-      "id": 2
-    }, {
-      "name": "kenedi",
-      "id": 1
-    }]
-  }],
+      "name": "little yeller",
+      "id": 1,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    },
+    {
+      "name": "Meow",
+      "id": 2,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    },
+    {
+      "name": "woofers",
+      "id": 3,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    },
+    {
+      "name": "dead by dead",
+      "id": 4,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    }
+  ],
   "village": [{
     "name": "little yeller",
     "id": 1,
@@ -196,10 +251,9 @@
       "name": "kenedi",
       "id": 1
     }]
-  }],
-  "wife": [{
-    "name": "little yeller",
-    "id": 1,
+  }, {
+    "name": "Meow",
+    "id": 2,
     "studios": [{
       "name": "pixar",
       "id": 4
@@ -215,6 +269,61 @@
       "id": 1
     }]
   }],
+  "wife": [{
+      "name": "little yeller",
+      "id": 1,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    },
+    {
+      "name": "little yeller",
+      "id": 1,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    },
+    {
+      "name": "firefighter",
+      "id": 1,
+      "studios": [{
+        "name": "fireflies",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    }
+  ],
   "ship": [{
     "name": "little yeller",
     "id": 1,
@@ -234,23 +343,42 @@
     }]
   }],
   "bee": [{
-    "name": "little yeller",
-    "id": 1,
-    "studios": [{
-      "name": "pixar",
-      "id": 4
-    }],
-    "actors": [{
-      "name": "jack black",
-      "id": 1
-    }, {
-      "name": "cory",
-      "id": 2
-    }, {
-      "name": "kenedi",
-      "id": 1
-    }]
-  }],
+      "name": "little yeller",
+      "id": 1,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    },
+    {
+      "name": "Meow",
+      "id": 2,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    }
+  ],
   "ocean": [{
     "name": "little yeller",
     "id": 1,
@@ -360,23 +488,42 @@
     }]
   }],
   "cards": [{
-    "name": "little yeller",
-    "id": 1,
-    "studios": [{
-      "name": "pixar",
-      "id": 4
-    }],
-    "actors": [{
-      "name": "jack black",
-      "id": 1
-    }, {
-      "name": "cory",
-      "id": 2
-    }, {
-      "name": "kenedi",
-      "id": 1
-    }]
-  }],
+      "name": "little yeller",
+      "id": 1,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    },
+    {
+      "name": "Meow",
+      "id": 2,
+      "studios": [{
+        "name": "pixar",
+        "id": 4
+      }],
+      "actors": [{
+        "name": "jack black",
+        "id": 1
+      }, {
+        "name": "cory",
+        "id": 2
+      }, {
+        "name": "kenedi",
+        "id": 1
+      }]
+    }
+  ],
   "dealer": [{
     "name": "little yeller",
     "id": 1,
@@ -398,6 +545,23 @@
   "flat": [{
     "name": "little yeller",
     "id": 1,
+    "studios": [{
+      "name": "pixar",
+      "id": 4
+    }],
+    "actors": [{
+      "name": "jack black",
+      "id": 1
+    }, {
+      "name": "cory",
+      "id": 2
+    }, {
+      "name": "kenedi",
+      "id": 1
+    }]
+  }, {
+    "name": "woofers",
+    "id": 3,
     "studios": [{
       "name": "pixar",
       "id": 4
