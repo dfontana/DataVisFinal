@@ -1,21 +1,11 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="javascript/network.js " type="text/javascript"></script>
+
 <head>
+  <link rel="stylesheet" href="css/network.css">
 </head>
 
 <body>
   <h1> Hello World! </h1>
+  <svg id="network" width=500 height=500></svg>
 </body>
-
-<script>
-  d3.json('http://localhost:8000/networkdata', function(data) {
-          console.log(data);
-      });
-
-  d3.json('http://localhost:8000/networksize', function(data) {
-          console.log(data);
-      });
-
-  d3.json('http://localhost:8000/networksummary', function(data) {
-          console.log(data);
-      });
-</script>
