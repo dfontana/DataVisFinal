@@ -38,8 +38,14 @@ Promise.all([nodes, links]).then((values) => {
     height = +svg.attr("height");
   var color = d3.scaleOrdinal(d3.schemeCategory20);
   
-  console.log(nodes[1950]);
-  console.log(links[1950]);
+  var decade = 2020;
+  console.log(nodes[decade]);
+  console.log(links[decade]);
+
+  var testLink = [{source: 1, target: 9},{source: 1, target: 10}, {source: 10, target: 11},{source: 11, target: 8} ]
+ 
+
+  
   var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
     .force("charge", d3.forceManyBody())
@@ -49,18 +55,17 @@ Promise.all([nodes, links]).then((values) => {
     svg.append("g")
     .attr("class", "links")
     .selectAll("line")
-    .data(links[1950])
+    .data(links[decade])
     .enter()
     .append("line")
-    .attr("fill", "black")
     .attr("stroke-width", function(d) {
-      return Math.sqrt(d.keywords.length); 
+      return d.keywords.length || 0; 
     })
 
     var node = svg.append("g")
     .attr("class", "nodes")
     .selectAll("circle")
-    .data(nodes[1950])
+    .data(nodes[decade])
     .enter().append("circle")
       .attr("r", function(d) { return d.value; })
       .attr("fill", function(d) { return color(d.id); })
@@ -73,12 +78,12 @@ Promise.all([nodes, links]).then((values) => {
     .text(function(d) { return d.id; });
     
     simulation
-    .nodes(nodes[1950])
+    .nodes(nodes[decade])
     .on("tick", ticked);
 
     simulation
     .force("link")
-    .links(links);
+    .links(links[decade]);
       
     function ticked() {
       link
