@@ -45,12 +45,14 @@ Promise.all([nodes, links]).then((values) => {
     .force("charge", d3.forceManyBody())
     .force("center", d3.forceCenter(width / 2, height / 2));
 
-    var link = svg.append("g")
+    var link = 
+    svg.append("g")
     .attr("class", "links")
     .selectAll("line")
     .data(links[1950])
     .enter()
     .append("line")
+    .attr("fill", "black")
     .attr("stroke-width", function(d) {
       return Math.sqrt(d.keywords.length); 
     })
@@ -71,12 +73,12 @@ Promise.all([nodes, links]).then((values) => {
     .text(function(d) { return d.id; });
     
     simulation
-    .force("link")
-    .links(links);
+    .nodes(nodes[1950])
+    .on("tick", ticked);
 
     simulation
-        .nodes(nodes[1950])
-        .on("tick", ticked);
+    .force("link")
+    .links(links);
       
     function ticked() {
       link
