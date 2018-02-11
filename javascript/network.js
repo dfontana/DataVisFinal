@@ -33,12 +33,13 @@ var nodes = getNetworkSize().then((data) => {
 Promise.all([nodes, links]).then((values) => {
   var nodes = values[0];
   var links = values[1];
-  console.log(nodes["1950"]);
   var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height");
   var color = d3.scaleOrdinal(d3.schemeCategory20);
-
+  
+  console.log(nodes[1950]);
+  console.log(links[1950]);
   var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
     .force("charge", d3.forceManyBody())
@@ -48,31 +49,35 @@ Promise.all([nodes, links]).then((values) => {
     .attr("class", "links")
     .selectAll("line")
     .data(links[1950])
-    .enter().append("line")
-    .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+    .enter()
+    .append("line")
+    .attr("stroke-width", function(d) {
+      return Math.sqrt(d.keywords.length); 
+    })
 
     var node = svg.append("g")
     .attr("class", "nodes")
     .selectAll("circle")
     .data(nodes[1950])
     .enter().append("circle")
-      .attr("r", 5)
+      .attr("r", function(d) { return d.value; })
       .attr("fill", function(d) { return color(d.id); })
-      .call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended));
+      // .call(d3.drag()
+      //     .on("start", dragstarted)
+      //     .on("drag", dragged)
+      //     .on("end", dragended));
 
     node.append("title")
     .text(function(d) { return d.id; });
     
     simulation
+    .force("link")
+    .links(links);
+
+    simulation
         .nodes(nodes[1950])
         .on("tick", ticked);
       
-    simulation.force("link").id(function(d, i) {
-      return i;});
-    
     function ticked() {
       link
           .attr("x1", function(d) { return d.source.x; })
