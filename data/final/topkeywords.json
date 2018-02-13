@@ -1,0 +1,10 @@
+{
+  "1950": ["film noir", "silent film", "musical"],
+  "1960": ["animation", "film noir", "musical"],
+  "1970": ["spaghetti western", "musical", "bounty hunter"],
+  "1980": ["android", "dystopia", "lawyer"],
+  "1990": ["dystopia", "violence", "saving the world"],
+  "2000": ["dystopia", "violence", "friendship"],
+  "2010": ["based on novel", "superhero", "violence"],
+  "2020": ["3d", "based on comic", "sequel"]
+}
