@@ -35,7 +35,7 @@ let metadata = d3.csvParse(fs.readFileSync(DATA_ROOT+'/raw_csv/movies_metadata_c
   }
   return d;
 });
-fs.writeFileSync(DATA_ROOT+'/raw_json/movies_metadata.json', JSON.stringify(credits), 'utf8');
+fs.writeFileSync(DATA_ROOT+'/raw_json/movies_metadata.json', JSON.stringify(metadata), 'utf8');
 
 // Ingest the keywords file
 let keywords = d3.csvParse(fs.readFileSync(DATA_ROOT+'/raw_csv/keywords.csv', 'utf8'), function(d) {
