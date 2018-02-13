@@ -13,7 +13,7 @@ let credits = d3.csvParse(fs.readFileSync(DATA_ROOT+'/raw_csv/credits.csv', 'utf
 fs.writeFileSync(DATA_ROOT+'/raw_json/credits.json', JSON.stringify(credits), 'utf8');
 
 // Ingest the Metadata file
-let metadata = d3.csvParse(fs.readFileSync(DATA_ROOT+'/raw_csv/movies_metadata_cleaned.csv', 'utf8'), function(d) {
+let metadata = d3.csvParse(fs.readFileSync(DATA_ROOT+'/raw_csv/movies_metadata.csv', 'utf8'), function(d) {
   if(d.genres){
     d.genres = JSON5.parse(d.genres)
   }

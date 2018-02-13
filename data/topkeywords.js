@@ -7,7 +7,7 @@ let keywords = require('./buffer/raw_json/keywords.json')
 function makeBin(binLow, binHigh) {
   // Filter movies for those only within the bin
   let movies = metadata.filter((m) => { 
-    if(m.release_date == undefined) return false;
+    if(m.release_date == undefined || m.release_date == null || m.release_date == "") return false;
     let year = parseInt(m.release_date.substring(0,4))
     return year >= binLow && year < binHigh
   })
@@ -61,7 +61,8 @@ function top3ForBin(movies){
 
 let bins = [[0, 1950], [1951, 1960], [1961,1970], [1971, 1980], [1981, 1990], [1991, 2000], [2001, 2010], [2011, 2020]]
 let KeywordMap = bins.reduce((acc, bin) =>{
-  acc[bin[1]] = top3ForBin(makeBin(bin[0], bin[1]))
+  let binned = makeBin(bin[0], bin[1]);
+  acc[bin[1]] = top3ForBin(binned)
   return acc
 }, {})
 fs.writeFileSync(__dirname+'/final/topkeywords.json', JSON.stringify(KeywordMap), 'utf8');
