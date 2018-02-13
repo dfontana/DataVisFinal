@@ -16,7 +16,7 @@ function movieLinks(mapsForBin){
 }
 
 /**
- * Builds a mapping of MovieID to a list of {MovieID, MovieName, SharedWords}
+ * Builds a mapping of ActorID to a list of {ActorID, ActorName, SharedWords}
  * representing its neighbors. The given mapsForBin parameter represents the
  * expected object containing the maps for the desired bin.
  */
@@ -25,7 +25,7 @@ function actorLinks(mapsForBin){
 }
 
 /**
- * Builds a mapping of MovieID to a list of {MovieID, MovieName, SharedWords}
+ * Builds a mapping of StudioID to a list of {StudioID, StudioName, SharedWords}
  * representing its neighbors. The given mapsForBin parameter represents the
  * expected object containing the maps for the desired bin.
  */
