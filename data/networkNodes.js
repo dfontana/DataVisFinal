@@ -7,16 +7,27 @@ const fs = require('fs')
  * Filter the movies in the bin for those containing the top
  * 3 keywords from the bin.
  */
-function filterRelevant(movies){
-
+function filterRelevant(movies, binWords){
+  return movies.filter((m) => {
+    for(let i = 0; i < m.keywords.length; i++){
+      if(binWords.includes(m.keywords[i].name)){
+        return true;
+      }  
+    }
+    return false;
+  })
 }
 
 /**
  * Build the movie sizing from all movies.
  * That's going to be a Map movie ID -> Movie rating * Vote Count
  */
-function movieMap(movies){
-
+function movieMaps(movies){
+  return movies.reduce((acc, m) => {
+    acc[0][m.id] = m.vote_average * m.vote_count;
+    acc[1][m.id] = m.title;
+    return acc
+  }, [{}, {}])
 }
 
 /**
@@ -28,7 +39,28 @@ function movieMap(movies){
 * - Actor ID -> { Movie Name, Movie ID, Movie Revenue, Movie Keywords}
 */
 function actorMaps(movies){
+  return movies.reduce((acc, m) => {
+    let actors = m.cast.sort((a,b) => a.order - b.order).slice(0, 3);
+    actors.map((a) => {
+      // Increase occurance frequency
+      if(!(a.id in acc[0])){
+        acc[0][a.id] = 0
+      }
+      acc[0][a.id]++;
 
+      // Add to name map
+      if(!(a.id in acc[1])){
+        acc[1][a.id] = a.name
+      }
+
+      // Add the keyword/movie map
+      if(!(a.id in acc[2])){
+        acc[2][a.id] = []
+      }
+      acc[2][a.id].push({name: m.title, id: m.id, revenue: m.revenue, keywords: m.keywords})
+    })
+    return acc
+  }, [{}, {}, {}])
 }
 
 /**
@@ -39,7 +71,27 @@ function actorMaps(movies){
 * - Studio ID -> { Movie Name, Movie ID, Movie Revenue, Movie Keywords}
 */
 function studioMaps(movies) {
+  return movies.reduce((acc, m) => {
+    m.production_companies.map((s) => {
+      // Increase occurance frequency
+      if(!(s.id in acc[0])){
+        acc[0][s.id] = 0
+      }
+      acc[0][s.id]++;
 
+      // Add to name map
+      if(!(s.id in acc[1])){
+        acc[1][s.id] = s.name
+      }
+
+      // Add the keyword/movie map
+      if(!(s.id in acc[2])){
+        acc[2][s.id] = []
+      }
+      acc[2][s.id].push({name: m.title, id: m.id, revenue: m.revenue, keywords: m.keywords})
+    })
+    return acc
+  }, [{}, {}, {}])
 }
 
 /**
@@ -47,25 +99,29 @@ function studioMaps(movies) {
  */
 let bins = [[0, 1950], [1951, 1960], [1961,1970], [1971, 1980], [1981, 1990], [1991, 2000], [2001, 2010], [2011, 2020]]
 let Maps = bins.reduce((acc, bin) =>{ 
-  let binned = Bin.makeBin(bin[0], bin[1]);
+  let binned = Bin(bin[0], bin[1]);
 
   // Movie Map by bin
-  acc[0][bin[1]] = moviesMap(binned);
+  let movies = movieMaps(binned);
+  acc[0][bin[1]] = {
+    nodemap: movies[0],
+    namemap: movies[1]
+  }
 
   // Actors Map by bin
-  let actors = actorsMap(filterRelevent(binned))
+  let actors = actorMaps(filterRelevant(binned, keywords[bin[1]]))
   acc[1][bin[1]] = {
     nodemap: actors[0],
-    keywordmap: actors[1],
-    namemap: actors[2]
+    namemap: actors[1],
+    keywordmap: actors[2]
   }
   
   // Studios Map by bin
-  let studios = studiosMap(filterRelevent(binned))
+  let studios = studioMaps(filterRelevant(binned, keywords[bin[1]]))
   acc[2][bin[1]] = {
     nodemap: studios[0],
-    keywordmap: studios[1],
-    namemap: studios[2]
+    namemap: studios[1],
+    keywordmap: studios[2]
   }
 
   return acc
