@@ -1,4 +1,8 @@
 // Must run with --max-old-space-size=4096 to increase heap... 
+/**
+ * Converts the Credits, Metadata, and Keyword CSVS into jsons for easier
+ * operations. This will clean the data of escape codes from the latin-1 encoding.
+ */
 const d3 = require('d3')
 const fs = require('fs')
 const JSON5 = require('json5');
