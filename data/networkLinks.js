@@ -7,28 +7,49 @@ const actorMaps = require('./final/actorMaps.json')
 const movieMaps = require('./final/movieMaps.json')
 const fs = require('fs')
 
-/**
- * Builds a mapping of MovieID to a list of {MovieID, MovieName, SharedWords}
- * representing its neighbors. The given mapsForBin parameter represents the
- * expected object containing the maps for the desired bin.
- */
-function movieLinks(maps){
-  // 1 Prep output and frontier
-  let output = {}
-  let frontier = Object.keys(maps.namemap).map((id) => {
+
+function buildMovieFrontier(maps) {
+  return Object.keys(maps.namemap).map((id) => {
     return {
       id: id,
-      name: maps.namemap[id],
       keywords: maps.keywordmap[id]
     }
   })
+}
 
+/**
+ * Makes the list of nodes to traverse in the case of 
+ * actors and studios. This essentially uses the given maps
+ * and reduces the movie references in the keyword map down
+ * to the unique keywords related to the given map.
+ */
+function buildActorStudioFrontier(maps, movieMaps) {
+  return Object.keys(maps.namemap).map((id) => {
+    return {
+      id: id,
+      keywords: maps.keywordmap[id].reduce((acc, a) => {
+        movieMaps.keywordmap[a.id].map((keyword) => {
+          if(!(acc.includes(keyword))) acc.push(keyword)
+        })
+        return acc
+      }, [])
+    }
+  })
+}
+
+/**
+ * Builds a mapping of ID to a list of {ID, SharedWords}
+ * representing its neighbors. Uses the given frontier list
+ * as the nodes to traverse.
+ */
+function findLinks(frontier){
+  let output = {}
   while(frontier.length !== 0){
-    let movie = frontier.shift()
+    let node = frontier.shift()
     frontier.map((other) => {
 
-      // Find shared words between movie and other.
-      let sharedWords = movie.keywords.reduce((acc, wordID) => {
+      // Find shared words between node and other.
+      let sharedWords = node.keywords.reduce((acc, wordID) => {
         if(other.keywords.filter(kID => kID === wordID).length === 1){
           acc.push(wordID)
         }
@@ -37,40 +58,23 @@ function movieLinks(maps){
 
       // Add Neighbor if it's a neighbor
       if(sharedWords.length > 0){
-        if(!(movie.id in output)){
-          output[movie.id] = [];
+        if(!(node.id in output)){
+          output[node.id] = [];
         }
 
-        output[movie.id].push({
+        output[node.id].push({
           id: other.id,
           words: sharedWords
         })
       }
-
     })
+    if(output[node.id] != undefined && output[node.id].length > 300){
+      console.log(node.id)
+      output[node.id].map(m => console.log('    ',m.words))
+    }
   }
 
   return output;
-}
-
-/**
- * Builds a mapping of ActorID to a list of {ActorID, ActorName, SharedWords}
- * representing its neighbors. The given mapsForBin parameter represents the
- * expected object containing the maps for the desired bin.
- */
-function actorLinks(mapsForBin){
-
-  return {}
-}
-
-/**
- * Builds a mapping of StudioID to a list of {StudioID, StudioName, SharedWords}
- * representing its neighbors. The given mapsForBin parameter represents the
- * expected object containing the maps for the desired bin.
- */
-function studioLinks(mapsForBin){
-
-    return {}
 }
 
 /**
@@ -80,13 +84,13 @@ let bins = [[0, 1950], [1951, 1960], [1961,1970], [1971, 1980], [1981, 1990], [1
 let Links = bins.reduce((acc, bin) =>{ 
 
   // Movie Map by bin
-  acc[0][bin[1]] = movieLinks(movieMaps[bin[1]]);
+  acc[0][bin[1]] = findLinks(buildMovieFrontier(movieMaps[bin[1]]));
 
   // Actors Map by bin
-  acc[1][bin[1]] = actorLinks(actorMaps[bin[1]])
+  acc[1][bin[1]] = findLinks(buildActorStudioFrontier(actorMaps[bin[1]], movieMaps[bin[1]]))
   
   // Studios Map by bin
-  acc[2][bin[1]] = studioLinks(studioMaps[bin[1]])
+  acc[2][bin[1]] = findLinks(buildActorStudioFrontier(studioMaps[bin[1]], movieMaps[bin[1]]))
 
   return acc
 }, [{}, {}, {}])
