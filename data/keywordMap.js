@@ -9,11 +9,7 @@ function top3ForBin(movies){
   let frequencies = movies.reduce((acc, m) => {
     m.keywords.forEach((k) => {
       if(k === 179431 || k.name == 179430){ return } // 'duringcreditstinger' and 'aftercreditstringer'
-      if(k in acc){
-        acc[k] += parseFloat(m.vote_average) * parseFloat(m.vote_count);
-      }else{
-        acc[k] = parseFloat(m.vote_average) * parseFloat(m.vote_count);
-      }
+      acc[k] = (acc[k] || 0) + parseFloat(m.vote_average) * parseFloat(m.vote_count); 
     })
     return acc
   }, {})
@@ -28,4 +24,4 @@ let KeywordMap = bins.reduce((acc, bin) =>{
   acc[bin[1]] = top3ForBin(binned)
   return acc
 }, {})
-fs.writeFileSync(__dirname+'/final/topkeywords.json', JSON.stringify(KeywordMap), 'utf8');
+fs.writeFile(__dirname+'/final/topkeywords.json', JSON.stringify(KeywordMap), 'utf8', ()=>{});

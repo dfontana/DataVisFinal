@@ -58,10 +58,7 @@ function findLinks(frontier){
 
       // Add Neighbor if it's a neighbor
       if(sharedWords.length > 0){
-        if(!(node.id in output)){
-          output[node.id] = [];
-        }
-
+        output[node.id] = (output[node.id] || [])
         output[node.id].push({
           id: other.id,
           words: sharedWords
@@ -91,6 +88,6 @@ let Links = bins.reduce((acc, bin) =>{
   return acc
 }, [{}, {}, {}])
 
-fs.writeFileSync(__dirname+'/final/movieLinks.json', JSON.stringify(Links[0]), 'utf8');
-fs.writeFileSync(__dirname+'/final/actorLinks.json', JSON.stringify(Links[1]), 'utf8');
-fs.writeFileSync(__dirname+'/final/studioLinks.json', JSON.stringify(Links[2]), 'utf8');
+fs.writeFile(__dirname+'/final/movieLinks.json', JSON.stringify(Links[0]), 'utf8', ()=>{});
+fs.writeFile(__dirname+'/final/actorLinks.json', JSON.stringify(Links[1]), 'utf8', ()=>{});
+fs.writeFile(__dirname+'/final/studioLinks.json', JSON.stringify(Links[2]), 'utf8', ()=>{});

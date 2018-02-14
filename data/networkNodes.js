@@ -44,10 +44,7 @@ function actorMaps(movies){
     let actors = m.cast.sort((a,b) => a.order - b.order).slice(0, 3);
     actors.map((a) => {
       // Increase occurance frequency
-      if(!(a.id in acc[0])){
-        acc[0][a.id] = 0
-      }
-      acc[0][a.id]++;
+      acc[0][a.id] = (acc[0][a.id] || 0) + 1;
 
       // Add to name map
       if(!(a.id in acc[1])){
@@ -55,9 +52,7 @@ function actorMaps(movies){
       }
 
       // Add the keyword/movie map
-      if(!(a.id in acc[2])){
-        acc[2][a.id] = []
-      }
+      acc[2][a.id] = (acc[2][a.id] || [])
       acc[2][a.id].push({id: parseInt(m.id), revenue: m.revenue})
     })
     return acc
@@ -75,10 +70,7 @@ function studioMaps(movies) {
   return movies.reduce((acc, m) => {
     m.production_companies.map((s) => {
       // Increase occurance frequency
-      if(!(s.id in acc[0])){
-        acc[0][s.id] = 0
-      }
-      acc[0][s.id]++;
+      acc[0][s.id] = (acc[0][s.id] || 0) + 1;
 
       // Add to name map
       if(!(s.id in acc[1])){
@@ -86,9 +78,7 @@ function studioMaps(movies) {
       }
 
       // Add the keyword/movie map
-      if(!(s.id in acc[2])){
-        acc[2][s.id] = []
-      }
+      acc[2][s.id] = (acc[2][s.id] || [])
       acc[2][s.id].push({id: parseInt(m.id), revenue: m.revenue})
     })
     return acc
@@ -128,6 +118,6 @@ let Maps = bins.reduce((acc, bin) =>{
 
   return acc
 }, [{}, {}, {}])
-fs.writeFileSync(__dirname+'/final/movieMaps.json', JSON.stringify(Maps[0]), 'utf8');
-fs.writeFileSync(__dirname+'/final/actorMaps.json', JSON.stringify(Maps[1]), 'utf8');
-fs.writeFileSync(__dirname+'/final/studioMaps.json', JSON.stringify(Maps[2]), 'utf8');
+fs.writeFile(__dirname+'/final/movieMaps.json', JSON.stringify(Maps[0]), 'utf8', ()=>{});
+fs.writeFile(__dirname+'/final/actorMaps.json', JSON.stringify(Maps[1]), 'utf8', ()=>{});
+fs.writeFile(__dirname+'/final/studioMaps.json', JSON.stringify(Maps[2]), 'utf8', ()=>{});

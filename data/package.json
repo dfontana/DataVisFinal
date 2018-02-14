@@ -4,7 +4,7 @@
   "description": "",
   "main": "build.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node keywordMap.js && node networkNodes.js && node networkLinks.js && node clusters.js && node lines.js"
   },
   "author": "",
   "license": "ISC",

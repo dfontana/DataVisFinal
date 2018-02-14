@@ -1,4 +1,6 @@
-
+/** 
+ * Builds the maps necessary for the clustering graph.
+ */
 const TopKeywords = require('./final/topkeywords.json')
 const studioMaps = require('./final/studioMaps.json')
 const actorMaps = require('./final/actorMaps.json')
@@ -52,6 +54,6 @@ function reshapeToStudios(clusterMap){
 }
 
 let clusters = cluster();
-fs.writeFileSync(__dirname+'/final/movieClusters.json', JSON.stringify(clusters), 'utf8');
-fs.writeFileSync(__dirname+'/final/actorClusters.json', JSON.stringify(reshapeToActors(clusters)), 'utf8');
-fs.writeFileSync(__dirname+'/final/studioClusters.json', JSON.stringify(reshapeToStudios(clusters)), 'utf8');
+fs.writeFile(__dirname+'/final/movieClusters.json', JSON.stringify(clusters), 'utf8', ()=>{});
+fs.writeFile(__dirname+'/final/actorClusters.json', JSON.stringify(reshapeToActors(clusters)), 'utf8', ()=>{});
+fs.writeFile(__dirname+'/final/studioClusters.json', JSON.stringify(reshapeToStudios(clusters)), 'utf8', ()=>{});
