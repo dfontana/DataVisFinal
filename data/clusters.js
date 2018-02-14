@@ -7,9 +7,6 @@ const actorMaps = require('./final/actorMaps.json')
 const movieMaps = require('./final/movieMaps.json')
 const fs = require('fs')
 
-/**
- * TopKeyword -> [{MovieID, [StudioIDs], [ActorIDs]}]
- */
 let partOfMovie = (keywordmap, movie) => {
   return Object.keys(keywordmap).filter(a => {
     return keywordmap[a].map(e => parseInt(e.id)).includes(movie)
@@ -20,6 +17,9 @@ let flattenKeywordMaps = (map) => {
   return Object.keys(map).reduce((acc, bin) => { return {...acc, ...map[bin].keywordmap} }, {})
 }
 
+/**
+ * TopKeyword -> [{MovieID, [StudioIDs], [ActorIDs]}]
+ */
 function cluster(){
   return [].concat(...Object.values(TopKeywords)).reduce((acc, key) => {
 
@@ -39,6 +39,9 @@ function cluster(){
   }, {})
 }
 
+/**
+ * TopKeyword -> [ActorId]
+ */
 function reshapeToActors(clusterMap){
   return Object.keys(clusterMap).reduce((acc, key) => {
     acc[key] = clusterMap[key].reduce((acc, e) => [...acc, ...e.actors], [])
@@ -46,6 +49,9 @@ function reshapeToActors(clusterMap){
   }, {})
 }
 
+/**
+ * TopKeyword -> [StudioID]
+ */
 function reshapeToStudios(clusterMap){
   return Object.keys(clusterMap).reduce((acc, key) => {
     acc[key] = clusterMap[key].reduce((acc, e) => [...acc, ...e.studios], [])
