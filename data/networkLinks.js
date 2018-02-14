@@ -11,7 +11,7 @@ const fs = require('fs')
 function buildMovieFrontier(maps) {
   return Object.keys(maps.namemap).map((id) => {
     return {
-      id: id,
+      id: parseInt(id),
       keywords: maps.keywordmap[id]
     }
   })
@@ -26,7 +26,7 @@ function buildMovieFrontier(maps) {
 function buildActorStudioFrontier(maps, movieMaps) {
   return Object.keys(maps.namemap).map((id) => {
     return {
-      id: id,
+      id: parseInt(id),
       keywords: maps.keywordmap[id].reduce((acc, a) => {
         movieMaps.keywordmap[a.id].map((keyword) => {
           if(!(acc.includes(keyword))) acc.push(keyword)
@@ -68,10 +68,6 @@ function findLinks(frontier){
         })
       }
     })
-    if(output[node.id] != undefined && output[node.id].length > 300){
-      console.log(node.id)
-      output[node.id].map(m => console.log('    ',m.words))
-    }
   }
 
   return output;

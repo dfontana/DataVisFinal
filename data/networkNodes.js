@@ -58,7 +58,7 @@ function actorMaps(movies){
       if(!(a.id in acc[2])){
         acc[2][a.id] = []
       }
-      acc[2][a.id].push({id: m.id, revenue: m.revenue})
+      acc[2][a.id].push({id: parseInt(m.id), revenue: m.revenue})
     })
     return acc
   }, [{}, {}, {}])
@@ -89,7 +89,7 @@ function studioMaps(movies) {
       if(!(s.id in acc[2])){
         acc[2][s.id] = []
       }
-      acc[2][s.id].push({id: m.id, revenue: m.revenue})
+      acc[2][s.id].push({id: parseInt(m.id), revenue: m.revenue})
     })
     return acc
   }, [{}, {}, {}])
