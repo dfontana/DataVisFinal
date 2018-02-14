@@ -1,10 +1,1 @@
-{
-  "1950": ["film noir", "silent film", "musical"],
-  "1960": ["animation", "film noir", "musical"],
-  "1970": ["spaghetti western", "musical", "bounty hunter"],
-  "1980": ["android", "dystopia", "lawyer"],
-  "1990": ["dystopia", "violence", "saving the world"],
-  "2000": ["dystopia", "violence", "friendship"],
-  "2010": ["based on novel", "superhero", "violence"],
-  "2020": ["3d", "based on comic", "sequel"]
-}
+{"1950":[195402,154802,4344],"1960":[10336,195402,4344],"1970":[156212,4344,801],"1980":[803,4565,10909],"1990":[4565,14819,83],"2000":[4565,14819,6054],"2010":[179430,818,9715],"2020":[209714,179430,9717]}

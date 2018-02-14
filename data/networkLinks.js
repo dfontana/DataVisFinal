@@ -5,14 +5,52 @@
 const studioMaps = require('./final/studioMaps.json')
 const actorMaps = require('./final/actorMaps.json')
 const movieMaps = require('./final/movieMaps.json')
+const fs = require('fs')
 
 /**
  * Builds a mapping of MovieID to a list of {MovieID, MovieName, SharedWords}
  * representing its neighbors. The given mapsForBin parameter represents the
  * expected object containing the maps for the desired bin.
  */
-function movieLinks(mapsForBin){
+function movieLinks(maps){
+  // 1 Prep output and frontier
+  let output = {}
+  let frontier = Object.keys(maps.namemap).map((id) => {
+    return {
+      id: id,
+      name: maps.namemap[id],
+      keywords: maps.keywordmap[id]
+    }
+  })
 
+  while(frontier.length !== 0){
+    let movie = frontier.shift()
+    frontier.map((other) => {
+
+      // Find shared words between movie and other.
+      let sharedWords = movie.keywords.reduce((acc, wordID) => {
+        if(other.keywords.filter(kID => kID === wordID).length === 1){
+          acc.push(wordID)
+        }
+        return acc
+      }, [])
+
+      // Add Neighbor if it's a neighbor
+      if(sharedWords.length > 0){
+        if(!(movie.id in output)){
+          output[movie.id] = [];
+        }
+
+        output[movie.id].push({
+          id: other.id,
+          words: sharedWords
+        })
+      }
+
+    })
+  }
+
+  return output;
 }
 
 /**
@@ -22,6 +60,7 @@ function movieLinks(mapsForBin){
  */
 function actorLinks(mapsForBin){
 
+  return {}
 }
 
 /**
@@ -31,6 +70,7 @@ function actorLinks(mapsForBin){
  */
 function studioLinks(mapsForBin){
 
+    return {}
 }
 
 /**
@@ -50,6 +90,7 @@ let Links = bins.reduce((acc, bin) =>{
 
   return acc
 }, [{}, {}, {}])
+
 fs.writeFileSync(__dirname+'/final/movieLinks.json', JSON.stringify(Links[0]), 'utf8');
 fs.writeFileSync(__dirname+'/final/actorLinks.json', JSON.stringify(Links[1]), 'utf8');
 fs.writeFileSync(__dirname+'/final/studioLinks.json', JSON.stringify(Links[2]), 'utf8');

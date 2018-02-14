@@ -10,7 +10,7 @@ const fs = require('fs')
 function filterRelevant(movies, binWords){
   return movies.filter((m) => {
     for(let i = 0; i < m.keywords.length; i++){
-      if(binWords.includes(m.keywords[i].name)){
+      if(binWords.includes(m.keywords[i])){
         return true;
       }  
     }
@@ -26,8 +26,9 @@ function movieMaps(movies){
   return movies.reduce((acc, m) => {
     acc[0][m.id] = m.vote_average * m.vote_count;
     acc[1][m.id] = m.title;
+    acc[2][m.id] = m.keywords;
     return acc
-  }, [{}, {}])
+  }, [{}, {}, {}])
 }
 
 /**
@@ -36,7 +37,7 @@ function movieMaps(movies){
 * At the same time you will make two other maps:
 * - Actor ID -> occurance frequency
 * - Actor ID -> actor name
-* - Actor ID -> { Movie Name, Movie ID, Movie Revenue, Movie Keywords}
+* - Actor ID -> { Movie ID, Movie Revenue} (Use movie maps to find title and keywords)
 */
 function actorMaps(movies){
   return movies.reduce((acc, m) => {
@@ -57,7 +58,7 @@ function actorMaps(movies){
       if(!(a.id in acc[2])){
         acc[2][a.id] = []
       }
-      acc[2][a.id].push({name: m.title, id: m.id, revenue: m.revenue, keywords: m.keywords})
+      acc[2][a.id].push({id: m.id, revenue: m.revenue})
     })
     return acc
   }, [{}, {}, {}])
@@ -68,7 +69,7 @@ function actorMaps(movies){
 * At the same time you will make two other maps:
 * - Studio ID -> occurance frequency
 * - Studio ID -> studio name
-* - Studio ID -> { Movie Name, Movie ID, Movie Revenue, Movie Keywords}
+* - Studio ID -> { Movie ID, Movie Revenue} (Use movie maps to find title and keywords)
 */
 function studioMaps(movies) {
   return movies.reduce((acc, m) => {
@@ -88,7 +89,7 @@ function studioMaps(movies) {
       if(!(s.id in acc[2])){
         acc[2][s.id] = []
       }
-      acc[2][s.id].push({name: m.title, id: m.id, revenue: m.revenue, keywords: m.keywords})
+      acc[2][s.id].push({id: m.id, revenue: m.revenue})
     })
     return acc
   }, [{}, {}, {}])
@@ -105,7 +106,8 @@ let Maps = bins.reduce((acc, bin) =>{
   let movies = movieMaps(binned);
   acc[0][bin[1]] = {
     nodemap: movies[0],
-    namemap: movies[1]
+    namemap: movies[1],
+    keywordmap: movies[2]
   }
 
   // Actors Map by bin

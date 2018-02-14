@@ -6,12 +6,26 @@
  * 
  * Use this as a starting point when inspecting a bin.
  */
-
+const fs = require('fs')
 const metadata = require('./buffer/raw_json/movies_metadata.json')
 let credits = require('./buffer/raw_json/credits.json')
 let keywords = require('./buffer/raw_json/keywords.json')
 
+function loadWordMap(){
+  try{
+    return require('./final/wordMap.json')
+  }catch(e){
+    return {};
+  }
+}
+
+function saveWordMap(map) {
+  fs.writeFileSync(__dirname+'/final/wordMap.json', JSON.stringify(map), 'utf8');
+}
+
 function makeBin(binLow, binHigh) {
+  let wordMap = loadWordMap();
+
   // Filter movies for those only within the bin
   let movies = metadata.filter((m) => { 
     if(m.release_date == undefined || m.release_date == null || m.release_date == "") return false;
@@ -25,14 +39,20 @@ function makeBin(binLow, binHigh) {
   let filterFurther = []
   movies.forEach(e => {
     let c,k;
+
     for(k = 0; k < keywords.length; k++){
       if(keywords[k].id == e.id){
-        e.keywords = keywords[k].keywords
+        e.keywords = keywords[k].keywords.map((entry) => {
+          if(!(entry.id in wordMap)){
+            wordMap[entry.id] = entry.name;
+          }
+          return entry.id;
+        })
         keywords.splice(k,1)
         break;
       }
     }
-    if(e.keywords == undefined){
+    if(e.keywords == undefined || e.keywords.length === 0){
       filterFurther.push(e.id)
     }
 
@@ -45,6 +65,8 @@ function makeBin(binLow, binHigh) {
       }
     }
   });
+
+  saveWordMap(wordMap)
   return movies.filter(m => !filterFurther.includes(m.id));
 }
 
