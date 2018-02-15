@@ -180,6 +180,7 @@ function reformLinks(altLink){
  */
 function validateLinks(expressiveLinks, compactLinks, skipDiff){
   if(!skipDiff){
+    console.log('Computing Raw Diffs')
     // Check the diffs of the big links against the compact links, ensuring the storage
     // system contains the links expressed by the big links.
     let actorDiff = rawDiff(expressiveLinks[1], compactLinks[1]);
@@ -187,6 +188,7 @@ function validateLinks(expressiveLinks, compactLinks, skipDiff){
     let movieDiff = rawDiff(expressiveLinks[0], compactLinks[0]);
 
     // If any of the diffs are not empty, a link was missed in storage.
+    console.log('Validating diffs')
     let diffEmpty = (diff) => Object.keys(diff).reduce((acc, bin) => diff[bin].length === 0 && acc, true)
     if(!diffEmpty(movieDiff)){
       console.error("[ERROR] STORED MOVIE links mismatch.")
@@ -209,6 +211,7 @@ function validateLinks(expressiveLinks, compactLinks, skipDiff){
       }, 0)
     }, 0)
   }
+  console.log('Checking reformed links')
   if(linkSum(expressiveLinks[0]) !== linkSum(reformLinks(compactLinks[0]))){
     console.error("[ERROR] Reformed MOVIE links mismatch.")
   }
@@ -218,6 +221,7 @@ function validateLinks(expressiveLinks, compactLinks, skipDiff){
   if(linkSum(expressiveLinks[2]) !== linkSum(reformLinks(compactLinks[2]))){
     console.error("[ERROR] Reformed STUDIO links mismatch.")
   }
+  console.log('Done.')
 }
 
 /**
@@ -237,7 +241,7 @@ fs.writeFileSync(__dirname+'/final/movieLinks.json', JSON.stringify(Links[0]), '
 fs.writeFileSync(__dirname+'/final/actorLinks.json', JSON.stringify(Links[1]), 'utf8', ()=>{});
 fs.writeFileSync(__dirname+'/final/studioLinks.json', JSON.stringify(Links[2]), 'utf8', ()=>{});
 
-
+console.log('Generating big links')
 let bigLinks = Object.keys(movieMaps).reduce((acc, bin) =>{ 
 
   // Movie, Actor, Studio maps respectively.
