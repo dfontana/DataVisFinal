@@ -7,8 +7,14 @@ function getNetworkLinks(interest, decade) {
 }
 
 function findIndex(array, item) {
-  if (array === undefined) return -1
-  return array.indexOf(e => e.target === item)
+  if (array === undefined || array.length === 0) return -1;
+  let i;
+  for(i = 0; i < array.length; i++){
+    if(array[i].target === item){
+      break;
+    }
+  }
+  return i >= array.length ? -1 : i;
 }
 
 /**
@@ -18,11 +24,12 @@ function findIndex(array, item) {
 function reformLinks(keywordLinks) {
   links = {}
   Object.keys(keywordLinks).map(kID => {
+    let = kID = parseInt(kID)
     let nodes = keywordLinks[kID]
     for (let i = 0; i < nodes.length; i++) {
-      let movieID = nodes[i]
+      let movieID = parseInt(nodes[i])
       for (let j = i + 1; j < nodes.length; j++) {
-        let otherID = nodes[j]
+        let otherID = parseInt(nodes[j])
 
         let oIDidx = findIndex(links[movieID], otherID)
         if (oIDidx !== -1) {
@@ -53,7 +60,6 @@ function getNetworkNodes(interest, decade) {
   return new Promise((resolve, reject) => {
     d3.json(`http://localhost:8000/${decade}/${interest}/size`, function (data) {
 
-      console.log(Object.keys(data))
       let reshape = Object.keys(data.nodemap).reduce((acc, mID) => {
         acc.push({
           id: mID,
@@ -69,7 +75,7 @@ function getNetworkNodes(interest, decade) {
   })
 }
 
-function getKeywordMap() {
+function getWordMap() {
   return new Promise((resolve, reject) => {
     d3.json('http://localhost:8000/wordmap', function (data) {
       resolve(data);
@@ -81,7 +87,8 @@ function generateGraph(interest, decade) {
   let links = getNetworkLinks(interest, decade);
   let nodes = getNetworkNodes(interest, decade);
 
-  Promise.all([nodes, links]).then((values) => {
+
+  Promise.all([nodes, links, getWordMap()]).then((values) => {
     console.log(values);
     d3.select('#network').selectAll('*').remove();
     let dropdown = document.getElementById("networkDropdown");
@@ -93,11 +100,24 @@ function generateGraph(interest, decade) {
 
     let nodes = values[0];
     let links = values[1];
+    let wordMap = values[2];
     let svg = d3.select("#network");
+    let linkGroup = svg.append('g').attr("class", "links")
+    let nodeGroup = svg.append('g').attr("class", "nodes")
     let width = svg.attr("width");
     let height = svg.attr("height");
     let color = d3.scaleOrdinal(d3.schemeCategory20);
     // let decade = decade;
+
+    const zoom = d3.zoom()
+      .scaleExtent([1, 40])
+      .translateExtent([[0, 0],[width, height]])
+      .extent([[0, 0],[width, height]])
+      .on("zoom", () => {
+        linkGroup.attr("transform", d3.event.transform)
+        nodeGroup.attr("transform", d3.event.transform)
+      });
+    svg.call(zoom)
 
 
     let simulation = d3.forceSimulation(nodes)
@@ -116,16 +136,11 @@ function generateGraph(interest, decade) {
       .domain(d3.extent(links, n => n.keywords.length))
       .range([1, 5])
 
-    let link =
-      svg.append("g")
-      .attr("class", "links")
-      .selectAll("line")
+    let link =linkGroup.selectAll("line")
       .data(links)
       .enter()
       .append("line")
-      .style('stroke', 'black')
       .style("stroke-width", d => thickScale(d.keywords.length))
-      .style('opacity', '0.1')
       .attr("x1", d => d.source.x)
       .attr("y1", d => d.source.y)
       .attr("x2", d => d.target.x)
@@ -135,7 +150,7 @@ function generateGraph(interest, decade) {
           .duration(200)
           .style("opacity", .9);
 
-        let text = d.keywords.join('<br>')
+        let text = d.keywords.map(k => wordMap[k]).join('<br>')
         div.html(text)
           .style("left", (d3.event.pageX) + "px")
           .style("top", (d3.event.pageY - 28) + "px");
@@ -150,9 +165,7 @@ function generateGraph(interest, decade) {
       .domain(d3.extent(nodes, n => n.value))
       .range([4, 10])
 
-    let node = svg.append("g")
-      .attr("class", "nodes")
-      .selectAll("circle")
+    let node = nodeGroup.selectAll("circle")
       .data(nodes)
       .enter().append("circle")
       .attr("r", d => rScale(d.value))
