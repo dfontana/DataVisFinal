@@ -5,6 +5,7 @@
 const studioMaps = require('./final/studioMaps.json')
 const actorMaps = require('./final/actorMaps.json')
 const movieMaps = require('./final/movieMaps.json')
+const keywords = require('./final/topkeywords.json')
 const fs = require('fs')
 
 
@@ -42,13 +43,17 @@ function buildActorStudioFrontier(maps, movieMaps) {
  * representing its neighbors. Uses the given frontier list
  * as the nodes to traverse.
  */
-function findLinksCompact(frontier){
+function findLinksCompact(frontier, topkeywords){
   let output = {}
   while(frontier.length !== 0){
     let node = frontier.shift()
     node.keywords.map((kID) => {
-      output[kID] = output[kID] || []
-      output[kID].push(node.id)
+
+      // Only build links from top keywords
+      if(contains(topkeywords, kID)){
+        output[kID] = output[kID] || []
+        output[kID].push(node.id)
+      }
     })
   }
   
@@ -230,9 +235,9 @@ function validateLinks(expressiveLinks, compactLinks, skipDiff){
 let Links = Object.keys(movieMaps).reduce((acc, bin) =>{ 
 
   // Movie, Actor, Studio maps respectively.
-  acc[0][bin] = findLinksCompact(buildMovieFrontier(movieMaps[bin]));
-  acc[1][bin] = findLinksCompact(buildActorStudioFrontier(actorMaps[bin], movieMaps[bin]))
-  acc[2][bin] = findLinksCompact(buildActorStudioFrontier(studioMaps[bin], movieMaps[bin]))
+  acc[0][bin] = findLinksCompact(buildMovieFrontier(movieMaps[bin]), keywords[bin]);
+  acc[1][bin] = findLinksCompact(buildActorStudioFrontier(actorMaps[bin], movieMaps[bin]), keywords[bin])
+  acc[2][bin] = findLinksCompact(buildActorStudioFrontier(studioMaps[bin], movieMaps[bin]), keywords[bin])
 
   return acc
 }, [{}, {}, {}])
@@ -241,15 +246,15 @@ fs.writeFileSync(__dirname+'/final/movieLinks.json', JSON.stringify(Links[0]), '
 fs.writeFileSync(__dirname+'/final/actorLinks.json', JSON.stringify(Links[1]), 'utf8', ()=>{});
 fs.writeFileSync(__dirname+'/final/studioLinks.json', JSON.stringify(Links[2]), 'utf8', ()=>{});
 
-console.log('Generating big links')
-let bigLinks = Object.keys(movieMaps).reduce((acc, bin) =>{ 
+// console.log('Generating big links')
+// let bigLinks = Object.keys(movieMaps).reduce((acc, bin) =>{ 
 
-  // Movie, Actor, Studio maps respectively.
-  acc[0][bin] = findLinksExpressive(buildMovieFrontier(movieMaps[bin]));
-  acc[1][bin] = findLinksExpressive(buildActorStudioFrontier(actorMaps[bin], movieMaps[bin]))
-  acc[2][bin] = findLinksExpressive(buildActorStudioFrontier(studioMaps[bin], movieMaps[bin]))
+//   // Movie, Actor, Studio maps respectively.
+//   acc[0][bin] = findLinksExpressive(buildMovieFrontier(movieMaps[bin]));
+//   acc[1][bin] = findLinksExpressive(buildActorStudioFrontier(actorMaps[bin], movieMaps[bin]))
+//   acc[2][bin] = findLinksExpressive(buildActorStudioFrontier(studioMaps[bin], movieMaps[bin]))
 
-  return acc
-}, [{}, {}, {}])
+//   return acc
+// }, [{}, {}, {}])
 
-validateLinks(bigLinks, Links, false)
+// validateLinks(bigLinks, Links, false)
