@@ -22,13 +22,17 @@ function filterRelevant(movies, binWords){
  * Build the movie sizing from all movies.
  * That's going to be a Map movie ID -> Movie rating * Vote Count
  */
-function movieMaps(movies){
-  return movies.reduce((acc, m) => {
+function movieMaps(movies, topkeywords){
+  let maps = movies.reduce((acc, m) => {
     acc[0][m.id] = m.vote_average * m.vote_count;
     acc[1][m.id] = m.title;
     acc[2][m.id] = m.keywords;
     return acc
   }, [{}, {}, {}])
+  
+  // Filter movies by those who have at least one top keyword of the time.
+  maps[4] = movies.filter(m => topkeywords.filter(k => m.keywords.filter(e => e === k).length > 0))
+  return maps
 }
 
 /**
@@ -93,11 +97,12 @@ let Maps = bins.reduce((acc, bin) =>{
   let binned = Bin(bin[0], bin[1]);
 
   // Movie Map by bin
-  let movies = movieMaps(binned);
+  let movies = movieMaps(binned, keywords[bin[1]]);
   acc[0][bin[1]] = {
     nodemap: movies[0],
     namemap: movies[1],
-    keywordmap: movies[2]
+    keywordmap: movies[2],
+    relevantmap: movies[3]
   }
 
   // Actors Map by bin
