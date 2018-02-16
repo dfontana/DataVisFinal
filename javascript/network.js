@@ -1,8 +1,23 @@
 function getNetworkLinks(interest, decade) {
   return new Promise( (resolve, reject) => {
-    d3.json(`http://localhost:8000/${decade}/${interest}/link`, function(data) {
-      resolve(reformLinks(data));
-    });
+      obj = [];
+      //every ten 
+    for(var i = 1; i < 500; i++) {
+      for(var j = 1; j < 500; j++) {
+        if(i%10==0 && j%10 ==0) {
+          obj.push({
+            source: i,
+            target: j,
+            keywords: [] 
+          });
+        }
+      }
+    }
+
+    resolve(obj);
+    // d3.json(`http://localhost:8000/${decade}/${interest}/link`, function(data) {
+    //   resolve(reformLinks(data));
+    // });
   });
 }
 
@@ -51,19 +66,27 @@ function reformLinks(keywordLinks){
 
 function getNetworkNodes(interest, decade) {
   return new Promise( (resolve, reject) => {
-    d3.json(`http://localhost:8000/${decade}/${interest}/size`, function(data) {
+    // d3.json(`http://localhost:8000/${decade}/${interest}/size`, function(data) {
 
-      let reshape = Object.keys(data.nodemap).reduce((acc, mID) => {
-        acc.push({
-          id: mID,
-          value: data.nodemap[mID]
-        })
-        return acc;
-      }, [])
+    //   let reshape = Object.keys(data.nodemap).reduce((acc, mID) => {
+    //     acc.push({
+    //       id: mID,
+    //       value: data.nodemap[mID]
+    //     })
+    //     return acc;
+    //   }, [])
 
-      data.nodemap = reshape;
-      resolve(data.nodemap);
+    //   data.nodemap = reshape;
+    //   resolve(data.nodemap);
+    // });
+    obj = [];
+    d3.range(500).map((d) => {
+    obj.push({
+              id: d,
+              value: d3.randomNormal(5,1)()
+      });
     });
+    resolve(obj);
   })
 }
 
@@ -79,6 +102,8 @@ function generateGraph(interest, decade) {
   var links = getNetworkLinks(interest, decade);
   
   var nodes = getNetworkNodes(interest, decade);
+
+
 
    //  nodes.nodemap;
   //  nodes.namemap;
@@ -104,8 +129,11 @@ function generateGraph(interest, decade) {
     
     var simulation = d3.forceSimulation(nodes)
       .force("link", d3.forceLink(links).id(function(d) { return d.id; }))
-      .force("charge", d3.forceManyBody())
-      .force("center", d3.forceCenter(width / 2, height / 2))
+      // .force("charge", d3.forceManyBody())
+      .force("center", d3.forceCenter(width / 2, height / 2)) //
+      .force("gravity", d3.forceManyBody(150))
+      .force("x", d3.forceX().strength(.3))
+      .force("y", d3.forceY().strength(.3))
       .stop();
   
     for (var i = 0, n = Math.ceil(Math.log(simulation.alphaMin()) / Math.log(1 - simulation.alphaDecay())); i < n; ++i) {
@@ -185,26 +213,26 @@ function generateGraph(interest, decade) {
       node.append("title")
       .text(function(d) { return d.id; });
       
-      // simulation
-      // .nodes(nodes)
-      // .on("tick", ticked);
+  //     simulation
+  //     .nodes(nodes)
+  //     .on("tick", ticked);
   
-      // simulation
-      // .force("link")
-      // .links(links);
+  //     simulation
+  //     .force("link")
+  //     .links(links);
 
         
-      // function ticked() {
-      //   link
-      //       .attr("x1", function(d) { return d.source.x; })
-      //       .attr("y1", function(d) { return d.source.y; })
-      //       .attr("x2", function(d) { return d.target.x; })
-      //       .attr("y2", function(d) { return d.target.y; });
+  //     function ticked() {
+  //       link
+  //           .attr("x1", function(d) { return d.source.x; })
+  //           .attr("y1", function(d) { return d.source.y; })
+  //           .attr("x2", function(d) { return d.target.x; })
+  //           .attr("y2", function(d) { return d.target.y; });
       
-      //   node
-      //       .attr("cx", function(d) { return d.x; })
-      //       .attr("cy", function(d) { return d.y; });
-      // }
+  //       node
+  //           .attr("cx", function(d) { return d.x; })
+  //           .attr("cy", function(d) { return d.y; });
+  //     }
   })
 }
 
