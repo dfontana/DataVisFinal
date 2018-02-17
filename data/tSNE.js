@@ -16,9 +16,9 @@ const fs = require('fs')
 function prepData(movies, keywords) {
   return movies.map(m => {
     let features = []
-    features.push(parseInt(m.runtime))
-    features.push(parseInt(m.vote_average))
-    features.push(parseInt(m.vote_count))
+    features.push(parseInt(m.runtime) || 0)
+    features.push(parseInt(m.vote_average) || 0)
+    features.push(parseInt(m.vote_count) || 0)
 
     // Genre, or -1 if it has none.
     features.push(m.genres[0] ? parseInt(m.genres[0].id) : -1)
@@ -71,7 +71,7 @@ function run(data, binLabel) {
 
 // Build the tSNE files for each bin if we call from commandline, otherwise we want to use this as an import.
 if(require.main === module){
-  const bins = [[0, 1950], [1951, 1960], [1961,1970], [1971, 1980], [1981, 1990], [1991, 2000], [2001, 2010], [2011, 2020]]
+  const bins = [[1951, 1960], [1961,1970], [1971, 1980], [1981, 1990], [1991, 2000], [2001, 2010], [2011, 2020]]
   bins.map(bin =>{ 
     console.log('Building Bin', bin[1])
     let binned = Bin(bin[0], bin[1]);
