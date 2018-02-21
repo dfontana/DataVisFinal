@@ -5,6 +5,10 @@ let buildTSNE = (svgroot) => {
   const height = rootbounds.height - margins.right;
   let circles, xScale, yScale, rScale, cScale;
 
+  // Keyword for Cluster Group
+  let keywordGroup = svgroot.append('g')
+    .style('transform', `translate(${width}px, 30px)`)
+
   // Attach a tooltip div to the DOM
   const tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
@@ -64,9 +68,19 @@ let buildTSNE = (svgroot) => {
       .enter().append("circle")
       .on('mouseover', function (d, i) {
         d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`).style('stroke', 'black')
+
+        nodes[i][11].forEach((d, i) => {
+          if(d != ""){
+            keywordGroup.append('text')
+                        .attr('class', 'keywordForGroup')
+                        .attr('y', `${i * 23}px`)
+                        .text(d)
+          }
+        })
          
         tooltip.html(nodes[i].join('<br>'))
-        
+
+
         let bounds = tooltip.node().getBoundingClientRect()
         let spillX = (d3.event.pageX + bounds.width) > rootbounds.right
         let spillY = (d3.event.pageY - 28 + bounds.height) > rootbounds.bottom
@@ -81,6 +95,9 @@ let buildTSNE = (svgroot) => {
       })
       .on('mouseout', function () {
         d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`).style('stroke', 'white')
+
+        d3.selectAll('.keywordForGroup').remove()
+
         tooltip.transition()
           .duration(500)
           .style("opacity", 0);
