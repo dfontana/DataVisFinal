@@ -1,10 +1,10 @@
 #conclusion_container{
   background-color:#381212;
-  height: fit-content;
-}
-
-#conclusion_container h1{
-  text-align: left;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  justify-content: center; 
+  flex-direction: column;
 }
 
 .summary-container {
@@ -12,13 +12,13 @@
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: left;
-  padding: 80px;
+  padding: 20px 80px;
 }
 
 .summary-item {
   margin: 15px;
   background-color: rgba(255, 255, 255, 0.8);
-  width: calc(33% - 30px);
+  width: calc(25% - 30px);
   height: 150px;
   font-size: 30px;
   text-align: center;
