@@ -4,6 +4,11 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
+#year_container {
+  height: 100vh;
+  position: relative;
+}
+
 #container {
   height: calc(100% - 30px);
 }
