@@ -48,6 +48,7 @@ body {
   text-transform: lowercase;
   font-variant: small-caps;
   width: calc(100% - 3px);
+  z-index: 2;
 }
 
 #start:hover {
@@ -69,7 +70,8 @@ button:focus {
   font-family: 'Raleway', sans-serif;
   background: linear-gradient(-45deg, #381212, #471717, rgb(29, 2, 102),#0b0d72);
 	background-size: 400% 400%;
-	animation: Gradient 13s ease infinite;
+  animation: Gradient 13s ease infinite;
+  z-index: 2;
 }
 
 i {

@@ -1,6 +1,6 @@
 #conclusion_container{
-  height: 100vh;
-  background-color:#381212
+  background-color:#381212;
+  height: fit-content;
 }
 
 #conclusion_container h1{
@@ -11,17 +11,15 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: center;
-  margin: 80px;
-  height: calc(80% - 160px);
-  overflow: scroll;
+  justify-content: left;
+  padding: 80px;
 }
 
 .summary-item {
   margin: 15px;
   background-color: rgba(255, 255, 255, 0.8);
   width: calc(33% - 30px);
-  height: 250px;
+  height: 150px;
   font-size: 30px;
   text-align: center;
   position: relative;
@@ -30,9 +28,7 @@
 }
 
 #summary-text{
-  height: 20%;
-  overflow: scroll;
-  margin: 0px 100px;
+  padding: 0px 100px;
 }
 
 .year{
