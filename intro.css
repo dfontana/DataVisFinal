@@ -1,14 +1,98 @@
-/* Colors:
-381212
-2B0E0E
-471717
-b13636
-802e2e
- */
 
 body {
   margin: 0px;
   color: #e1e1e1;
-  background-color: #2B0E0E;
   font-family: 'Raleway', sans-serif;
+  background: linear-gradient(-45deg, #381212, #471717, rgb(29, 2, 102),#0b0d72);
+	background-size: 400% 400%;
+	animation: Gradient 13s ease infinite;
+}
+
+#intro {
+  padding-top: 5%;
+  padding-left: 50px;
+}
+
+#intro h1 {
+  font-size: 9vw;
+  font-family: 'Abril Fatface', cursive;
+  text-transform: uppercase;
+  text-align: left;
+  letter-spacing: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  overflow: scroll;
+}
+
+#intro_text {
+  width: 45%;
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+#start {
+  position: absolute;
+  bottom: 1px;
+  left: 1px;
+  padding: 10px 30px;
+  font-size: 50px;
+  border-radius: 5px 5px;
+  margin: 10px 0px 0px 0px;
+  color: #e1e1e1;
+  background-color: rgba(25, 25, 25, .1);
+  font-family: 'Raleway', sans-serif;
+  text-transform: lowercase;
+  font-variant: small-caps;
+  width: calc(100% - 2px);
+}
+
+#start:hover {
+  background: linear-gradient(-135deg, rgba(185, 56, 56, 0.8), rgba(44, 2, 160, 0.8));
+	background-size: 400% 400%;
+  animation: Gradient 5s ease infinite;
+  cursor: pointer;
+}
+
+button:focus {
+  outline:0;
+}
+
+#intro_container {
+  height: 100%;
+}
+
+i {
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  display: block;
+  padding: 20px;
+  position: relative;
+  animation: arrowsjump 2s infinite;
+  top: -10px;
+}
+
+.left_down {
+  transform: rotate(45deg);
+  float: left;
+}
+
+.right_down {
+  transform: rotate(45deg);
+  float: right;
+}
+
+@keyframes arrowsjump {
+   0% { top: -10px; }
+  50% { top: 10px; }
+  100% { top: -10px; }
 }
