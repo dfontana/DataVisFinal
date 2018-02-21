@@ -149,13 +149,15 @@ if(require.main === module){
     let binned = Bin(bin[0], bin[1])
     let keywords = Keywords(binned, 3)
     WordMap = require('./final/wordMap.json')
-    // let features = makeFeatures(binned, keywords)
-    // let coords = runTSNE(features, bin[1])
-    coords = require(`./final/tSNE/${bin[1]}-coords.json`)
+    let features = makeFeatures(binned, keywords)
+    let coords = runTSNE(features, bin[1])
     let nodeDetails = buildDetails(binned, keywords, coords)
+
+    // features = require(`./final/tSNE/${bin[1]}-features.json`)
+    // let test = features.map(row => row.join('\t')).join('\n')
     
-    // fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-coords.json`, JSON.stringify(coords), 'utf8', ()=>{});
-    // fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-features.json`, JSON.stringify(features), 'utf8', ()=>{});
+    fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-coords.json`, JSON.stringify(coords), 'utf8', ()=>{});
+    fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-features.json`, JSON.stringify(features), 'utf8', ()=>{});
     fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-details.json`, JSON.stringify(nodeDetails), 'utf8', ()=>{});
     console.timeEnd("tSNE")
   })
