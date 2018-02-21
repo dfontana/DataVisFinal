@@ -8,10 +8,27 @@
 </head>
 
 <body>
-  <select id="networkDropdown">
-      <option value="movie" selected="selected">Movies</option>
-      <option value="actor">Actors</option>
-      <option value="studio">Studios</option>
+  <select id="decadeDropdown">
+      <option value="1950" selected="selected">1950</option>
+      <option value="1960">1960</option>
+      <option value="1970">1970</option>
   </select>
-  <svg id="network" width=600 height=650></svg>
+  <svg id="mainVis" width=600 height=650></svg>
 </body>
+
+<script>
+  let dispatch = d3.dispatch('decade-update')
+
+  // Build the DOM
+  buildTSNE(d3.select('#mainVis'))
+
+  // Dispatch initial selection
+  let selected = () => document.getElementById("decadeDropdown").value;
+  dispatch.call('decade-update', this, selected())
+
+  // Listen for changes to selection
+  d3.select('#decadeDropdown')
+    .on("change", function () {
+      dispatch.call('decade-update', this, selected())
+    });
+</script>
