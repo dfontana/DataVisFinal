@@ -19,9 +19,11 @@ function generateGraph(interest, decade) {
       let section = dropdown.options[dropdown.selectedIndex].value;
 
       let svg = d3.select("#network");
-      let nodeGroup = svg.append('g').attr("class", "nodes")
-      let width = svg.attr("width") - 50;
-      let height = svg.attr("height") - 50;
+      let nodeGroup = svg.append('g')
+        .attr("class", "nodes")
+        .style('transform', 'translate(50px, 50px)')
+      let width = svg.attr("width") - 100;
+      let height = svg.attr("height") - 100;
 
       const zoom = d3.zoom()
       .scaleExtent([1, 40])
@@ -44,35 +46,35 @@ function generateGraph(interest, decade) {
         .range([4, 10])
       let cScale = d3.scaleSequential(d3.interpolateCool)
         .domain(d3.extent(coords, c => c[2]));
-          
-
       let circles = nodeGroup.selectAll("circle")
         .data(coords)
         .enter().append("circle")
+        .attr('class', (d, i) => `group-${nodes[i][10]}`)
         .attr("r", (d,i) => rScale(nodes[i][3]))
         .attr('fill', d => cScale(d[2]))
         .attr("cx", d => xScale(d[0]))
         .attr("cy", d => yScale(d[1]))
         .on('mouseover', function (d, i) {
-          let m = nodes[i]
+          d3.selectAll(`.${this.className.baseVal}`).style('stroke', 'black')
 
           div.transition()
             .duration(200)
             .style("opacity", .9);
   
-          let text = m.join('<br>')
+          let text = nodes[i].join('<br>')
           div.html(text)
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 28) + "px");
         })
         .on('mouseout', function () {
+          d3.selectAll(`.${this.className.baseVal}`).style('stroke', 'white')
           div.transition()
             .duration(500)
             .style("opacity", 0);
         })
 
       d3.forceSimulation(coords)
-        .force('collision', d3.forceCollide().radius((d, i) => 3))
+        .force('collision', d3.forceCollide().radius((d, i) => 3).strength(0.9))
         .force('home', function(alpha) {
           coords.map(c => {
             c.x += alpha * (xScale(c[0]) - c.x)
@@ -80,19 +82,19 @@ function generateGraph(interest, decade) {
           })
         })
         .on('tick', function(){
-          circles
-            .attr("cx", d => d.x)
-            .attr("cy", d => d.y);
+            circles
+              .attr("cx", d => d.x)
+              .attr("cy", d => d.y);
         })
-
     })
 }
 
 window.onload = function () {
-  generateGraph(getCurrentSelected(), '1950')
+  let year = 1950;
+  generateGraph(getCurrentSelected(), year)
   d3.select('#networkDropdown')
     .on("change", function () {
-      generateGraph(getCurrentSelected(), 1950);
+      generateGraph(getCurrentSelected(), year);
     });
 };
 

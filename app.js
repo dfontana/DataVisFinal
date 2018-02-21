@@ -73,7 +73,7 @@ app.get('/tSNE/:bin/coords', (req, res) => {
     return
   } 
 
-  let links = require(`${DATA_DIR}tSNE/${bin}-out.json`)
+  let links = require(`${DATA_DIR}tSNE/${bin}-coords.json`)
   res.status(200).send(links);
 })
 app.get('/tSNE/:bin/nodes', (req, res) => {

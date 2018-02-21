@@ -60,10 +60,11 @@ function buildDetails(movies, keywords, coords) {
     return acc
   }, {})
   
+  // TODO Turn into array of objects instead of array of arrays
   return movies.map((m, i) => {
     let node = []
     // In order: ID, Title, Runtime, Weighted Rating, Production Company, 
-    // Top 3 Leads, Director, Genre, Cluster
+    // Top 3 Leads, Director, Genre, Cluster, Keywords of Cluster
     node.push(parseInt(m.id) || 0)
     node.push(m.title)
     node.push(parseInt(m.runtime) || 0)
@@ -147,13 +148,13 @@ if(require.main === module){
     console.time("tSNE")
     
     let binned = Bin(bin[0], bin[1]);
-    let keywords = Keywords(binned, 50)
+    let keywords = Keywords(binned, 3)
     let features = makeFeatures(binned, keywords)
-    let coords = runTSNE(tSNEBin, bin[1])
+    let coords = runTSNE(features, bin[1])
     let nodeDetails = buildDetails(binned, keywords, coords)
     
     fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-coords.json`, JSON.stringify(coords), 'utf8', ()=>{});
-    s.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-features.json`, JSON.stringify(features), 'utf8', ()=>{});
+    fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-features.json`, JSON.stringify(features), 'utf8', ()=>{});
     fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-details.json`, JSON.stringify(nodeDetails), 'utf8', ()=>{});
     console.timeEnd("tSNE")
   })
