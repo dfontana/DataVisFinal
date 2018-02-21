@@ -1,7 +1,8 @@
 let buildTSNE = (svgroot) => {
   const margins = { left: 100, right: 100, top: 50}
-  const width = svgroot.node().getBoundingClientRect().width - margins.left;
-  const height = svgroot.node().getBoundingClientRect().height - margins.right;
+  const rootbounds = svgroot.node().getBoundingClientRect()
+  const width = rootbounds.width - margins.left;
+  const height = rootbounds.height - margins.right;
   let circles, xScale, yScale, rScale, cScale;
 
   // Attach a tooltip div to the DOM
@@ -63,11 +64,17 @@ let buildTSNE = (svgroot) => {
       .enter().append("circle")
       .on('mouseover', function (d, i) {
         d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`).style('stroke', 'black')
-
-        let text = nodes[i].join('<br>')
-        tooltip.html(text)
-          .style("left", (d3.event.pageX) + "px")
-          .style("top", (d3.event.pageY - 28) + "px")
+         
+        tooltip.html(nodes[i].join('<br>'))
+        
+        let bounds = tooltip.node().getBoundingClientRect()
+        let spillX = (d3.event.pageX + bounds.width) > rootbounds.right
+        let spillY = (d3.event.pageY - 28 + bounds.height) > rootbounds.bottom
+        let x =  spillX ? d3.event.pageX - bounds.width : d3.event.pageX
+        let y =  spillY ? d3.event.pageY - bounds.height :  d3.event.pageY - 28
+        
+        tooltip.style("left", x + "px")
+          .style("top", y + "px")
           .transition()
           .duration(200)
           .style("opacity", .9)
