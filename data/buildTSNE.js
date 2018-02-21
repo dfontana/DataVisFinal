@@ -35,7 +35,7 @@ function buildDetails(movies, keywords, coords) {
     return acc
   }, {})
   
-  // Reduces the keywords for a cluster to the top one's string.
+  // Reduces the keywords related to a cluster down to the top 3 by frequency
   let ClusterKeyword = Object.entries(keywordsForAll).reduce((acc, entry) => {
 
     //find most common keyword in entry[1]
@@ -46,41 +46,39 @@ function buildDetails(movies, keywords, coords) {
     }, {})
     
     let keywords = Object.entries(frequencies)
-    .reduce((acc, e) => {
-      if(e[1] > acc[0][1]) {
-        acc[0] = e
-      }else if(e[1] > acc[1][1]){
-        acc[1] = e
-      }else if(e[1] > acc[2][1]){
-        acc[2] = e
-      }
-      return acc;
-    }, [["", 0], ["", 0], ["", 0]])
+      .reduce((acc, e) => {
+        if(e[1] > acc[0][1]) {
+          acc[0] = e
+        }else if(e[1] > acc[1][1]){
+          acc[1] = e
+        }else if(e[1] > acc[2][1]){
+          acc[2] = e
+        }
+        return acc;
+      }, [["", 0], ["", 0], ["", 0]])
+
 
     acc[entry[0]] = keywords.map(k => WordMap[k[0]]);
     return acc
   }, {})
-  
-  // TODO Turn into array of objects instead of array of arrays
+
   return movies.map((m, i) => {
-    let node = []
-    // In order: ID, Title, Runtime, Weighted Rating, Production Company, 
-    // Top 3 Leads, Director, Genre, Cluster, Keywords of Cluster
-    node.push(parseInt(m.id) || 0)
-    node.push(m.title)
-    node.push(parseInt(m.runtime) || 0)
-    node.push((parseInt(m.vote_average) || 0) * (parseInt(m.vote_count) || 0))
-    node.push(m.production_companies[0] ? m.production_companies[0].name : "")
-    node.push(m.cast[0] ? m.cast[0].name : "")
-    node.push(m.cast[1] ? m.cast[1].name : "")
-    node.push(m.cast[2] ? m.cast[2].name : "")
     let directors = m.crew.filter(c => c.job === 'Director');
-    node.push(directors[0] ? directors[0].name : "")
-    node.push(m.genres[0] ? m.genres[0].name : "")
-    
-    // Define its cluster & cluster keyword(s)
-    node.push(clusters.idxs[i])
-    node.push(ClusterKeyword[clusters.idxs[i]])
+    let node = {
+      id: parseInt(m.id) || 0,
+      title: m.title,
+      runtime: parseInt(m.runtime) || 0,
+      weighted_vote: (parseInt(m.vote_average) || 0) * (parseInt(m.vote_count) || 0),
+      studio: m.production_companies[0] ? m.production_companies[0].name : "",
+      lead1: m.cast[0] ? m.cast[0].name : "",
+      lead2: m.cast[1] ? m.cast[1].name : "",
+      lead3: m.cast[2] ? m.cast[2].name : "",
+      director: directors[0] ? directors[0].name : "",
+      genre: m.genres[0] ? m.genres[0].name : "",
+      keywords: m.keywords.slice(0, 3).map(k => WordMap[k]),
+      cluster: clusters.idxs[i],
+      clusterwords: ClusterKeyword[clusters.idxs[i]]
+    }
     return node
   })
 }
@@ -151,12 +149,13 @@ if(require.main === module){
     let binned = Bin(bin[0], bin[1])
     let keywords = Keywords(binned, 3)
     WordMap = require('./final/wordMap.json')
-    let features = makeFeatures(binned, keywords)
-    let coords = runTSNE(features, bin[1])
+    // let features = makeFeatures(binned, keywords)
+    // let coords = runTSNE(features, bin[1])
+    coords = require(`./final/tSNE/${bin[1]}-coords.json`)
     let nodeDetails = buildDetails(binned, keywords, coords)
     
-    fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-coords.json`, JSON.stringify(coords), 'utf8', ()=>{});
-    fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-features.json`, JSON.stringify(features), 'utf8', ()=>{});
+    // fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-coords.json`, JSON.stringify(coords), 'utf8', ()=>{});
+    // fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-features.json`, JSON.stringify(features), 'utf8', ()=>{});
     fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-details.json`, JSON.stringify(nodeDetails), 'utf8', ()=>{});
     console.timeEnd("tSNE")
   })

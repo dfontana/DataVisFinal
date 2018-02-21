@@ -5,10 +5,10 @@
 
 div.tooltip {	
   position: absolute;			
-  text-align: center;			
+  text-align: left;			
   padding: 10px;				
   font: 12px sans-serif;		
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.8);
   border: 0px;		
   border-radius: 8px;			
   pointer-events: none;	

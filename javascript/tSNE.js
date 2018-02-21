@@ -31,7 +31,7 @@ let buildTSNE = (svgroot) => {
 
   // Declare the Force
   const force = d3.forceSimulation()
-    .force('collision', d3.forceCollide().radius((d, i) => 3).strength(0.9))
+    .force('collision', d3.forceCollide().radius((d, i) => 4).strength(0.9))
     .on('tick', function(){
       circles
         .attr("cx", d => d.x)
@@ -54,8 +54,8 @@ let buildTSNE = (svgroot) => {
 
     // Update existing nodes
     let setAttrs = (selection) => {
-      selection.attr('class', (d, i) => `group-${nodes[i][10]} node`)
-        .attr("r", (d,i) => rScale(nodes[i][3]))
+      selection.attr('class', (d, i) => `group-${nodes[i].cluster} node`)
+        .attr("r", (d,i) => rScale(nodes[i].weighted_vote))
         .attr('fill', d => cScale(d[2]))
         .attr("cx", d => xScale(d[0]))
         .attr("cy", d => yScale(d[1]))
@@ -69,7 +69,7 @@ let buildTSNE = (svgroot) => {
       .on('mouseover', function (d, i) {
         d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`).style('stroke', 'black')
 
-        nodes[i][11].forEach((d, i) => {
+        nodes[i].clusterwords.forEach((d, i) => {
           if(d != ""){
             keywordGroup.append('text')
                         .attr('class', 'keywordForGroup')
@@ -77,8 +77,16 @@ let buildTSNE = (svgroot) => {
                         .text(d)
           }
         })
-         
-        tooltip.html(nodes[i].join('<br>'))
+        
+        tooltip.html(`Title: ${nodes[i].title}<br>\
+        Genre: ${nodes[i].genre}<br>\
+        Lead 1: ${nodes[i].lead1}<br>\
+        Lead 2: ${nodes[i].lead2}<br>\
+        Lead 3: ${nodes[i].lead3}<br>\
+        Rating: ${nodes[i].weighted_vote}<br>\
+        Studio: ${nodes[i].studio}<br>\
+        Runtime: ${nodes[i].runtime}<br>\
+        Keywords: ${nodes[i].keywords}<br>`)
 
 
         let bounds = tooltip.node().getBoundingClientRect()
@@ -125,7 +133,7 @@ let buildTSNE = (svgroot) => {
       .domain(d3.extent(coords, c => c[1]))
       .range([0, height])
     rScale = d3.scaleLinear()
-      .domain(d3.extent(nodes, n => n[3]))
+      .domain(d3.extent(nodes, n => n.weighted_vote))
       .range([4, 10])
     cScale = d3.scaleSequential(d3.interpolateCool)
       .domain(d3.extent(coords, c => c[2]));
