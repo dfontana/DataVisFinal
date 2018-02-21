@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "node data/keywordMap.js && node data/networkNodes.js && node data/networkLinks.js && node data/clusters.js && node data/lines.js"
+    "buildOld": "node data/makeTopKeywords.js && node data/old/makeNetworkNodes.js && node data/old/makeNetworkLinks.js && node data/old/makeClusters.js && node data/old/MakeMultiLine.js",
+    "build": "node data/buildTSNE.js"
   },
   "author": "",
   "license": "ISC",

@@ -7,8 +7,8 @@ const Bin = require('./buildBin')
 const Keywords = require('./makeTopKeywords')
 const tSNE = require('../deps/tsnejs/tsne')
 const KMeans = require('skmeans')
-const WordMap = require('./final/wordMap.json')
 const fs = require('fs')
+let WordMap;
 
 /**
 * Makes the details for each node that corresponds to the coords.
@@ -37,6 +37,7 @@ function buildDetails(movies, keywords, coords) {
   
   // Reduces the keywords for a cluster to the top one's string.
   let ClusterKeyword = Object.entries(keywordsForAll).reduce((acc, entry) => {
+
     //find most common keyword in entry[1]
     let frequencies = entry[1].reduce((acc, e) => {
       acc[e] = acc[e] || 0
@@ -147,8 +148,9 @@ if(require.main === module){
     console.log('Starting Bin: ', bin[1])
     console.time("tSNE")
     
-    let binned = Bin(bin[0], bin[1]);
+    let binned = Bin(bin[0], bin[1])
     let keywords = Keywords(binned, 3)
+    WordMap = require('./final/wordMap.json')
     let features = makeFeatures(binned, keywords)
     let coords = runTSNE(features, bin[1])
     let nodeDetails = buildDetails(binned, keywords, coords)
