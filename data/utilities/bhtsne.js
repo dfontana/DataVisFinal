@@ -7,7 +7,8 @@ bins.map(bin =>{
   console.time("tSNE")
 
   const bhTSNE = spawnSync('python',["../../deps/bhtsne-master/bhtsne.py", '-d', '2', '-p', '5', '-i', `../buffer/${bin[1]}-features.tsv`]);
-  fs.writeFileSync(`${__dirname}/${bin[1]}-coords.json`, bhTSNE.stdout, 'utf8', ()=>{});
+  let out = String(bhTSNE.stdout).split('\n').map(pair => pair.split('\t').map(n => Number(n)))
+  fs.writeFileSync(`../final/tSNE/${bin[1]}-coords.json`, JSON.stringify(out), 'utf8', ()=>{});
 
   console.timeEnd("tSNE")
 })
