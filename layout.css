@@ -32,10 +32,6 @@ body {
   width: 30%;
   float: left;
   background-color: #2B0E0E;
-  /* display: flex; */
-  /* flex-direction: column;
-  justify-content: center; */
-  /* flex-wrap: wrap */
   position: relative;
 }
 
