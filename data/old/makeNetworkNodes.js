@@ -8,7 +8,7 @@ const fs = require('fs')
  * 3 keywords from the bin.
  */
 function filterRelevant(movies, binWords){
-  return movies.filter((m) => {
+  let relevant = movies.filter((m) => {
     for(let i = 0; i < m.keywords.length; i++){
       if(binWords.includes(m.keywords[i])){
         return true;
@@ -16,6 +16,8 @@ function filterRelevant(movies, binWords){
     }
     return false;
   })
+
+  return relevant.sort((a,b) => b.vote_average*b.vote_count - a.vote_average*a.vote_count).slice(0,500)
 }
 
 /**
@@ -93,7 +95,7 @@ let Maps = bins.reduce((acc, bin) =>{
   let binned = Bin(bin[0], bin[1]);
 
   // Movie Map by bin
-  let movies = movieMaps(binned);
+  let movies = movieMaps(filterRelevant(binned, keywords[bin[1]]));
   acc[0][bin[1]] = {
     nodemap: movies[0],
     namemap: movies[1],

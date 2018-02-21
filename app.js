@@ -66,6 +66,27 @@ app.get('/:bin/:interest/link', (req, res) => {
   res.status(200).send(links[bin]);
 })
 
+app.get('/tSNE/:bin/coords', (req, res) => {
+  const bin = req.params.bin;
+  if(!validBin(bin)){
+    res.status(400).send({ error: `Invalid bin provided: ${bin}` });
+    return
+  } 
+
+  let links = require(`${DATA_DIR}tSNE/${bin}-coords.json`)
+  res.status(200).send(links);
+})
+app.get('/tSNE/:bin/nodes', (req, res) => {
+  const bin = req.params.bin;
+  if(!validBin(bin)){
+    res.status(400).send({ error: `Invalid bin provided: ${bin}` });
+    return
+  } 
+
+  let links = require(`${DATA_DIR}tSNE/${bin}-details.json`)
+  res.status(200).send(links);
+})
+
 /**
  * Bottom Half
  *  /clusters
