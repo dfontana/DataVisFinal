@@ -20,3 +20,8 @@ div.tooltip {
   font-size: 18pt;
   fill: #fff;
 }
+
+.pointer {
+  fill: none;
+  stroke: black;
+}
