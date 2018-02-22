@@ -23,5 +23,6 @@ div.tooltip {
 
 .pointer {
   fill: none;
-  stroke: black;
+  stroke: orange;
+  stroke-width: 2px;
 }

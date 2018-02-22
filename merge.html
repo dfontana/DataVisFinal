@@ -121,11 +121,12 @@
 
 <script>
     // Global
-    let dispatch = d3.dispatch('decade-update')
+    let dispatch = d3.dispatch('decade-update', 'point-to')
 
     // Build the TSNE chart, nothing will draw until dispatch
     buildTSNE(d3.select('#mainVis'))
 
     // Initialize (for now, move to scrolly tell code later)
     dispatch.call('decade-update', this, 1950)
+    dispatch.call('point-to', this, [{x: 100, y: 100, r: 20}])
 </script>
