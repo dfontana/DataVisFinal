@@ -22,7 +22,7 @@
 </body>
 
 <script>
-  let dispatch = d3.dispatch('decade-update')
+  let dispatch = d3.dispatch('decade-update', 'point-to')
 
   // Build the DOM
   buildTSNE(d3.select('#mainVis'))
@@ -30,6 +30,7 @@
   // Dispatch initial selection
   let selected = () => document.getElementById("decadeDropdown").value;
   dispatch.call('decade-update', this, selected())
+  dispatch.call('point-to', this, [{x: 100, y: 100, r: 20}])
 
   // Listen for changes to selection
   d3.select('#decadeDropdown')

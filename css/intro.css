@@ -36,19 +36,17 @@ body {
 
 #start {
   position: absolute;
-  bottom: 2px;
-  left: 1px;
-  padding: 10px 30px;
+  bottom: 0px;
+  padding: 30px 0px;
   font-size: 50px;
   border-radius: 5px 5px;
-  margin: 10px 0px 0px 0px;
   color: #e1e1e1;
   background-color: rgba(25, 25, 25, .1);
   font-family: 'Raleway', sans-serif;
   text-transform: lowercase;
   font-variant: small-caps;
-  width: calc(100% - 3px);
-  z-index: 2;
+  text-align: center;
+  width: 100%;
 }
 
 #start:hover {
@@ -78,7 +76,7 @@ i {
   border: solid white;
   border-width: 0 3px 3px 0;
   display: block;
-  padding: 20px;
+  padding: 30px;
   position: relative;
   animation: arrowsjump 2s infinite;
   top: -10px;
@@ -86,12 +84,15 @@ i {
 
 .left_down {
   transform: rotate(45deg);
-  float: left;
 }
 
 .right_down {
   transform: rotate(45deg);
-  float: right;
+}
+
+#position_arrows {
+  margin: 0 auto;
+  display: inline-block;
 }
 
 @keyframes arrowsjump {

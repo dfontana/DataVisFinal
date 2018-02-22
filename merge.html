@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="css/intro.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/conclusion.css">
+    <link rel="stylesheet" href="css/tSNE.css">
     <link href="https://fonts.googleapis.com/css?family=Old+Standard+TT" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
@@ -29,11 +30,12 @@
               </span>
         </div>
       </div>
-      <button id="start">
+      <div id="start">
+          <div id="position_arrows">
           <i class="left_down"></i>
-            Start
           <i class="right_down"></i>
-      </button> 
+          </div>
+      </div> 
     </div>
 
 <!-- Year Begins -->
@@ -51,6 +53,7 @@
             </div>
         </div>
         <div id="middle">
+            <svg id="mainVis" width="100%" height="100%"></svg>
         </div>
         <div id="right">
             <h1>Top Keywords</h1>
@@ -118,12 +121,13 @@
 </body>
 
 <script>
-    let dispatch = d3.dispatch('decade-update')
-  
-    // Build the DOM
-    buildTSNE(d3.select('#middle'))
-  
-    // Dispatch
+    // Global
+    let dispatch = d3.dispatch('decade-update', 'point-to')
+
+    // Build the TSNE chart, nothing will draw until dispatch
+    buildTSNE(d3.select('#mainVis'))
+
+    // Initialize (for now, move to scrolly tell code later)
     dispatch.call('decade-update', this, 1950)
-  
-  </script>
+    dispatch.call('point-to', this, [{x: 100, y: 100, r: 20}])
+</script>

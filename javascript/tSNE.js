@@ -3,11 +3,11 @@ let buildTSNE = (svgroot) => {
   const rootbounds = svgroot.node().getBoundingClientRect()
   const width = rootbounds.width - margins.left;
   const height = rootbounds.height - margins.right;
-  let circles, xScale, yScale, rScale, cScale;
+  let circles, pointers, xScale, yScale, rScale, cScale;
 
   // Keyword for Cluster Group
   let keywordGroup = svgroot.append('g')
-    .style('transform', `translate(${width-100}px, 30px)`)
+    .style('transform', `translate(${width-50}px, 30px)`)
 
   // Attach a tooltip div to the DOM
   const tooltip = d3.select("body").append("div")
@@ -15,9 +15,11 @@ let buildTSNE = (svgroot) => {
     .style("opacity", 0);
 
   // Place all nodes inside a group in the SVG, for centering
-  const g = svgroot.append('g')
-    .attr("class", "nodes")
+  const nodecenter = svgroot.append('g')
     .style('transform', `translate(${margins.top}px, ${margins.left/2}px)`)
+
+  const g = nodecenter.append('g')
+    .attr("class", "nodes")
 
   // Build the zooming effect for the page
   const zoom = d3.zoom()
@@ -63,8 +65,7 @@ let buildTSNE = (svgroot) => {
     setAttrs(circles)
 
     // Enter the new datapoints
-    let enterCircles = g.selectAll("circle")
-      .data(coords)
+    let enterCircles = circles
       .enter().append("circle")
       .on('mouseover', function (d, i) {
         d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`).style('stroke', 'black')
@@ -166,5 +167,37 @@ let buildTSNE = (svgroot) => {
       let [nodes, coords] = data;
       newDecade(nodes, coords)
     })
+  })
+
+  /**
+   * When invoke, place a pointer at the given locations. Will clear current pointers.
+   * 
+   * Items is expected to be an array of objects, each item representing a seperate
+   * pointer. Each pointer, then, is an object such that:
+   * {
+   *  x: x location of the pointer,
+   *  y: y location of the pointer,
+   *  r: Radius the pointer, centered around (x,y)
+   * }
+   */
+  dispatch.on('point-to.tSNE', (items) => {
+    // Join
+    pointers = nodecenter.selectAll('.pointer').data(items)
+
+    // Exit
+    pointers.exit().remove()
+
+    // Update
+    pointers.attr('cx', d => d.x)
+            .attr('cy', d => d.y)
+            .attr('r', d => d.r)
+
+    // Enter
+    pointers.enter()
+      .append('circle')
+      .attr('class', 'pointer')
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+      .attr('r', d => d.r)
   })
 }
