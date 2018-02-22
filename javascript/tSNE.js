@@ -16,18 +16,9 @@ let buildTSNE = (svgroot) => {
 
   // Place all nodes inside a group in the SVG, for centering
   const g = svgroot.append('g')
-    .attr("class", "nodes")
     .style('transform', `translate(${margins.top}px, ${margins.left/2}px)`)
-
-  // Build the zooming effect for the page
-  const zoom = d3.zoom()
-    .scaleExtent([1, 40])
-    .translateExtent([[0, 0],[width, height]])
-    .extent([[0, 0],[width, height]])
-    .on("zoom", () => {
-      g.attr("transform", d3.event.transform)
-    });
-  svgroot.call(zoom)
+    .append('g')
+    .attr("class", "nodes")
 
   // Declare the Force
   const force = d3.forceSimulation()
@@ -61,6 +52,17 @@ let buildTSNE = (svgroot) => {
         .attr("cy", d => yScale(d[1]))
     };
     setAttrs(circles)
+
+        
+    // Build the zooming effect for the page
+    const zoom = d3.zoom()
+      .scaleExtent([1, 40])
+      .translateExtent([[0, 0],[width, height]])
+      .extent([[0, 0],[width, height]])
+      .on("zoom", () => {
+        g.attr("transform", d3.event.transform)
+      });
+    svgroot.call(zoom)
 
     // Enter the new datapoints
     let enterCircles = g.selectAll(".node")
