@@ -1,4 +1,4 @@
-.nodes circle {
+.node {
   stroke: #fff;
   stroke-width: 1px;
 }
@@ -18,4 +18,5 @@ div.tooltip {
 
 .keywordForGroup {
   font-size: 18pt;
+  fill: #fff;
 }

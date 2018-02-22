@@ -7,7 +7,7 @@ let buildTSNE = (svgroot) => {
 
   // Keyword for Cluster Group
   let keywordGroup = svgroot.append('g')
-    .style('transform', `translate(${width-100}px, 30px)`)
+    .style('transform', `translate(${width-50}px, 30px)`)
 
   // Attach a tooltip div to the DOM
   const tooltip = d3.select("body").append("div")
@@ -63,7 +63,7 @@ let buildTSNE = (svgroot) => {
     setAttrs(circles)
 
     // Enter the new datapoints
-    let enterCircles = g.selectAll("circle")
+    let enterCircles = g.selectAll(".node")
       .data(coords)
       .enter().append("circle")
       .on('mouseover', function (d, i) {
