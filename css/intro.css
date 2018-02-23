@@ -42,19 +42,11 @@ body {
   font-size: 50px;
   border-radius: 5px 5px;
   color: #e1e1e1;
-  background-color: rgba(25, 25, 25, .1);
   font-family: 'Raleway', sans-serif;
   text-transform: lowercase;
   font-variant: small-caps;
   text-align: center;
   width: 100%;
-}
-
-#start:hover {
-  background: linear-gradient(-135deg, rgba(185, 56, 56, 0.8), rgba(44, 2, 160, 0.8));
-	background-size: 400% 400%;
-  animation: Gradient 5s ease infinite;
-  cursor: pointer;
 }
 
 button:focus {
