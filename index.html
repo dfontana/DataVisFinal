@@ -42,13 +42,13 @@
 
   <!-- Year Overlay -->
   <div id="container">
-    <div id="year_container">
+    <div id="year_container" class="stickme">
       <div id="top"> 
-        <div id="left">
+        <!-- <div id="left">
           <div id="year">
             <span>1950</span>
           </div>
-        </div>
+        </div> -->
         <div id="middle">
           <svg id="mainVis" width="100%" height="100%"></svg>
         </div>
@@ -67,11 +67,11 @@
           </div>
         </div>
       </div>
-      <div id="footer">
-        <div class="progress"></div>
-        <div class="progress"></div>
-        <div class="progress"></div>
-      </div>
+      <div id="footer" class="stickme">
+          <div class="progress"></div>
+          <div class="progress"></div>
+          <div class="progress"></div>
+        </div>
     </div>
     <!-- Wall of Text (no, literally...) -->
     <div id="narration">
@@ -80,6 +80,9 @@
       </div>
       <div class="statement">
           STAHP. Wait a minute ;)
+      </div>
+      <div class="statement">
+          meow. Wait a minute ;)
       </div>
     </div>
   </div>
@@ -142,7 +145,7 @@
 
   // Prep the scrolly
   d3.graphScroll()
-    .graph(d3.select('#year_container'))
+    .graph(d3.selectAll('.stickme'))
     .container(d3.select('#container'))
     .sections(d3.selectAll('.statement'))
     .on('active', function(i){ console.log(i + 'th section active') })
