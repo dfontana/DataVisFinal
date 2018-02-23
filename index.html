@@ -165,35 +165,35 @@
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.>
     </div>
     <div class="summary-container">
-      <div class="summary-item">
+      <div class="summary-item" onclick="returnToDecade(1950)">
         <svg id="summ-1950" width="100%" height="100%"></svg>
         <div class="year">1950</div>
       </div>
-      <div class="summary-item">
+      <div class="summary-item" onclick="returnToDecade(1960)">
         <svg id="summ-1960" width="100%" height="100%"></svg>
         <div class="year">1960</div>
       </div>
-      <div class="summary-item">
+      <div class="summary-item" onclick="returnToDecade(1970)">
         <svg id="summ-1970" width="100%" height="100%"></svg>
         <div class="year">1970</div>
       </div>
-      <div class="summary-item">
+      <div class="summary-item" onclick="returnToDecade(1980)">
         <svg id="summ-1980" width="100%" height="100%"></svg>
         <div class="year">1980</div>
       </div>
-      <div class="summary-item">
+      <div class="summary-item" onclick="returnToDecade(1990)">
         <svg id="summ-1990" width="100%" height="100%"></svg>
         <div class="year">1990</div>
       </div>
-      <div class="summary-item">
+      <div class="summary-item" onclick="returnToDecade(2000)">
         <svg id="summ-2000" width="100%" height="100%"></svg>
         <div class="year">2000</div>
       </div>
-      <div class="summary-item">
+      <div class="summary-item" onclick="returnToDecade(2010)">
         <svg id="summ-2010" width="100%" height="100%"></svg>
         <div class="year">2010</div>
       </div>
-      <div class="summary-item">
+      <div class="summary-item" onclick="returnToDecade(2020)">
         <svg id="summ-2020" width="100%" height="100%"></svg>
         <div class="year">2020</div>
       </div>
@@ -211,7 +211,6 @@
     .container(d3.select('#container'))
     .sections(d3.selectAll('.statement'))
     .on('active', function(i) { 
-      console.log('observing' + i)
       if(i == 1 || i > 1 && (i-1)%3 == 0){
         let decade = 1950;
           if(i > 1) {
@@ -219,19 +218,13 @@
           }
           //add listener to button depending on decade
           document.getElementById("next_decade").removeEventListener("click", fastForwardDecade);
-            document.getElementById("next_decade").addEventListener("click", () => fastForwardDecade(decade));
-
+          document.getElementById("next_decade").addEventListener("click", () => fastForwardDecade(decade));
           dispatch.call('decade-update', this, decade)
         }
 
       if(i === 3){
         dispatch.call('point-to', this, [{x: 100, y: 100, r: 20}])
       }
-
-      //  if(i === 6){
-      //   dispatch.call('decade-update', this, 1960)
-      // }
-      console.log(i + 'th section active') 
     })
 
   // Build the TSNE chart, nothing will draw until dispatch
@@ -246,10 +239,14 @@
   })
 
   function fastForwardDecade(decade) {
-     //if decade 2020, make sure to return to the final container
     decade = decade == 2020 ? 'conclusion_container' : 'graph' + (decade+10);
-    console.log(document.querySelector('#' + decade), 'query');
     document.querySelector('#' + decade).scrollIntoView({ 
+      behavior: 'smooth' 
+    });
+  }
+
+  function returnToDecade(decade){
+    document.querySelector('#graph' + decade).scrollIntoView({ 
       behavior: 'smooth' 
     });
   }
