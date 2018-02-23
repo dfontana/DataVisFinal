@@ -4,12 +4,36 @@ body {
   font-family: 'Raleway', sans-serif;
 }
 
-#year_container {
-  height: 100vh;
-  position: relative;
+#narration {
+  width: 100vw;
+}
+
+.statement {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  height: 100%;
+  width: 30%; /* Matches width of Left */
+  left: 0px;
+
+  box-sizing: border-box;
+  padding: 0 15 0 15;
 }
 
 #container {
+  position: relative;
+}
+
+#year_container {
+  height: 100vh;
+  width: 100vw;
+  position: sticky;
+  top: 0px;
+  right: 0px;
+}
+
+#top {
   height: calc(100% - 30px);
 }
 
@@ -22,14 +46,13 @@ body {
   box-shadow: 0px -2px 15px #111;
   padding: 0px 10px;
   color: #b9b8b8;
-  z-index: 1;
 }
 
 #middle {
   height: calc(100% - 80px);
   width: calc(50% - 80px);
   float: left;
-  background-color: #2B0E0E;
+  background-color: #230c0c;
   padding: 40px;
 }
 
@@ -37,7 +60,7 @@ body {
   height: 100%;
   width: 30%;
   float: left;
-  background-color: #2B0E0E;
+  box-shadow: 0px -2px 15px #111;
   position: relative;
 }
 
