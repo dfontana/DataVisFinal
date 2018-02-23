@@ -52,7 +52,13 @@ let buildTSNE = (svgroot) => {
   const update = (nodes, coords) => {
     // Join & Exit the old data
     circles = g.selectAll(".node").data(coords)
-    circles.exit().remove()
+    circles.exit()
+    .attr("fill-opacity", 1)
+        .attr("stroke-opacity", 1)
+        .transition()
+            .duration(500)
+            .attr("fill-opacity", 0)
+            .attr("stroke-opacity", 0).remove()
 
     // Update existing nodes
     let setAttrs = (selection) => {

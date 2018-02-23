@@ -83,7 +83,38 @@
       <div class="statement">
           meow. Wait a minute ;)
       </div>
+      <div class="statement">
+        a
+      </div>
+      <div class="statement">
+        b
+      </div>
       <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      <div class="statement"></div>
+      
     </div>
   </div>
 
@@ -149,13 +180,22 @@
     .container(d3.select('#container'))
     .sections(d3.selectAll('.statement'))
     .on('active', function(i) { 
-      if(i === 1){
-        dispatch.call('decade-update', this, 1950)
+      if(i == 1 || i > 1 && i%4 == 0){
+        let year = 1950;
+        if(i > 1) {
+          console.log()
+          year += i/4 * 10
+        }
+        dispatch.call('decade-update', this, year)
       }
 
       if(i === 3){
         dispatch.call('point-to', this, [{x: 100, y: 100, r: 20}])
       }
+
+      //  if(i === 6){
+      //   dispatch.call('decade-update', this, 1960)
+      // }
       console.log(i + 'th section active') 
     })
 
