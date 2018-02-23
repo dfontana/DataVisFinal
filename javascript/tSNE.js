@@ -165,6 +165,7 @@ let buildTSNE = (svgroot) => {
    */
   dispatch.on('decade-update.tSNE', (decade) => {
     console.log("Changing decade!", decade)
+    document.getElementById('year').innerText = decade;
     d3.queue()
     .defer(d3.json, `http://localhost:8000/tSNE/${decade}/nodes`)
     .defer(d3.json, `http://localhost:8000/tSNE/${decade}/coords`)
