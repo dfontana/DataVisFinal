@@ -44,11 +44,9 @@
   <div id="container">
     <div id="year_container" class="stickme">
       <div id="top"> 
-        <!-- <div id="left">
-          <div id="year">
-            <span>1950</span>
-          </div>
-        </div> -->
+        <div id="year">
+          <span>1950</span>
+        </div>
         <div id="middle">
           <svg id="mainVis" width="100%" height="100%"></svg>
         </div>
@@ -75,6 +73,7 @@
     </div>
     <!-- Wall of Text (no, literally...) -->
     <div id="narration">
+      <div class="statement"></div>
       <div class="statement">
         This is an awesome statement about why the world should look into being better people. Did you know most people are not better people? I know better people.
       </div>
@@ -84,6 +83,7 @@
       <div class="statement">
           meow. Wait a minute ;)
       </div>
+      <div class="statement"></div>
     </div>
   </div>
 
@@ -148,15 +148,20 @@
     .graph(d3.selectAll('.stickme'))
     .container(d3.select('#container'))
     .sections(d3.selectAll('.statement'))
-    .on('active', function(i){ console.log(i + 'th section active') })
+    .on('active', function(i) { 
+      if(i === 1){
+        dispatch.call('decade-update', this, 1950)
+      }
+
+      if(i === 3){
+        dispatch.call('point-to', this, [{x: 100, y: 100, r: 20}])
+      }
+      console.log(i + 'th section active') 
+    })
 
   // Build the TSNE chart, nothing will draw until dispatch
   buildTSNE(d3.select('#mainVis'))
-  
-  // Initialize (for now, move to scrolly tell code later)
-  dispatch.call('decade-update', this, 1950)
-  dispatch.call('point-to', this, [{x: 100, y: 100, r: 20}])
-  
+ 
   // Build conclusions
   let bins = [1950,1960,1970,1980,1990,2000,2010,2020]
   let queue = bins.reduce((acc, b) => acc.defer(d3.json, `http://localhost:8000/tSNE/${b}/coords`), d3.queue())

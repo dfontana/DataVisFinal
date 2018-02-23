@@ -182,7 +182,7 @@ let buildTSNE = (svgroot) => {
    */
   dispatch.on('point-to.tSNE', (items) => {
     // Join
-    pointers = nodecenter.selectAll('.pointer').data(items)
+    pointers = g.selectAll('.pointer').data(items)
 
     // Exit
     pointers.exit().remove()
