@@ -1,7 +1,8 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="javascript/tSNE.js " type="text/javascript"></script>
-
+<script src="https://d3js.org/d3-hexbin.v0.2.min.js"></script>
+<script src="javascript/hexBin.js " type="text/javascript"></script>
 
 <head>
   <link rel="stylesheet" href="css/tSNE.css">
@@ -25,16 +26,18 @@
   let dispatch = d3.dispatch('decade-update', 'point-to')
 
   // Build the DOM
-  buildTSNE(d3.select('#mainVis'))
-
-  // Dispatch initial selection
   let selected = () => document.getElementById("decadeDropdown").value;
-  dispatch.call('decade-update', this, selected())
-  dispatch.call('point-to', this, [{x: 100, y: 100, r: 20}])
+  d3.json(`http://localhost:8000/tSNE/${selected()}/coords`, (err, data) => {
+    if(err) { console.error(err); return }
+    buildHex(d3.select('#mainVis'), data)
+  })
 
   // Listen for changes to selection
   d3.select('#decadeDropdown')
     .on("change", function () {
-      dispatch.call('decade-update', this, selected())
+      d3.json(`http://localhost:8000/tSNE/${selected()}/coords`, (err, data) => {
+        if(err) return
+        buildHex(d3.select('#mainVis'), data)
+      })
     });
 </script>
