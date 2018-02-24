@@ -10,7 +10,7 @@ let buildTSNE = (svgroot) => {
     .style('transform', `translate(${width-50}px, 30px)`)
 
   // Attach a tooltip div to the DOM
-  const tooltip = d3.select("body").append("div")
+  const tooltip = d3.select("#middle").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
@@ -96,12 +96,14 @@ let buildTSNE = (svgroot) => {
         Runtime: ${nodes[i].runtime}<br>\
         Keywords: ${nodes[i].keywords}<br>`)
 
-
+        // Positions are relative to the MIDDLE element in MainVis.
+        let [mouseX, mouseY] = d3.mouse(d3.select('#middle').node())
         let bounds = tooltip.node().getBoundingClientRect()
-        let spillX = (d3.event.pageX + bounds.width) > rootbounds.right
-        let spillY = (d3.event.pageY - 28 + bounds.height) > rootbounds.bottom
-        let x =  spillX ? d3.event.pageX - bounds.width : d3.event.pageX
-        let y =  spillY ? d3.event.pageY - bounds.height :  d3.event.pageY - 28
+        let spillX = (mouseX + bounds.width) > rootbounds.width
+        let spillY = (mouseY - 28 + bounds.height) > rootbounds.height
+        let x =  spillX ? mouseX - bounds.width : mouseX
+        let y =  spillY ? mouseY - bounds.height :  mouseY - 28
+
         
         tooltip.style("left", x + "px")
           .style("top", y + "px")
