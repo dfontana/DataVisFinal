@@ -168,7 +168,6 @@ let buildTSNE = (svgroot) => {
    */
   dispatch.on('decade-update.tSNE', (decade) => {
     console.log("Changing decade!", decade)
-    document.getElementById('year').innerText = decade;
     d3.queue()
     .defer(d3.json, `${DOMAIN}tSNE/nodes/${decade}.json`)
     .defer(d3.json, `${DOMAIN}tSNE/coords/${decade}.json`)
@@ -209,5 +208,12 @@ let buildTSNE = (svgroot) => {
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
       .attr('r', d => d.r)
+  })
+
+  /**
+   * When invoked, will stop the current force simulation.
+   */
+  dispatch.on('stop-force', () => {
+    force.stop();
   })
 }

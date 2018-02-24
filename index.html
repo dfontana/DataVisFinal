@@ -210,21 +210,30 @@
   d3.graphScroll()
     .graph(d3.selectAll('.stickme'))
     .container(d3.select('#container'))
-    .sections(d3.selectAll('.statement'))
+    .sections(d3.selectAll('.statement, #conclusion_container'))
     .on('active', function(i) {
+      let active_id = d3.select(`.graph-scroll-active`).attr('id');
+
+      if(active_id === 'conclusion_container'){
+        dispatch.call('stop-force', null)
+        SCROLLINGTO = null
+        return
+      }
+
       // Check if decade has changed. (Changes every 3, starting @ 1)
       if(i > 0 && (i-1)%3 == 0){
         let decade = 1950 + (i-1)/3 * 10;
+        document.getElementById('year').innerText = decade;
 
         // Check what is currently in view. If its the scrollingto decade, set
         // scrollingto to null, send dispatches, and update listeners.
-        if(d3.select(`.graph-scroll-active`).attr('id') === SCROLLINGTO){
+        if(active_id === SCROLLINGTO){
           SCROLLINGTO = null
         }
         if(SCROLLINGTO === null){
           document.getElementById("next_decade").removeEventListener("click", fastForwardDecade);
           document.getElementById("next_decade").addEventListener("click", () => fastForwardDecade(decade));
-          dispatch.call('stop-force', this, decade)
+          dispatch.call('stop-force', null)
           dispatch.call('decade-update', this, decade)
         }
       }
@@ -249,7 +258,7 @@
 
   // Will jump forward to the given decade when triggered.
   function fastForwardDecade(decade) {
-    dispatch.call('stop-force', this, decade)
+    dispatch.call('stop-force', null)
     SCROLLINGTO = decade == 2020 ? 'conclusion_container' : 'graph' + (decade+10);
     document.querySelector('#' + SCROLLINGTO).scrollIntoView({ 
       behavior: 'smooth' 
@@ -266,7 +275,7 @@
 
   // Will jump to conclusion
   function goToConclusion() {
-    dispatch.call('stop-force', this, decade)
+    dispatch.call('stop-force', null)
     SCROLLINGTO = 'conclusion_container'
     document.querySelector('#'+SCROLLINGTO).scrollIntoView({ 
       behavior: 'smooth' 
