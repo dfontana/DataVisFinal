@@ -204,7 +204,7 @@
   // Globals
   let SCROLLINGTO = null;
   let DOMAIN = 'http://localhost:8000/'
-  let dispatch = d3.dispatch('decade-update', 'point-to')
+  let dispatch = d3.dispatch('decade-update', 'point-to', 'stop-force')
 
   // Prep the scrolly
   d3.graphScroll()
@@ -224,6 +224,7 @@
         if(SCROLLINGTO === null){
           document.getElementById("next_decade").removeEventListener("click", fastForwardDecade);
           document.getElementById("next_decade").addEventListener("click", () => fastForwardDecade(decade));
+          dispatch.call('stop-force', this, decade)
           dispatch.call('decade-update', this, decade)
         }
       }
@@ -240,7 +241,7 @@
  
   // Build conclusions
   let bins = [1950,1960,1970,1980,1990,2000,2010,2020]
-  let queue = bins.reduce((acc, b) => acc.defer(d3.json, `${DOMAIN}tSNE/coords/${b}`), d3.queue())
+  let queue = bins.reduce((acc, b) => acc.defer(d3.json, `${DOMAIN}tSNE/coords/${b}.json`), d3.queue())
   queue.awaitAll(function(err, responses){
     if(err) { console.error(err); return }
     responses.map((d,i) => { buildHex(d3.select(`#summ-${bins[i]}`), d) })
@@ -248,6 +249,7 @@
 
   // Will jump forward to the given decade when triggered.
   function fastForwardDecade(decade) {
+    dispatch.call('stop-force', this, decade)
     SCROLLINGTO = decade == 2020 ? 'conclusion_container' : 'graph' + (decade+10);
     document.querySelector('#' + SCROLLINGTO).scrollIntoView({ 
       behavior: 'smooth' 
@@ -264,6 +266,7 @@
 
   // Will jump to conclusion
   function goToConclusion() {
+    dispatch.call('stop-force', this, decade)
     SCROLLINGTO = 'conclusion_container'
     document.querySelector('#'+SCROLLINGTO).scrollIntoView({ 
       behavior: 'smooth' 

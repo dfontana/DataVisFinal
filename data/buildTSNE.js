@@ -156,9 +156,9 @@ if(require.main === module){
     // features = require(`./final/tSNE/${bin[1]}-features.json`)
     // let test = features.map(row => row.join('\t')).join('\n')
     
-    fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-coords.json`, JSON.stringify(coords), 'utf8', ()=>{});
-    fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-features.json`, JSON.stringify(features), 'utf8', ()=>{});
-    fs.writeFileSync(`${__dirname}/final/tSNE/${bin[1]}-details.json`, JSON.stringify(nodeDetails), 'utf8', ()=>{});
+    fs.writeFileSync(`${__dirname}/final/tSNE/coords/${bin[1]}.json`, JSON.stringify(coords), 'utf8', ()=>{});
+    fs.writeFileSync(`${__dirname}/final/tSNE/features/${bin[1]}.json`, JSON.stringify(features), 'utf8', ()=>{});
+    fs.writeFileSync(`${__dirname}/final/tSNE/details/${bin[1]}.json`, JSON.stringify(nodeDetails), 'utf8', ()=>{});
     console.timeEnd("tSNE")
   })
 }

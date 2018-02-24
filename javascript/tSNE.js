@@ -170,8 +170,8 @@ let buildTSNE = (svgroot) => {
     console.log("Changing decade!", decade)
     document.getElementById('year').innerText = decade;
     d3.queue()
-    .defer(d3.json, `${DOMAIN}tSNE/nodes/${decade}`)
-    .defer(d3.json, `${DOMAIN}tSNE/coords/${decade}`)
+    .defer(d3.json, `${DOMAIN}tSNE/nodes/${decade}.json`)
+    .defer(d3.json, `${DOMAIN}tSNE/coords/${decade}.json`)
     .awaitAll(function(err, data){
       if(err) return
       let [nodes, coords] = data;

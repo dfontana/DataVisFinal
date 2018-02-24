@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 
 
 // Validators
-let validBin = (bin) => ['1950','1960','1970','1980','1990','2000','2010','2020'].includes(bin)
+let validBin = (bin) => ['1950','1960','1970','1980','1990','2000','2010','2020'].includes(bin.substring(0,4))
 let validInterest = (interest) => ['studio', 'actor', 'movie'].includes(interest)
 
 /**
@@ -73,7 +73,7 @@ app.get('/tSNE/coords/:bin', (req, res) => {
     return
   } 
 
-  let links = require(`${DATA_DIR}tSNE/${bin}-coords.json`)
+  let links = require(`${DATA_DIR}tSNE/coords/${bin}`)
   res.status(200).send(links);
 })
 app.get('/tSNE/nodes/:bin', (req, res) => {
@@ -83,7 +83,7 @@ app.get('/tSNE/nodes/:bin', (req, res) => {
     return
   } 
 
-  let links = require(`${DATA_DIR}tSNE/${bin}-details.json`)
+  let links = require(`${DATA_DIR}tSNE/details/${bin}`)
   res.status(200).send(links);
 })
 
