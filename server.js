@@ -66,7 +66,7 @@ app.get('/:bin/:interest/link', (req, res) => {
   res.status(200).send(links[bin]);
 })
 
-app.get('/tSNE/:bin/coords', (req, res) => {
+app.get('/tSNE/coords/:bin', (req, res) => {
   const bin = req.params.bin;
   if(!validBin(bin)){
     res.status(400).send({ error: `Invalid bin provided: ${bin}` });
@@ -76,7 +76,7 @@ app.get('/tSNE/:bin/coords', (req, res) => {
   let links = require(`${DATA_DIR}tSNE/${bin}-coords.json`)
   res.status(200).send(links);
 })
-app.get('/tSNE/:bin/nodes', (req, res) => {
+app.get('/tSNE/nodes/:bin', (req, res) => {
   const bin = req.params.bin;
   if(!validBin(bin)){
     res.status(400).send({ error: `Invalid bin provided: ${bin}` });

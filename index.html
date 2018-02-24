@@ -201,9 +201,9 @@
 </body>
 
 <script>
+  // Globals
   let SCROLLINGTO = null;
-
-  // Global
+  let DOMAIN = 'http://localhost:8000/'
   let dispatch = d3.dispatch('decade-update', 'point-to')
 
   // Prep the scrolly
@@ -240,7 +240,7 @@
  
   // Build conclusions
   let bins = [1950,1960,1970,1980,1990,2000,2010,2020]
-  let queue = bins.reduce((acc, b) => acc.defer(d3.json, `http://localhost:8000/tSNE/${b}/coords`), d3.queue())
+  let queue = bins.reduce((acc, b) => acc.defer(d3.json, `${DOMAIN}tSNE/coords/${b}`), d3.queue())
   queue.awaitAll(function(err, responses){
     if(err) { console.error(err); return }
     responses.map((d,i) => { buildHex(d3.select(`#summ-${bins[i]}`), d) })
