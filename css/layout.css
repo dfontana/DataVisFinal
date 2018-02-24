@@ -1,5 +1,6 @@
 body {
   margin: 0px;
+  overflow-x: hidden;
   color: #e1e1e1;
   font-family: 'Raleway', sans-serif;
 }
@@ -8,9 +9,8 @@ body {
   width: 30%; /* Matches width of Left */
 }
 
-.graph-scroll-active {
-  border: 3px solid gold;
-}
+/* Applies to the active statements */
+.graph-scroll-active {}
 
 .statement {
   display: flex;
@@ -139,7 +139,7 @@ h1 {
 
 #keywords {
   font-size: 1.3vw;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 ol {

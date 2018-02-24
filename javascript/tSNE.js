@@ -67,6 +67,7 @@ let buildTSNE = (svgroot) => {
         .attr('fill', d => cScale(d[2]))
         .attr("cx", d => xScale(d[0]))
         .attr("cy", d => yScale(d[1]))
+        .attr("stroke", '#fff')
     };
     setAttrs(circles)
 
