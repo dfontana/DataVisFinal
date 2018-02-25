@@ -65,9 +65,9 @@
         </div>
       </div>
       <div id="footer" class="stickme">
-          <div class="progress"></div>
-          <div class="progress"></div>
-          <div class="progress"></div>
+          <div class="progress" id="p1"></div>
+          <div class="progress" id="p2"></div>
+          <div class="progress" id="p3"></div>
         </div>
     </div>
     <!-- Wall of Text (no, literally...) -->
@@ -212,18 +212,34 @@
     .container(d3.select('#container'))
     .sections(d3.selectAll('.statement, #conclusion_container'))
     .on('active', function(i) {
-      let active_id = d3.select(`.graph-scroll-active`).attr('id');
+            let active_id = d3.select(`.graph-scroll-active`).attr('id');
 
       if(active_id === 'conclusion_container'){
         dispatch.call('stop-force', null)
         SCROLLINGTO = null
         return
       }
+      console.log(i);
+      if((i%2 == 0) && (i%3 != 0)){
+        document.getElementById('p2').style.backgroundColor = "yellow";
+      }
+      else if(i%3 == 0){
+        document.getElementById('p3').style.backgroundColor = "yellow";
+      }
+      else if(i == 0){
+        
+      }
+      else{
+        document.getElementById('p1').style.backgroundColor = "yellow";
+      }
 
       // Check if decade has changed. (Changes every 3, starting @ 1)
       if(i > 0 && (i-1)%3 == 0){
         let decade = 1950 + (i-1)/3 * 10;
         document.getElementById('year').innerText = decade;
+        document.getElementById('p1').style.backgroundColor = "#471717";
+        document.getElementById('p2').style.backgroundColor = "#471717";
+        document.getElementById('p3').style.backgroundColor = "#471717";
 
         // Check what is currently in view. If its the scrollingto decade, set
         // scrollingto to null, send dispatches, and update listeners.
