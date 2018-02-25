@@ -146,39 +146,40 @@ h1 {
   margin: 15 0 0 0;
 }
 
-#keywordSummary {
-  font-size: 1.3vw;
-  overflow: hidden;
+#keywordSummaryContainer {
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 ol {
+  font-size: 1.3vw;
   list-style-type: none;
   margin: 0;
   margin-left: 4vw;
   padding: 0;
   counter-reset: li-counter;
-  }
+}
 
-  ol > li{
-    position: relative;
-    margin-bottom: 20px;
-    padding-left: 0.5vw;
-    min-height: 1.3vw;
-  }
+ol > li{
+  position: relative;
+  margin-bottom: 20px;
+  padding-left: 0.5vw;
+  min-height: 1.3vw;
+}
 
-  ol > li:before {
-    position: absolute;
-    top: .08vw;
-    left: -2vw;
-    width: 1.3vw;
-    height: 1.3vw;
-    font-size: 1vw;
-    line-height: 1.3vw;
-    text-align: center;
-    color: #f5f5f5;
-    border: 3px solid #c5c5c5;
-    border-radius: 50%;
-    background-color: #464646;
-    content: counter(li-counter);
-    counter-increment: li-counter;
-  }
+ol > li:before {
+  position: absolute;
+  top: .08vw;
+  left: -2vw;
+  width: 1.3vw;
+  height: 1.3vw;
+  font-size: 1vw;
+  line-height: 1.3vw;
+  text-align: center;
+  color: #f5f5f5;
+  border: 3px solid #c5c5c5;
+  border-radius: 50%;
+  background-color: #464646;
+  content: counter(li-counter);
+  counter-increment: li-counter;
+}

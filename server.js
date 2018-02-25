@@ -25,15 +25,9 @@ let validInterest = (interest) => ['studio', 'actor', 'movie'].includes(interest
  *      /size
  *      /link
  */
-app.get('/:bin/summary', (req, res) => {
-  const bin = req.params.bin;
-  if(!validBin(bin)) {
-    res.status(400).send({ error: `Invalid bin provided: ${bin}` });
-    return
-  }
-
+app.get('/topkeywords.json', (req, res) => {
   let keywords = require(DATA_DIR+'topkeywords.json')
-  res.status(200).send(keywords[bin]);
+  res.status(200).send(keywords);
 })
 app.get('/:bin/:interest/size', (req, res) => {
   const bin = req.params.bin;
