@@ -6,8 +6,7 @@ let buildTSNE = (svgroot) => {
   let circles, pointers, xScale, yScale, rScale, cScale;
 
   // Keyword for Cluster Group
-  let keywordGroup = svgroot.append('g')
-    .style('transform', `translate(${width-50}px, 30px)`)
+  let keywordGroup = d3.select('#middle').append('div').attr('id', 'keywordGroup')
 
   // Attach a tooltip div to the DOM
   const tooltip = d3.select("#middle").append("div")
@@ -79,10 +78,10 @@ let buildTSNE = (svgroot) => {
 
         nodes[i].clusterwords.forEach((d, i) => {
           if(d != ""){
-            keywordGroup.append('text')
+            keywordGroup.append('span')
                         .attr('class', 'keywordForGroup')
-                        .attr('y', `${i * 23}px`)
-                        .text(d)
+                        .html(d)
+                        .append('br')
           }
         })
         

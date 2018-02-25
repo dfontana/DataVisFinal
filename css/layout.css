@@ -57,6 +57,7 @@ body {
   width: 70%;
   float: left;
   background-color: #230c0c;
+  position: relative;
 }
 
 #footer {
