@@ -202,7 +202,7 @@
   // Globals
   let SCROLLINGTO = null;
   let DOMAIN = 'http://localhost:8000/'
-  let dispatch = d3.dispatch('decade-update', 'point-to', 'stop-force')
+  let dispatch = d3.dispatch('decade-update', 'point-to', 'stop-force', 'filter')
 
   // Keywords list:
   let keywords;
@@ -271,20 +271,13 @@
 
   function search(ele) {
     if(event.key === 'Enter') {
-      // Clear old pointers
-      d3.selectAll('.search-pointer').remove()
-      let filtered = d3.selectAll(`[title*="${ele.value.toLowerCase()}"]`)
-      if(!filtered.empty() && filtered.size() <= 10){
-        d3.selectAll('.node').classed('outoffocus', true)
-        let pointers = []
-        filtered.each(function(){
-          pointers.push({x: this.getAttribute('cx'), y: this.getAttribute('cy'), r: 20})
-          dispatch.call('point-to', this, { points: pointers, classed:"search-pointer" })
-        })
-        .raise()
-        .classed('outoffocus', false)
+      let term = ele.value.toLowerCase();
+      if(term === ""){
+        // Clear the filter
+        dispatch.call('filter', null, null)
       }else{
-        d3.selectAll('.node').classed('outoffocus', false)
+        // Set the filter
+        dispatch.call('filter', null, term)
       }
     }
   }

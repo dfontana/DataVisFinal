@@ -4,7 +4,7 @@ let buildTSNE = (svgroot) => {
   const width = rootbounds.width - margins.left;
   const height = rootbounds.height - margins.right;
   const depth = 1000;
-  let circles, pointers, xScale, yScale, radiusScale, rScale, gScale, bScale;
+  let circles, NODES, pointers, xScale, yScale, radiusScale, rScale, gScale, bScale;
 
   // Keyword for Cluster Group
   let keywordGroup = d3.select('#middle').append('div').attr('id', 'keywordGroup')
@@ -33,7 +33,7 @@ let buildTSNE = (svgroot) => {
 
   // Declare the Force
   const force = d3.forceSimulation()
-    .force('collision', d3.forceCollide().radius(3.5).strength(0.9))
+    .force('collision', d3.forceCollide().radius(3).strength(0.9))
     .on('tick', function(){
       circles
         .attr("cx", d => d.x)
@@ -50,6 +50,9 @@ let buildTSNE = (svgroot) => {
    * @param {Array} coords Array of points in space
    */
   const update = (nodes, coords, colors) => {
+    // Set chart wide reference, for filtering purposes
+    NODES = nodes;
+
     // Join & Exit the old data
     circles = g.selectAll(".node").data(coords)
     circles.exit()
@@ -64,7 +67,6 @@ let buildTSNE = (svgroot) => {
     let setAttrs = (selection) => {
       selection.attr('class', (d, i) => `group-${nodes[i].cluster} node`)
         .attr("r", (d,i) => radiusScale(nodes[i].weighted_vote))
-        .attr('title', (d,i) => nodes[i].title.toLowerCase())
         .attr('fill', (d, i) => `rgb(${rScale(colors[i][0])},${gScale(colors[i][1])},${bScale(colors[i][2])})`)
         .attr("cx", d => xScale(d[0]))
         .attr("cy", d => yScale(d[1]))
@@ -220,6 +222,41 @@ let buildTSNE = (svgroot) => {
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
       .attr('r', d => d.r)
+  })
+
+  /**
+   * Filters the tSNE plot for the given term. Will inspect all fields
+   */
+  dispatch.on('filter.tSNE', (term) => {
+    // Always clear pointers, and clear the filter if null.
+    d3.selectAll('.search-pointer').remove()
+    if(term === null){
+      d3.selectAll('.node').classed('outoffocus', false)
+      return
+    }
+
+    // Filter & raise / focus
+    let filtered = d3.selectAll('.node')
+      .classed('outoffocus', true)
+      .filter((d,i) => {
+        //TODO search more than just title!
+        return NODES[i].title.toLowerCase().includes(term)
+      })
+      .raise()
+      .classed('outoffocus', false)
+
+    // Nothing found in filter? Clear existing filter & stop.
+    if(filtered.empty() || filtered.size() > 20){
+      d3.selectAll('.node').classed('outoffocus', false)
+      return
+    }
+
+    // Point to the filtered items
+    let pointers = []
+    filtered.each(function(){
+      pointers.push({x: this.getAttribute('cx'), y: this.getAttribute('cy'), r: 20})
+    })
+    dispatch.call('point-to', null, { points: pointers, classed:"search-pointer" })
   })
 
   /**
