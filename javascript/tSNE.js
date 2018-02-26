@@ -4,7 +4,7 @@ let buildTSNE = (svgroot) => {
   const width = rootbounds.width - margins.left;
   const height = rootbounds.height - margins.right;
   const depth = 1000;
-  let circles, NODES, pointers, xScale, yScale, radiusScale, rScale, gScale, bScale;
+  let circles, pointers, xScale, yScale, radiusScale, rScale, gScale, bScale;
 
   // Keyword for Cluster Group
   let keywordGroup = d3.select('#middle').append('div').attr('id', 'keywordGroup')
@@ -45,16 +45,11 @@ let buildTSNE = (svgroot) => {
    * When executed, will merge the existing DOM elements with new data,
    * updating their backing structure rather than rebuilding them from 
    * scratch. Will execute the Join, Exit, Update, Enter pattern.
-   * 
-   * @param {Array} nodes Data with details about each index in coords
-   * @param {Array} coords Array of points in space
    */
-  const update = (nodes, coords, colors) => {
-    // Set chart wide reference, for filtering purposes
-    NODES = nodes;
+  const update = (stitched) => {
 
     // Join & Exit the old data
-    circles = g.selectAll(".node").data(coords)
+    circles = g.selectAll(".node").data(stitched)
     circles.exit()
     .attr("fill-opacity", 1)
         .attr("stroke-opacity", 1)
@@ -65,11 +60,11 @@ let buildTSNE = (svgroot) => {
 
     // Update existing nodes
     let setAttrs = (selection) => {
-      selection.attr('class', (d, i) => `group-${nodes[i].cluster} node`)
-        .attr("r", (d,i) => radiusScale(nodes[i].weighted_vote))
-        .attr('fill', (d, i) => `rgb(${rScale(colors[i][0])},${gScale(colors[i][1])},${bScale(colors[i][2])})`)
-        .attr("cx", d => xScale(d[0]))
-        .attr("cy", d => yScale(d[1]))
+      selection.attr('class', d => `group-${d[2].cluster} node`)
+        .attr("r", d => radiusScale(d[2].weighted_vote))
+        .attr('fill', d => `rgb(${rScale(d[1][0])},${gScale(d[1][1])},${bScale(d[1][2])})`)
+        .attr("cx", d => xScale(d[0][0]))
+        .attr("cy", d => yScale(d[0][1]))
         .attr("stroke", '#fff')
     };
     setAttrs(circles)
@@ -77,10 +72,10 @@ let buildTSNE = (svgroot) => {
     // Enter the new datapoints
     let enterCircles = circles
       .enter().append("circle")
-      .on('mouseover', function (d, i) {
+      .on('mouseover', function (d) {
         d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`).style('stroke', 'black')
 
-        nodes[i].clusterwords.forEach((d, i) => {
+        d[2].clusterwords.forEach(d => {
           if(d != ""){
             keywordGroup.append('span')
                         .attr('class', 'keywordForGroup')
@@ -89,15 +84,15 @@ let buildTSNE = (svgroot) => {
           }
         })
         
-        tooltip.html(`Title: ${nodes[i].title}<br>\
-        Genre: ${nodes[i].genre}<br>\
-        Lead 1: ${nodes[i].lead1}<br>\
-        Lead 2: ${nodes[i].lead2}<br>\
-        Lead 3: ${nodes[i].lead3}<br>\
-        Rating: ${nodes[i].weighted_vote}<br>\
-        Studio: ${nodes[i].studio}<br>\
-        Runtime: ${nodes[i].runtime}<br>\
-        Keywords: ${nodes[i].keywords}<br>`)
+        tooltip.html(`Title: ${d[2].title}<br>\
+        Genre: ${d[2].genre}<br>\
+        Lead 1: ${d[2].lead1}<br>\
+        Lead 2: ${d[2].lead2}<br>\
+        Lead 3: ${d[2].lead3}<br>\
+        Rating: ${d[2].weighted_vote}<br>\
+        Studio: ${d[2].studio}<br>\
+        Runtime: ${d[2].runtime}<br>\
+        Keywords: ${d[2].keywords}<br>`)
 
         // Positions are relative to the MIDDLE element in MainVis.
         let [mouseX, mouseY] = d3.mouse(d3.select('#middle').node())
@@ -137,38 +132,38 @@ let buildTSNE = (svgroot) => {
    * @param {Array} nodes Data with details about each index in coords
    * @param {Array} coords Array of points in space
    */
-  let newDecade = (nodes, coords, colors) => {
+  let newDecade = (stitched) => {
     // Set the new position, radius, and color scales
     xScale = d3.scaleLinear()
-      .domain(d3.extent(coords, c => c[0]))
+      .domain(d3.extent(stitched, c => c[0][0]))
       .range([0, width])
     yScale = d3.scaleLinear()
-      .domain(d3.extent(coords, c => c[1]))
+      .domain(d3.extent(stitched, c => c[0][1]))
       .range([0, height])
 
     radiusScale = d3.scaleLinear()
-      .domain(d3.extent(nodes, n => n.weighted_vote))
+      .domain(d3.extent(stitched, n => n[2].weighted_vote))
       .range([4, 10])
 
     rScale = d3.scaleLinear()
-      .domain(d3.extent(colors, c => c[0]))
+      .domain(d3.extent(stitched, c => c[1][0]))
       .rangeRound([0, 255])
     gScale = d3.scaleLinear()
-      .domain(d3.extent(colors, c => c[1]))
+      .domain(d3.extent(stitched, c => c[1][0]))
       .rangeRound([0, 255])
     bScale = d3.scaleLinear()
-      .domain(d3.extent(colors, c => c[2]))
+      .domain(d3.extent(stitched, c => c[1][0]))
       .rangeRound([0, 255])
 
     // Update the DOM
-    update(nodes, coords, colors)
+    update(stitched)
 
     // Rekindle the Force
-    force.nodes(coords)
+    force.nodes(stitched)
     force.force('home', function(alpha) {
-      coords.map(c => {
-        c.x += alpha * (xScale(c[0]) - c.x)
-        c.y += alpha * (yScale(c[1]) - c.y)
+      stitched.map(s => {
+        s.x += alpha * (xScale(s[0][0]) - s.x)
+        s.y += alpha * (yScale(s[0][1]) - s.y)
       })
     })
     force.alpha(1).alphaDecay(0.2).restart()
@@ -187,7 +182,8 @@ let buildTSNE = (svgroot) => {
     .awaitAll(function(err, data){
       if(err) return
       let [nodes, coords, colors] = data;
-      newDecade(nodes, coords, colors)
+      let stitched = coords.map((coor,i) => [coor, colors[i], nodes[i]])
+      newDecade(stitched)
     })
   })
 
@@ -238,15 +234,21 @@ let buildTSNE = (svgroot) => {
     // Filter & raise / focus
     let filtered = d3.selectAll('.node')
       .classed('outoffocus', true)
-      .filter((d,i) => {
-        //TODO search more than just title!
-        return NODES[i].title.toLowerCase().includes(term)
+      .filter(d => {
+        // Exploits short circuits to stop eval early
+        return d[2].title.toLowerCase().includes(term) || 
+            d[2].director.toLowerCase().includes(term) || 
+            d[2].lead1.toLowerCase().includes(term) ||
+            d[2].lead2.toLowerCase().includes(term) ||
+            d[2].lead3.toLowerCase().includes(term) ||
+            d[2].studio.toLowerCase().includes(term) ||
+            d[2].keywords.filter(k => k.toLowerCase().includes(term)).length > 0
       })
       .raise()
       .classed('outoffocus', false)
 
     // Nothing found in filter? Clear existing filter & stop.
-    if(filtered.empty() || filtered.size() > 20){
+    if(filtered.empty()){
       d3.selectAll('.node').classed('outoffocus', false)
       return
     }
