@@ -45,7 +45,7 @@
     <div id="year_container" class="stickme">
       <div id="top"> 
         <div id="year">
-          <span>1950</span>
+          <span>1880-1950</span>
         </div>
         <div id="middle">
           <svg id="mainVis" width="100%" height="100%"></svg>
@@ -164,35 +164,35 @@
     <div class="summary-container">
       <div class="summary-item" onclick="returnToDecade(1950)">
         <svg id="summ-1950" width="100%" height="100%"></svg>
-        <div class="year">1950</div>
+        <div class="year">1880-1950</div>
       </div>
       <div class="summary-item" onclick="returnToDecade(1960)">
         <svg id="summ-1960" width="100%" height="100%"></svg>
-        <div class="year">1960</div>
+        <div class="year">1950-1960</div>
       </div>
       <div class="summary-item" onclick="returnToDecade(1970)">
         <svg id="summ-1970" width="100%" height="100%"></svg>
-        <div class="year">1970</div>
+        <div class="year">1960-1970</div>
       </div>
       <div class="summary-item" onclick="returnToDecade(1980)">
         <svg id="summ-1980" width="100%" height="100%"></svg>
-        <div class="year">1980</div>
+        <div class="year">1970-1980</div>
       </div>
       <div class="summary-item" onclick="returnToDecade(1990)">
         <svg id="summ-1990" width="100%" height="100%"></svg>
-        <div class="year">1990</div>
+        <div class="year">1980-1990</div>
       </div>
       <div class="summary-item" onclick="returnToDecade(2000)">
         <svg id="summ-2000" width="100%" height="100%"></svg>
-        <div class="year">2000</div>
+        <div class="year">1990-2000</div>
       </div>
       <div class="summary-item" onclick="returnToDecade(2010)">
         <svg id="summ-2010" width="100%" height="100%"></svg>
-        <div class="year">2010</div>
+        <div class="year">2000-2010</div>
       </div>
       <div class="summary-item" onclick="returnToDecade(2020)">
         <svg id="summ-2020" width="100%" height="100%"></svg>
-        <div class="year">2020</div>
+        <div class="year">2010-2020</div>
       </div>
     </div>
   </div>
@@ -233,7 +233,8 @@
       // Check if decade has changed. (Changes every 3, starting @ 1)
       if(i > 0 && (i-1)%3 == 0){
         let decade = 1950 + (i-1)/3 * 10;
-        d3.select('#year').html(decade);
+        let prevDecade = ((i-1)/3) === 0 ? 1880 : 1950 + (((i-1)/3)-1) * 10
+        d3.select('#year').html(`${prevDecade} - ${decade}`);
         
         // Determine if target bin hit, then send updates (else skip).
         if(active_id === SCROLLINGTO){
@@ -256,10 +257,14 @@
  
   // Build conclusions
   let bins = [1950,1960,1970,1980,1990,2000,2010,2020]
-  let queue = bins.reduce((acc, b) => acc.defer(d3.json, `${DOMAIN}data/final/tSNE/coords/${b}.json`), d3.queue())
-  queue.awaitAll(function(err, responses){
-    if(err) { console.error(err); return }
-    responses.map((d,i) => { buildHex(d3.select(`#summ-${bins[i]}`), d) })
+  bins.map(b => {
+    d3.queue()
+      .defer(d3.json, `${DOMAIN}data/final/tSNE/coords/${b}.json`)
+      .defer(d3.json, `${DOMAIN}data/final/tSNE/colors/${b}.json`)
+      .awaitAll(function(err, res){
+        if(err) { console.error(err); return }
+        buildHex(d3.select(`#summ-${b}`), res[0], res[1])
+      })
   })
 
   // Build the keyword summary list

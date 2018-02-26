@@ -152,10 +152,10 @@ let buildTSNE = (svgroot) => {
       .domain(d3.extent(stitched, c => c[1][0]))
       .rangeRound([0, 255])
     gScale = d3.scaleLinear()
-      .domain(d3.extent(stitched, c => c[1][0]))
+      .domain(d3.extent(stitched, c => c[1][1]))
       .rangeRound([0, 255])
     bScale = d3.scaleLinear()
-      .domain(d3.extent(stitched, c => c[1][0]))
+      .domain(d3.extent(stitched, c => c[1][2]))
       .rangeRound([0, 255])
 
     // Update the DOM
