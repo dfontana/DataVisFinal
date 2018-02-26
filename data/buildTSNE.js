@@ -122,10 +122,10 @@ function makeFeatures(movies, keywords) {
   })
 }
 
-function runTSNE(data) {
+function runTSNE(data, dims) {
   console.log('Features: ', data[0].length)
   console.log('Examples: ', data.length)
-  let model = new tSNE.tSNE({dim:3}) // Default vals are right
+  let model = new tSNE.tSNE({dim:dims}) // Default vals are right
   model.initDataRaw(data)
   
   for(let i = 0; i < 500; i++){
@@ -150,7 +150,8 @@ if(require.main === module){
     let keywords = Keywords(binned, 3)
     WordMap = require('./final/wordMap.json')
     let features = makeFeatures(binned, keywords)
-    let coords = runTSNE(features, bin[1])
+    let coords = runTSNE(features, 2)
+    let colors = runTSNE(features, 3)
     let nodeDetails = buildDetails(binned, keywords, coords)
 
     // features = require(`./final/tSNE/${bin[1]}-features.json`)
@@ -159,6 +160,7 @@ if(require.main === module){
     fs.writeFileSync(`${__dirname}/final/tSNE/coords/${bin[1]}.json`, JSON.stringify(coords), 'utf8', ()=>{});
     fs.writeFileSync(`${__dirname}/final/tSNE/features/${bin[1]}.json`, JSON.stringify(features), 'utf8', ()=>{});
     fs.writeFileSync(`${__dirname}/final/tSNE/details/${bin[1]}.json`, JSON.stringify(nodeDetails), 'utf8', ()=>{});
+    fs.writeFileSync(`${__dirname}/final/tSNE/colors/${bin[1]}.json`, JSON.stringify(colors), 'utf8', ()=>{});
     console.timeEnd("tSNE")
   })
 }

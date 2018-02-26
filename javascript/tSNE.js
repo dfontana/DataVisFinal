@@ -3,7 +3,8 @@ let buildTSNE = (svgroot) => {
   const rootbounds = svgroot.node().getBoundingClientRect()
   const width = rootbounds.width - margins.left;
   const height = rootbounds.height - margins.right;
-  let circles, pointers, xScale, yScale, rScale, cScale;
+  const depth = 1000;
+  let circles, pointers, xScale, yScale, radiusScale, rScale, gScale, bScale;
 
   // Keyword for Cluster Group
   let keywordGroup = d3.select('#middle').append('div').attr('id', 'keywordGroup')
@@ -32,7 +33,7 @@ let buildTSNE = (svgroot) => {
 
   // Declare the Force
   const force = d3.forceSimulation()
-    .force('collision', d3.forceCollide().radius(4).strength(0.9))
+    .force('collision', d3.forceCollide().radius(3.5).strength(0.9))
     .on('tick', function(){
       circles
         .attr("cx", d => d.x)
@@ -48,7 +49,7 @@ let buildTSNE = (svgroot) => {
    * @param {Array} nodes Data with details about each index in coords
    * @param {Array} coords Array of points in space
    */
-  const update = (nodes, coords) => {
+  const update = (nodes, coords, colors) => {
     // Join & Exit the old data
     circles = g.selectAll(".node").data(coords)
     circles.exit()
@@ -62,8 +63,8 @@ let buildTSNE = (svgroot) => {
     // Update existing nodes
     let setAttrs = (selection) => {
       selection.attr('class', (d, i) => `group-${nodes[i].cluster} node`)
-        .attr("r", (d,i) => rScale(nodes[i].weighted_vote))
-        .attr('fill', d => cScale(d[2]))
+        .attr("r", (d,i) => radiusScale(nodes[i].weighted_vote))
+        .attr('fill', (d, i) => `rgb(${rScale(colors[i][0])},${gScale(colors[i][1])},${bScale(colors[i][2])})`)
         .attr("cx", d => xScale(d[0]))
         .attr("cy", d => yScale(d[1]))
         .attr("stroke", '#fff')
@@ -133,7 +134,7 @@ let buildTSNE = (svgroot) => {
    * @param {Array} nodes Data with details about each index in coords
    * @param {Array} coords Array of points in space
    */
-  let newDecade = (nodes, coords) => {
+  let newDecade = (nodes, coords, colors) => {
     // Set the new position, radius, and color scales
     xScale = d3.scaleLinear()
       .domain(d3.extent(coords, c => c[0]))
@@ -141,14 +142,23 @@ let buildTSNE = (svgroot) => {
     yScale = d3.scaleLinear()
       .domain(d3.extent(coords, c => c[1]))
       .range([0, height])
-    rScale = d3.scaleLinear()
+
+    radiusScale = d3.scaleLinear()
       .domain(d3.extent(nodes, n => n.weighted_vote))
       .range([4, 10])
-    cScale = d3.scaleSequential(d3.interpolateCool)
-      .domain(d3.extent(coords, c => c[2]));
+
+    rScale = d3.scaleLinear()
+      .domain(d3.extent(colors, c => c[0]))
+      .rangeRound([0, 255])
+    gScale = d3.scaleLinear()
+      .domain(d3.extent(colors, c => c[1]))
+      .rangeRound([0, 255])
+    bScale = d3.scaleLinear()
+      .domain(d3.extent(colors, c => c[2]))
+      .rangeRound([0, 255])
 
     // Update the DOM
-    update(nodes, coords)
+    update(nodes, coords, colors)
 
     // Rekindle the Force
     force.nodes(coords)
@@ -170,10 +180,11 @@ let buildTSNE = (svgroot) => {
     d3.queue()
     .defer(d3.json, `${DOMAIN}tSNE/nodes/${decade}.json`)
     .defer(d3.json, `${DOMAIN}tSNE/coords/${decade}.json`)
+    .defer(d3.json, `${DOMAIN}tSNE/colors/${decade}.json`)
     .awaitAll(function(err, data){
       if(err) return
-      let [nodes, coords] = data;
-      newDecade(nodes, coords)
+      let [nodes, coords, colors] = data;
+      newDecade(nodes, coords, colors)
     })
   })
 
