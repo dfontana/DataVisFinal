@@ -1,5 +1,4 @@
 .node {
-  stroke: #fff;
   stroke-width: 1px;
 }
 
@@ -31,8 +30,4 @@ div.tooltip {
   fill: none;
   stroke: orange;
   stroke-width: 3px;
-}
-
-.outoffocus {
-  opacity: 0.3;
 }

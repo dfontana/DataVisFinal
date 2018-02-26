@@ -63,9 +63,9 @@ let buildTSNE = (svgroot) => {
       selection.attr('class', d => `group-${d[2].cluster} node`)
         .attr("r", d => radiusScale(d[2].weighted_vote))
         .attr('fill', d => `rgb(${rScale(d[1][0])},${gScale(d[1][1])},${bScale(d[1][2])})`)
+        .attr("stroke", d => 'rgb(255,255,255)')
         .attr("cx", d => xScale(d[0][0]))
         .attr("cy", d => yScale(d[0][1]))
-        .attr("stroke", '#fff')
     };
     setAttrs(circles)
 
@@ -73,7 +73,9 @@ let buildTSNE = (svgroot) => {
     let enterCircles = circles
       .enter().append("circle")
       .on('mouseover', function (d) {
-        d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`).style('stroke', 'black')
+        let cluster = d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`)
+        d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`)
+          .attr('stroke', function() { return `rgba(0,0,0,${d3.color(d3.select(this).attr('stroke')).opacity})` })
 
         d[2].clusterwords.forEach(d => {
           if(d != ""){
@@ -110,8 +112,9 @@ let buildTSNE = (svgroot) => {
           .style("opacity", .9)
       })
       .on('mouseout', function () {
-        d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`).style('stroke', 'white')
-
+        d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`)
+          .attr('stroke', function(){ return `rgba(255,255,255,${d3.color(d3.select(this).attr('stroke')).opacity})` });
+          
         d3.selectAll('.keywordForGroup').remove()
 
         tooltip.transition()
@@ -226,13 +229,17 @@ let buildTSNE = (svgroot) => {
   dispatch.on('filter.tSNE', (term) => {
     // Always clear pointers, and clear the filter if null.
     if(term === null){
-      d3.selectAll('.node').classed('outoffocus', false)
+      console.log("CLEAR")
+      d3.selectAll('.node')
+        .attr('fill', d => `rgba(${rScale(d[1][0])},${gScale(d[1][1])},${bScale(d[1][2])},1)`)
+        .attr('stroke', d => `rgba(255,255,255,1)`)
       return
     }
 
     // Filter & raise / focus
     let filtered = d3.selectAll('.node')
-      .classed('outoffocus', true)
+      .attr('fill', d => `rgba(${rScale(d[1][0])},${gScale(d[1][1])},${bScale(d[1][2])},0.3)`)
+      .attr('stroke', d => `rgba(255,255,255,0.3)`)
       .filter(d => {
         // Exploits short circuits to stop eval early
         return d[2].title.toLowerCase().includes(term) || 
@@ -244,11 +251,14 @@ let buildTSNE = (svgroot) => {
             d[2].keywords.filter(k => k.toLowerCase().includes(term)).length > 0
       })
       .raise()
-      .classed('outoffocus', false)
+      .attr('fill', d => `rgba(${rScale(d[1][0])},${gScale(d[1][1])},${bScale(d[1][2])},1)`)
+      .attr('stroke', d => `rgba(255,255,255,1)`)
 
     // Nothing found in filter? Clear existing filter & stop.
     if(filtered.empty()){
-      d3.selectAll('.node').classed('outoffocus', false)
+      d3.selectAll('.node')
+        .attr('fill', d => `rgba(${rScale(d[1][0])},${gScale(d[1][1])},${bScale(d[1][2])},1)`)
+        .attr('stroke', d => `rgba(255,255,255,1)`)
       return
     }
   })
