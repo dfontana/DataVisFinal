@@ -77,8 +77,8 @@
         case 38: // up arrow
         case 33: // page up
         delta = d3.event.metaKey ? -Infinity : -1 ;break
-        case 32: // space
-        delta = d3.event.shiftKey ? -1 : 1
+        // case 32: // space WHYYYYYYYYY
+        // delta = d3.event.shiftKey ? -1 : 1
         ;break
         default: return
       }

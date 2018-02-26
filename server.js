@@ -25,12 +25,12 @@ let validInterest = (interest) => ['studio', 'actor', 'movie'].includes(interest
  *      /size
  *      /link
  */
-app.get('/topkeywords.json', (req, res) => {
+app.get('/data/final/topkeywords.json', (req, res) => {
   let keywords = require(DATA_DIR+'topkeywords.json')
   res.status(200).send(keywords);
 })
 
-app.get('/tSNE/coords/:bin', (req, res) => {
+app.get('/data/final/tSNE/coords/:bin', (req, res) => {
   const bin = req.params.bin;
   if(!validBin(bin)){
     res.status(400).send({ error: `Invalid bin provided: ${bin}` });
@@ -41,7 +41,7 @@ app.get('/tSNE/coords/:bin', (req, res) => {
   res.status(200).send(links);
 })
 
-app.get('/tSNE/colors/:bin', (req, res) => {
+app.get('/data/final/tSNE/colors/:bin', (req, res) => {
   const bin = req.params.bin;
   if(!validBin(bin)){
     res.status(400).send({ error: `Invalid bin provided: ${bin}` });
@@ -52,7 +52,7 @@ app.get('/tSNE/colors/:bin', (req, res) => {
   res.status(200).send(links);
 })
 
-app.get('/tSNE/nodes/:bin', (req, res) => {
+app.get('/data/final/tSNE/nodes/:bin', (req, res) => {
   const bin = req.params.bin;
   if(!validBin(bin)){
     res.status(400).send({ error: `Invalid bin provided: ${bin}` });

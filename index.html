@@ -56,7 +56,7 @@
             <ol id="keywordSummary"></ol>
           </div>
           <div id="buttons">
-            <input id="searchbox" placeholder="Search..." class="button-item" onkeydown="search(this)"/>
+            <input class="button-item" id="searchbox" type="text" placeholder="Search..."  onkeydown="search(this)"/>
             <button class="button-item" id="next_decade">Next Decade</button>
             <button class="button-item" onclick="goToConclusion()">Conclusion</button>
           </div>
@@ -257,14 +257,14 @@
  
   // Build conclusions
   let bins = [1950,1960,1970,1980,1990,2000,2010,2020]
-  let queue = bins.reduce((acc, b) => acc.defer(d3.json, `${DOMAIN}tSNE/coords/${b}.json`), d3.queue())
+  let queue = bins.reduce((acc, b) => acc.defer(d3.json, `${DOMAIN}data/final/tSNE/coords/${b}.json`), d3.queue())
   queue.awaitAll(function(err, responses){
     if(err) { console.error(err); return }
     responses.map((d,i) => { buildHex(d3.select(`#summ-${bins[i]}`), d) })
   })
 
   // Build the keyword summary list
-  d3.json(`${DOMAIN}topkeywords.json`, (err, data) => {
+  d3.json(`${DOMAIN}data/final/topkeywords.json`, (err, data) => {
     if(err) { console.error(err); return }
     keywords = data;
   })

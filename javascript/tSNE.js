@@ -179,9 +179,9 @@ let buildTSNE = (svgroot) => {
   dispatch.on('decade-update.tSNE', (decade) => {
     console.log("Changing decade!", decade)
     d3.queue()
-    .defer(d3.json, `${DOMAIN}tSNE/nodes/${decade}.json`)
-    .defer(d3.json, `${DOMAIN}tSNE/coords/${decade}.json`)
-    .defer(d3.json, `${DOMAIN}tSNE/colors/${decade}.json`)
+    .defer(d3.json, `${DOMAIN}data/final/tSNE/nodes/${decade}.json`)
+    .defer(d3.json, `${DOMAIN}data/final/tSNE/coords/${decade}.json`)
+    .defer(d3.json, `${DOMAIN}data/final/tSNE/colors/${decade}.json`)
     .awaitAll(function(err, data){
       if(err) return
       let [nodes, coords, colors] = data;
@@ -201,11 +201,10 @@ let buildTSNE = (svgroot) => {
    * }
    */
   dispatch.on('point-to.tSNE', (items) => {
-    console.log(items)
     let {points, classed} = items;
     // Join
     pointers = g.selectAll(`.${classed}`).data(points)
-    console.log(classed)
+
     // Exit
     pointers.exit().remove()
 
