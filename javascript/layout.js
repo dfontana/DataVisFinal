@@ -59,11 +59,12 @@ function transitionDecade(decade, keywords) {
       return acc;
     }, [])
 
-  keywordSummary = d3.select("#keywordSummary").selectAll('.summary-item').data(sliced)
+  keywordSummary = d3.select("#keywordSummary").selectAll('.summary-keyword').data(sliced)
   keywordSummary.exit().remove()
 
   let entered = keywordSummary.enter()
     .append('li')
+    .attr('class', 'summary-keyword')
     .text(d => d)
 
   keywordSummary = entered.merge(keywordSummary)

@@ -43,6 +43,8 @@ body {
 
 #right {
   position: relative;
+  display: flex;
+  flex-direction: column;
   height: 100%;
   width: calc(30% - 20px);
   float: left;
@@ -107,18 +109,16 @@ body {
   transition:all 1s ease;
 }
 
-#footer > div:first-child
-{
+#footer > div:first-child{
    border-left: none;
 }
 
 #buttons {
-  position: absolute;
-  bottom: 10px;
   width: calc(100% - 10px);
-  margin-top: 40px;
+  height: 60px;
+  margin: auto 0 20 0;
   display: flex;
-  justify-content: center; 
+  justify-content: center;
 }
 
 .button-item {
@@ -152,7 +152,7 @@ h1 {
 }
 
 ol {
-  font-size: 1.3vw;
+  font-size: 1vw;
   list-style-type: none;
   margin: 0;
   margin-left: 4vw;
@@ -162,7 +162,7 @@ ol {
 
 ol > li{
   position: relative;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   padding-left: 0.5vw;
   min-height: 1.3vw;
 }
@@ -171,10 +171,10 @@ ol > li:before {
   position: absolute;
   top: .08vw;
   left: -2vw;
-  width: 1.3vw;
-  height: 1.3vw;
-  font-size: 1vw;
-  line-height: 1.3vw;
+  width: 1vw;
+  height: 1vw;
+  font-size: 0.7vw;
+  line-height: 1vw;
   text-align: center;
   color: #f5f5f5;
   border: 3px solid #c5c5c5;
