@@ -63,7 +63,7 @@ let buildTSNE = (svgroot) => {
     let setAttrs = (selection) => {
       selection.attr('class', (d, i) => `group-${nodes[i].cluster} node`)
         .attr("r", (d,i) => rScale(nodes[i].weighted_vote))
-        .attr('fill', d => cScale(d[2]))
+        .attr('fill', (d,i) => cScale(nodes[i].cluster))
         .attr("cx", d => xScale(d[0]))
         .attr("cy", d => yScale(d[1]))
         .attr("stroke", '#fff')
@@ -145,7 +145,8 @@ let buildTSNE = (svgroot) => {
       .domain(d3.extent(nodes, n => n.weighted_vote))
       .range([4, 10])
     cScale = d3.scaleSequential(d3.interpolateCool)
-      .domain(d3.extent(coords, c => c[2]));
+      // .domain(d3.extent(coords, c => c[2]));
+      .domain(d3.extent(nodes, c => c.cluster));
 
     // Update the DOM
     update(nodes, coords)
@@ -173,6 +174,7 @@ let buildTSNE = (svgroot) => {
     .awaitAll(function(err, data){
       if(err) return
       let [nodes, coords] = data;
+      console.log(coords)
       newDecade(nodes, coords)
     })
   })
