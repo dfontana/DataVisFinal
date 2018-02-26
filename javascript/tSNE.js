@@ -32,7 +32,7 @@ let buildTSNE = (svgroot) => {
 
   // Declare the Force
   const force = d3.forceSimulation()
-    .force('collision', d3.forceCollide().radius((d, i) => 3).strength(0.9))
+    .force('collision', d3.forceCollide().radius(4).strength(0.9))
     .on('tick', function(){
       circles
         .attr("cx", d => d.x)
@@ -158,7 +158,7 @@ let buildTSNE = (svgroot) => {
         c.y += alpha * (yScale(c[1]) - c.y)
       })
     })
-    force.alpha(1).restart()
+    force.alpha(1).alphaDecay(0.2).restart()
   }
 
   /**
