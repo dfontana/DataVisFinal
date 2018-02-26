@@ -115,14 +115,20 @@ body {
 
 #buttons {
   width: calc(100% - 10px);
-  height: 60px;
+  height: 100px;
   margin: auto 0 20 0;
   display: flex;
-  justify-content: center;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+#searchbox {
+  width: 100%;
+  padding-left: 15px;
 }
 
 .button-item {
-  width: 100%;
+  width: 48%;
   padding: 10px 0px;
   background-color: transparent;
   color: #e1e1e1;
