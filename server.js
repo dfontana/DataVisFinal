@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 
 
 // Validators
-let validBin = (bin) => ['1950','1960','1970','1980','1990','2000','2010','2020'].includes(bin)
+let validBin = (bin) => ['1950','1960','1970','1980','1990','2000','2010','2020'].includes(bin.substring(0,4))
 let validInterest = (interest) => ['studio', 'actor', 'movie'].includes(interest)
 
 /**
@@ -25,15 +25,9 @@ let validInterest = (interest) => ['studio', 'actor', 'movie'].includes(interest
  *      /size
  *      /link
  */
-app.get('/:bin/summary', (req, res) => {
-  const bin = req.params.bin;
-  if(!validBin(bin)) {
-    res.status(400).send({ error: `Invalid bin provided: ${bin}` });
-    return
-  }
-
+app.get('/topkeywords.json', (req, res) => {
   let keywords = require(DATA_DIR+'topkeywords.json')
-  res.status(200).send(keywords[bin]);
+  res.status(200).send(keywords);
 })
 app.get('/:bin/:interest/size', (req, res) => {
   const bin = req.params.bin;
@@ -66,24 +60,24 @@ app.get('/:bin/:interest/link', (req, res) => {
   res.status(200).send(links[bin]);
 })
 
-app.get('/tSNE/:bin/coords', (req, res) => {
+app.get('/tSNE/coords/:bin', (req, res) => {
   const bin = req.params.bin;
   if(!validBin(bin)){
     res.status(400).send({ error: `Invalid bin provided: ${bin}` });
     return
   } 
 
-  let links = require(`${DATA_DIR}tSNE/${bin}-coords.json`)
+  let links = require(`${DATA_DIR}tSNE/coords/${bin}`)
   res.status(200).send(links);
 })
-app.get('/tSNE/:bin/nodes', (req, res) => {
+app.get('/tSNE/nodes/:bin', (req, res) => {
   const bin = req.params.bin;
   if(!validBin(bin)){
     res.status(400).send({ error: `Invalid bin provided: ${bin}` });
     return
   } 
 
-  let links = require(`${DATA_DIR}tSNE/${bin}-details.json`)
+  let links = require(`${DATA_DIR}tSNE/details/${bin}`)
   res.status(200).send(links);
 })
 

@@ -24,6 +24,8 @@ if(require.main === module){
   let KeywordMap = bins.reduce((acc, bin) =>{ 
     let binned = Bin(bin[0], bin[1]);
     acc[bin[1]] = topNForBin(binned, 3)
+    WordMap = require('./final/wordMap.json')
+    acc[bin[1]] = acc[bin[1]].map(k => WordMap[k]) // Translate ID => Word
     return acc
   }, {})
   fs.writeFile(__dirname+'/final/topkeywords.json', JSON.stringify(KeywordMap), 'utf8', ()=>{});

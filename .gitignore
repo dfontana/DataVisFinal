@@ -1,3 +1,5 @@
 node_modules
 *.csv
 buffer/
+.DS_Store
+nobackground.png

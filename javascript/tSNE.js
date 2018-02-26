@@ -3,21 +3,22 @@ let buildTSNE = (svgroot) => {
   const rootbounds = svgroot.node().getBoundingClientRect()
   const width = rootbounds.width - margins.left;
   const height = rootbounds.height - margins.right;
-  let circles, xScale, yScale, rScale, cScale;
+  let circles, pointers, xScale, yScale, rScale, cScale;
 
   // Keyword for Cluster Group
-  let keywordGroup = svgroot.append('g')
-    .style('transform', `translate(${width-100}px, 30px)`)
+  let keywordGroup = d3.select('#middle').append('div').attr('id', 'keywordGroup')
 
   // Attach a tooltip div to the DOM
-  const tooltip = d3.select("body").append("div")
+  const tooltip = d3.select("#middle").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
   // Place all nodes inside a group in the SVG, for centering
-  const g = svgroot.append('g')
-    .attr("class", "nodes")
+  const nodecenter = svgroot.append('g')
     .style('transform', `translate(${margins.top}px, ${margins.left/2}px)`)
+
+  const g = nodecenter.append('g')
+    .attr("class", "nodes")
 
   // Build the zooming effect for the page
   const zoom = d3.zoom()
@@ -31,7 +32,7 @@ let buildTSNE = (svgroot) => {
 
   // Declare the Force
   const force = d3.forceSimulation()
-    .force('collision', d3.forceCollide().radius((d, i) => 3).strength(0.9))
+    .force('collision', d3.forceCollide().radius(4).strength(0.9))
     .on('tick', function(){
       circles
         .attr("cx", d => d.x)
@@ -50,7 +51,13 @@ let buildTSNE = (svgroot) => {
   const update = (nodes, coords) => {
     // Join & Exit the old data
     circles = g.selectAll(".node").data(coords)
-    circles.exit().remove()
+    circles.exit()
+    .attr("fill-opacity", 1)
+        .attr("stroke-opacity", 1)
+        .transition()
+            .duration(500)
+            .attr("fill-opacity", 0)
+            .attr("stroke-opacity", 0).remove()
 
     // Update existing nodes
     let setAttrs = (selection) => {
@@ -59,22 +66,22 @@ let buildTSNE = (svgroot) => {
         .attr('fill', d => cScale(d[2]))
         .attr("cx", d => xScale(d[0]))
         .attr("cy", d => yScale(d[1]))
+        .attr("stroke", '#fff')
     };
     setAttrs(circles)
 
     // Enter the new datapoints
-    let enterCircles = g.selectAll("circle")
-      .data(coords)
+    let enterCircles = circles
       .enter().append("circle")
       .on('mouseover', function (d, i) {
         d3.selectAll(`.${this.className.baseVal.split(" ")[0]}`).style('stroke', 'black')
 
         nodes[i].clusterwords.forEach((d, i) => {
           if(d != ""){
-            keywordGroup.append('text')
+            keywordGroup.append('span')
                         .attr('class', 'keywordForGroup')
-                        .attr('y', `${i * 23}px`)
-                        .text(d)
+                        .html(d)
+                        .append('br')
           }
         })
         
@@ -88,12 +95,14 @@ let buildTSNE = (svgroot) => {
         Runtime: ${nodes[i].runtime}<br>\
         Keywords: ${nodes[i].keywords}<br>`)
 
-
+        // Positions are relative to the MIDDLE element in MainVis.
+        let [mouseX, mouseY] = d3.mouse(d3.select('#middle').node())
         let bounds = tooltip.node().getBoundingClientRect()
-        let spillX = (d3.event.pageX + bounds.width) > rootbounds.right
-        let spillY = (d3.event.pageY - 28 + bounds.height) > rootbounds.bottom
-        let x =  spillX ? d3.event.pageX - bounds.width : d3.event.pageX
-        let y =  spillY ? d3.event.pageY - bounds.height :  d3.event.pageY - 28
+        let spillX = (mouseX + bounds.width) > rootbounds.width
+        let spillY = (mouseY - 28 + bounds.height) > rootbounds.height
+        let x =  spillX ? mouseX - bounds.width : mouseX
+        let y =  spillY ? mouseY - bounds.height :  mouseY - 28
+
         
         tooltip.style("left", x + "px")
           .style("top", y + "px")
@@ -149,7 +158,7 @@ let buildTSNE = (svgroot) => {
         c.y += alpha * (yScale(c[1]) - c.y)
       })
     })
-    force.alpha(1).restart()
+    force.alpha(1).alphaDecay(0.2).restart()
   }
 
   /**
@@ -159,12 +168,51 @@ let buildTSNE = (svgroot) => {
   dispatch.on('decade-update.tSNE', (decade) => {
     console.log("Changing decade!", decade)
     d3.queue()
-    .defer(d3.json, `http://localhost:8000/tSNE/${decade}/nodes`)
-    .defer(d3.json, `http://localhost:8000/tSNE/${decade}/coords`)
+    .defer(d3.json, `${DOMAIN}tSNE/nodes/${decade}.json`)
+    .defer(d3.json, `${DOMAIN}tSNE/coords/${decade}.json`)
     .awaitAll(function(err, data){
       if(err) return
       let [nodes, coords] = data;
       newDecade(nodes, coords)
     })
+  })
+
+  /**
+   * When invoke, place a pointer at the given locations. Will clear current pointers.
+   * 
+   * Items is expected to be an array of objects, each item representing a seperate
+   * pointer. Each pointer, then, is an object such that:
+   * {
+   *  x: x location of the pointer,
+   *  y: y location of the pointer,
+   *  r: Radius the pointer, centered around (x,y)
+   * }
+   */
+  dispatch.on('point-to.tSNE', (items) => {
+    // Join
+    pointers = g.selectAll('.pointer').data(items)
+
+    // Exit
+    pointers.exit().remove()
+
+    // Update
+    pointers.attr('cx', d => d.x)
+            .attr('cy', d => d.y)
+            .attr('r', d => d.r)
+
+    // Enter
+    pointers.enter()
+      .append('circle')
+      .attr('class', 'pointer')
+      .attr('cx', d => d.x)
+      .attr('cy', d => d.y)
+      .attr('r', d => d.r)
+  })
+
+  /**
+   * When invoked, will stop the current force simulation.
+   */
+  dispatch.on('stop-force', () => {
+    force.stop();
   })
 }
