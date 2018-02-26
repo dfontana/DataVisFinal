@@ -27,8 +27,18 @@ div.tooltip {
   fill: #fff;
 }
 
-.pointer {
+.story-pointer {
   fill: none;
   stroke: orange;
-  stroke-width: 2px;
+  stroke-width: 3px;
+}
+
+.search-pointer {
+  fill: none;
+  stroke: red;
+  stroke-width: 3px;
+}
+
+.outoffocus {
+  opacity: 0.3;
 }

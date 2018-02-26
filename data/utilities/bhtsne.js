@@ -14,8 +14,8 @@ let WordMap;
 *  - Cluster
 *  - Cluster's Word or Theme
 */
-function buildDetails(movies, keywords, colors) {
-  let clusters = KMeans(colors.map(c => c[2]), 20)
+function buildDetails(movies, keywords, meansSpace) {
+  let clusters = KMeans(meansSpace, 20)
   
   // Accumulates keywords for all movies related to the cluster
   let keywordsForAll = clusters.idxs.reduce((acc, c, i) => {
@@ -133,12 +133,12 @@ bins.map(bin =>{
   let keywords = Keywords(binned, 3)
   WordMap = require('../final/wordMap.json')
 
-  let features = makeFeatures(binned, keywords)
-  fs.writeFileSync(`../final/tSNE/features/${bin[1]}.tsv`, features, 'utf8', ()=>{});
+  // let features = makeFeatures(binned, keywords)
+  // fs.writeFileSync(`../final/tSNE/features/${bin[1]}.tsv`, features, 'utf8', ()=>{});
 
   let coords = runBHTSNE(bin[1], 2, 70)
   let colors = runBHTSNE(bin[1], 3, 70)
-  let nodeDetails = buildDetails(binned, keywords, colors)
+  let nodeDetails = buildDetails(binned, keywords, coords)
 
   fs.writeFileSync(`../final/tSNE/coords/${bin[1]}.json`, JSON.stringify(coords), 'utf8', ()=>{});
   fs.writeFileSync(`../final/tSNE/details/${bin[1]}.json`, JSON.stringify(nodeDetails), 'utf8', ()=>{});

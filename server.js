@@ -29,36 +29,6 @@ app.get('/topkeywords.json', (req, res) => {
   let keywords = require(DATA_DIR+'topkeywords.json')
   res.status(200).send(keywords);
 })
-app.get('/:bin/:interest/size', (req, res) => {
-  const bin = req.params.bin;
-  const interest = req.params.interest;
-  if(!validBin(bin)){
-    res.status(400).send({ error: `Invalid bin provided: ${bin}` });
-    return
-  } 
-  if(!validInterest(interest)){
-    res.status(400).send({ error: `Invalid interest provided: ${interest}` });
-    return
-  }
-
-  let sizes = require(`${DATA_DIR}${interest}Maps.json`)
-  res.status(200).send(sizes[bin]);
-})
-app.get('/:bin/:interest/link', (req, res) => {
-  const bin = req.params.bin;
-  const interest = req.params.interest;
-  if(!validBin(bin)){
-    res.status(400).send({ error: `Invalid bin provided: ${bin}` });
-    return
-  } 
-  if(!validInterest(interest)){
-    res.status(400).send({ error: `Invalid interest provided: ${interest}` });
-    return
-  } 
-
-  let links = require(`${DATA_DIR}${interest}Links.json`)
-  res.status(200).send(links[bin]);
-})
 
 app.get('/tSNE/coords/:bin', (req, res) => {
   const bin = req.params.bin;
@@ -70,16 +40,7 @@ app.get('/tSNE/coords/:bin', (req, res) => {
   let links = require(`${DATA_DIR}tSNE/coords/${bin}`)
   res.status(200).send(links);
 })
-app.get('/tSNE/nodes/:bin', (req, res) => {
-  const bin = req.params.bin;
-  if(!validBin(bin)){
-    res.status(400).send({ error: `Invalid bin provided: ${bin}` });
-    return
-  } 
 
-  let links = require(`${DATA_DIR}tSNE/details/${bin}`)
-  res.status(200).send(links);
-})
 app.get('/tSNE/colors/:bin', (req, res) => {
   const bin = req.params.bin;
   if(!validBin(bin)){
@@ -91,47 +52,15 @@ app.get('/tSNE/colors/:bin', (req, res) => {
   res.status(200).send(links);
 })
 
-/**
- * Bottom Half
- *  /clusters
- *    /:interest
- * 
- *  /bar
- *    /actors
- *    /studios
- * 
- *  /line
- *    /:interest
- */
-app.get('/clusters/:interest', (req, res) => {
-  const interest = req.params.interest;
-  if(!validInterest(interest)) {
-    res.status(400).send({ error: `Invalid interest provided: ${interest}` });
+app.get('/tSNE/nodes/:bin', (req, res) => {
+  const bin = req.params.bin;
+  if(!validBin(bin)){
+    res.status(400).send({ error: `Invalid bin provided: ${bin}` });
     return
   } 
-  res.status(200).send(`${DATA_DIR}${interest}Clusters.json`);
-})
-app.get('/line/:interest', (req, res) => {
-  const interest = req.params.interest;
-  if(!validInterest(interest)){
-    res.status(400).send({ error: `Invalid interest provided: ${interest}` });
-    return
-  }
-  res.status(200).sendFile(`${DATA_DIR}${interest}Lines.json`);
-})
-app.get('/bar/actor', (req, res) => {
-  res.status(200).sendFile(`${DATA_DIR}actorBars.json`);
-})
-app.get('/bar/studio', (req, res) => {
-  res.status(200).sendFile(`${DATA_DIR}studioBars.json`);
-})
 
-/**
- * General purpose
- *  /wordMap
- */
-app.get('/wordMap', (req, res) => {
-  res.status(200).sendFile(`${DATA_DIR}wordMap.json`);
+  let links = require(`${DATA_DIR}tSNE/details/${bin}`)
+  res.status(200).send(links);
 })
 
 app.listen(port, (err) => {

@@ -64,6 +64,7 @@ let buildTSNE = (svgroot) => {
     let setAttrs = (selection) => {
       selection.attr('class', (d, i) => `group-${nodes[i].cluster} node`)
         .attr("r", (d,i) => radiusScale(nodes[i].weighted_vote))
+        .attr('title', (d,i) => nodes[i].title.toLowerCase())
         .attr('fill', (d, i) => `rgb(${rScale(colors[i][0])},${gScale(colors[i][1])},${bScale(colors[i][2])})`)
         .attr("cx", d => xScale(d[0]))
         .attr("cy", d => yScale(d[1]))
@@ -200,9 +201,11 @@ let buildTSNE = (svgroot) => {
    * }
    */
   dispatch.on('point-to.tSNE', (items) => {
+    console.log(items)
+    let {points, classed} = items;
     // Join
-    pointers = g.selectAll('.pointer').data(items)
-
+    pointers = g.selectAll(`.${classed}`).data(points)
+    console.log(classed)
     // Exit
     pointers.exit().remove()
 
@@ -214,7 +217,7 @@ let buildTSNE = (svgroot) => {
     // Enter
     pointers.enter()
       .append('circle')
-      .attr('class', 'pointer')
+      .attr('class', classed)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
       .attr('r', d => d.r)
