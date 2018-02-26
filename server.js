@@ -80,6 +80,16 @@ app.get('/tSNE/nodes/:bin', (req, res) => {
   let links = require(`${DATA_DIR}tSNE/details/${bin}`)
   res.status(200).send(links);
 })
+app.get('/tSNE/colors/:bin', (req, res) => {
+  const bin = req.params.bin;
+  if(!validBin(bin)){
+    res.status(400).send({ error: `Invalid bin provided: ${bin}` });
+    return
+  } 
+
+  let links = require(`${DATA_DIR}tSNE/colors/${bin}`)
+  res.status(200).send(links);
+})
 
 /**
  * Bottom Half
