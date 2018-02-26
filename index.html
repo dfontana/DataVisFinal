@@ -246,7 +246,6 @@
 
       // Dispatch pointer events (clear old ones)
       d3.selectAll('.story-pointer').remove()
-      d3.selectAll('.search-pointer').remove()
       if(i === 3){
         dispatch.call('point-to', this, {points: [{x: 100, y: 100, r: 20}], classed:"story-pointer"})
       }

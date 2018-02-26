@@ -225,7 +225,6 @@ let buildTSNE = (svgroot) => {
    */
   dispatch.on('filter.tSNE', (term) => {
     // Always clear pointers, and clear the filter if null.
-    d3.selectAll('.search-pointer').remove()
     if(term === null){
       d3.selectAll('.node').classed('outoffocus', false)
       return
@@ -252,13 +251,6 @@ let buildTSNE = (svgroot) => {
       d3.selectAll('.node').classed('outoffocus', false)
       return
     }
-
-    // Point to the filtered items
-    let pointers = []
-    filtered.each(function(){
-      pointers.push({x: this.getAttribute('cx'), y: this.getAttribute('cy'), r: 20})
-    })
-    dispatch.call('point-to', null, { points: pointers, classed:"search-pointer" })
   })
 
   /**

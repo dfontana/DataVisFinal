@@ -33,12 +33,6 @@ div.tooltip {
   stroke-width: 3px;
 }
 
-.search-pointer {
-  fill: none;
-  stroke: red;
-  stroke-width: 3px;
-}
-
 .outoffocus {
   opacity: 0.3;
 }
