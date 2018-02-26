@@ -22,7 +22,6 @@ let WordMap;
 function buildDetails(movies, keywords, coords) {
   let clusters = KMeans(coords.map(c => c[2]), 20)
   
-  
   // Accumulates keywords for all movies related to the cluster
   let keywordsForAll = clusters.idxs.reduce((acc, c, i) => {
     acc[c] = acc[c] || []
