@@ -64,7 +64,7 @@ button:focus {
   z-index: 2;
 }
 
-i {
+.left_down, .right_down {
   border: solid white;
   border-width: 0 3px 3px 0;
   display: block;
@@ -72,13 +72,6 @@ i {
   position: relative;
   animation: arrowsjump 2s infinite;
   top: -10px;
-}
-
-.left_down {
-  transform: rotate(45deg);
-}
-
-.right_down {
   transform: rotate(45deg);
 }
 

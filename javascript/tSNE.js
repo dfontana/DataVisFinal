@@ -221,6 +221,10 @@ let buildTSNE = (svgroot) => {
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
       .attr('r', d => d.r)
+      .style('opacity', 0)
+      .transition()
+      .duration(300)
+      .style('opacity', 1)
   })
 
   /**
