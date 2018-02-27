@@ -51,7 +51,7 @@ function setProgress(i){
 }
 
 // Sets up the next decade
-function transitionDecade(decade, keywords) {
+function transitionDecade(decade, keywords, cb) {
   if(keywords === undefined) { return }
   let sliced = Object.entries(keywords)
     .reduce((acc, e) => {
@@ -73,4 +73,6 @@ function transitionDecade(decade, keywords) {
   document.getElementById("next_decade").addEventListener("click", () => fastForwardDecade(decade));
   dispatch.call('stop-force', null)
   dispatch.call('decade-update', this, decade)
+
+  setTimeout(() => cb(), 500)
 }

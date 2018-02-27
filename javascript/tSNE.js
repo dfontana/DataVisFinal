@@ -229,7 +229,6 @@ let buildTSNE = (svgroot) => {
   dispatch.on('filter.tSNE', (term) => {
     // Always clear pointers, and clear the filter if null.
     if(term === null){
-      console.log("CLEAR")
       d3.selectAll('.node')
         .attr('fill', d => `rgba(${rScale(d[1][0])},${gScale(d[1][1])},${bScale(d[1][2])},1)`)
         .attr('stroke', d => `rgba(255,255,255,1)`)
