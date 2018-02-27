@@ -179,7 +179,7 @@ let buildTSNE = (svgroot) => {
   dispatch.on('decade-update.tSNE', (decade) => {
     console.log("Changing decade!", decade)
     d3.queue()
-    .defer(d3.json, `${DOMAIN}data/final/tSNE/nodes/${decade}.json`)
+    .defer(d3.json, `${DOMAIN}data/final/tSNE/details/${decade}.json`)
     .defer(d3.json, `${DOMAIN}data/final/tSNE/coords/${decade}.json`)
     .defer(d3.json, `${DOMAIN}data/final/tSNE/colors/${decade}.json`)
     .awaitAll(function(err, data){

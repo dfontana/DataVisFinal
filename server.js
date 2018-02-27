@@ -52,7 +52,7 @@ app.get('/data/final/tSNE/colors/:bin', (req, res) => {
   res.status(200).send(links);
 })
 
-app.get('/data/final/tSNE/nodes/:bin', (req, res) => {
+app.get('/data/final/tSNE/details/:bin', (req, res) => {
   const bin = req.params.bin;
   if(!validBin(bin)){
     res.status(400).send({ error: `Invalid bin provided: ${bin}` });
