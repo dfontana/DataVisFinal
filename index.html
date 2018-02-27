@@ -70,7 +70,14 @@
     </div>
     <!-- Wall of Text (no, literally...) -->
     <div id="narration">
-      <div class="statement"></div>
+      <div class="statement">
+        <p>
+          Let’s orient you to the visualization. The current years of movies you are looking at appears right above this narration (a ‘bin’). As you scroll the page, the bin will change and we’ll talk a little bit about what’s going on right here. You can monitor your progress through the current bin with the progress bar at the bottom.
+        </p>
+        <p>
+          On the far right is a running list of top keywords movies had within the bins up to and including the currently viewed one - this can help you get a sense of how themes change with time. If you wish to quickly advance, there’s also some convenience buttons at the bottom. Finally, use the search box to help you find specific keywords, studios, movies, directors, or actors on the soon-to-be-displayed chart.
+        </p>     
+      </div>
       <div class="statement" id="graph1950">
         This is an awesome statement about why the world should look into being better people. Did you know most people are not better people? I know better people.
       </div>
@@ -201,7 +208,7 @@
 <script>
   // Globals
   let SCROLLINGTO = null;
-  let DOMAIN = ''//'http://localhost:8000/'
+  let DOMAIN = 'http://localhost:8000/'
   let dispatch = d3.dispatch('decade-update', 'point-to', 'stop-force', 'filter')
 
   // Keywords list:
