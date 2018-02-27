@@ -343,6 +343,13 @@
       if(i === 3){
         dispatch.call('point-to', this, {points: [{x: 100, y: 100, r: 20}], classed:"story-pointer"})
       }
+
+      console.log(i);
+      if(i == 9) {
+        console.log('dispatch?');
+        document.getElementById('searchbox').value = 'Spaghetti Western';
+        dispatch.call('filter', null, 'spaghetti western')
+      }
     })
 
   // Build the TSNE chart, nothing will draw until dispatch
