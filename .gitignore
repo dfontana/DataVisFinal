@@ -1,5 +1,6 @@
 node_modules
 *.csv
-buffer/
+raw_csv/
+filteredData.json
+raw_json/
 .DS_Store
-nobackground.png

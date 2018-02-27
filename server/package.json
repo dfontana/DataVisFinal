@@ -1,0 +1,19 @@
+{
+  "name": "movienight",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "buildOld": "node ../data/makeTopKeywords.js && node ../data/old/makeNetworkNodes.js && node ../data/old/makeNetworkLinks.js && node ../data/old/makeClusters.js && node ../data/old/MakeMultiLine.js",
+    "build": "untar -zxf ../data/buffer/raw_csv.tar.gz && node --max-old-space-size=4096 ../data/utilities/csvs2json.js && node ../data/utilities/exportBins.js && data/buildBHTSNE.js",
+    "fast": "node ../data/buildTSNE.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^4.13.0",
+    "express": "^4.16.2",
+    "json5": "^0.5.1",
+    "skmeans": "^0.9.7"
+  }
+}

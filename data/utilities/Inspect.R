@@ -1,7 +1,7 @@
 library('jsonlite')
 
-raw_data <- fromJSON("~/github/CS4802/movienight/data/buffer/raw_json/movies_metadata.json")
-data <- fromJSON("~/github/CS4802/movienight/data/buffer/filteredData.json")
+raw_data <- fromJSON("~/github/CS4802/DataVisFinal/data/buffer/raw_json/movies_metadata.json")
+data <- fromJSON("~/github/CS4802/DataVisFinal/data/buffer/filteredData.json")
 data$release_date = as.Date(data$release_date, "%Y-%m-%d")
 
 # Number of movies with a budget
