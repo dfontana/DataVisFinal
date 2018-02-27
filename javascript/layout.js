@@ -125,14 +125,16 @@ function takeAction(i, callback){
       searchForUser('Spaghetti Western');
       break;
     case 11:
-      points = [ findCoordinatesOf("The Godfather: Part II") ]
+      points = [ findCoordinatesOf("The Conversation") ]
+      points[0].r = 60;
       dispatch.call('point-to', this, {points: points, classed:"story-pointer"})
       break;
     case 14:
       searchForUser('Space');
       break;
-    case 16:
+    case 17:
       points = [ findCoordinatesOf("Men In Black") ]
+      points[0].r = 40;
       dispatch.call('point-to', this, {points: points, classed:"story-pointer"})
       break;
     case 19:
