@@ -344,11 +344,16 @@
         dispatch.call('point-to', this, {points: [{x: 100, y: 100, r: 20}], classed:"story-pointer"})
       }
 
-      console.log(i);
       if(i == 9) {
-        console.log('dispatch?');
-        document.getElementById('searchbox').value = 'Spaghetti Western';
-        dispatch.call('filter', null, 'spaghetti western')
+        searchForUser('Spaghetti Western');
+      }
+
+      if(i == 20) {
+        searchForUser('Harry Potter');
+      }
+
+      if(i == 23) {
+       searchForUser('Hero');
       }
     })
 
@@ -376,13 +381,24 @@
   function search(ele) {
     if(event.key === 'Enter') {
       let term = ele.value.toLowerCase();
-      if(term === ""){
-        // Clear the filter
+      filterByTerm(term);
+    }
+  }
+
+  function filterByTerm(term) {
+    if(term === "") {
+      // Clear the filter
         dispatch.call('filter', null, null)
       }else{
         // Set the filter
         dispatch.call('filter', null, term)
       }
-    }
   }
+
+  function searchForUser(term) {
+    document.getElementById('searchbox').value = term;
+    let finalWord = term.toLowerCase();
+    filterByTerm(finalWord);
+  }
+
 </script>
