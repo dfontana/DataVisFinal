@@ -24,11 +24,7 @@
       <h1>Movie Night</h1>
       <div id="intro_text">
         <span>
-          In this visualization, we explore the ties of time with movie popularity and characteristics to find a relationship
-          between what makes a movie successful, and how our taste changes through time can influence the movies that are considered well-done. 
-          As we travel through each decade, play close attention to which movies are considered similar to each other, the top
-          three keywords for each decade, the top rated movies, and the way the clusters of data form. 
-          Enjoy the show!
+          In this visualization, we explore the relationship of movies through time. By considering popularity and a subset of movie features, we learn more about what makes a movie successful and how our taste might change through time. As we travel through each decade, play close attention to which movies are considered similar to each other, the top three keywords describing the movies for that decade, and the way the clusters of data form. Enjoy the show!
         </span>
       </div>
     </div>
@@ -80,6 +76,7 @@
       </div>
       <div class="statement" id="graph1950">
         <p> 
+          <h3><i>On the Chart</i></h3>
           This is a t-SNE (t-Distributed Stochastic Neighbor Embedding) cluster chart. t-SNE is an algorithm used for dimensionality reduction of high-dimension data into two or three dimensions. These reduced dimensions can then be plotted in a scatterplot space, where similar points are near one another and dissimilar points are apart. 
         </p>
         <p>
@@ -88,7 +85,7 @@
       </div>
       <div class="statement">
         <p>
-          Cinematography predates or is omitted from even the vast collection of films shown here. For example, "The Horse in Motion" is an example of 1878 motion photography,created by taking a series of simultaneous pictures. "Roundhay Garden Scene" was then created in 1888 - a 2.1 seconds long movie. A final that made it into this visualiztion is "Arrival of a Train" in 1895, a short of a train being pulled into a station.
+          Cinematography predates (or some early examples are omitted) from even the vast collection of films shown here. For example, "The Horse in Motion" is an example of 1878 motion photography,created by taking a series of simultaneous pictures. "Roundhay Garden Scene" was then created in 1888 - a 2.1 seconds long movie. A final that made it into this visualiztion is "Arrival of a Train" in 1895, a short of a train being pulled into a station.
         </p>
         <p>
           Finding specific movies can be hard. In this case we've pointed to a specific movie for you, but if you'd like, try searching for movies using the search box in the bottom right. You can search by any of the names, studios, or keywords found in the movies - for example, try finding movies from "Disney" (pressing 'Enter' to submit your query). To clear your search, simply clear the search box of text and press 'Enter'.
@@ -101,19 +98,23 @@
       </div>
       <div class="statement" id="graph1960">
         <p>
+          <h3><i>On the Chart</i></h3>
           Coloring t-SNE charts can be done in a variety of ways, the method choosen for this visualization being particularly interesting. While a 2 Dimensional t-SNE was used to plot the individual movies, a seperate 3 Dimensional t-SNE was ran to color them. Each coordinate in the 3D space was translated to an RGB Triplet (as in, X-Coordinates determine 'redness', Y-Coordinates 'greenness', and Z-Coordintes 'blueness'. Points of similar locality and colors, then, would share a similarity in a three dimensional space.
         </p>
       </div>
       <div class="statement">
         <p>
-          World War (Closing of World War II)
+          The 50s for cinema was a time of turbulance, given the end of World War II only five years prior. The war had a big impact on entertainment at that time; most films, radio stations, and news paper articles were written realistically instead of for entertainment. Most people, in fact, went to the cinema to watch educational films on their countries war efforts and its progress. 
         </p>
       </div>
       <div class="statement">
-        c
+        <p>
+          Of course the post war boom brought economic prosperity, the Baby Boom, and along with those cinema attendance was soaring. With the war over and most of the population heavily impacted by it, the 50s films were idealized with portrayals of the war and groups of people rebelling or going against authority. It was celebration and applause. If you search ‘World War’ you will find all the movies made in the 50s about the war.
+        </p>
       </div>
       <div class="statement" id="graph1970">
         <p>
+          <h3><i>On the Chart</i></h3>
           It's important to note the distance between any two points in t-SNE is virtually meaningless. A point an inch away from another means nothing more than one six inches away. What's important are that points can be close together, or they can be far apart, representing whether or not they are similar. Nothing more can be said about their spatial position.
         </p>
       </div>
@@ -129,47 +130,59 @@
       </div>
       <div class="statement" id="graph1980">
         <p>
+          <h3><i>On the Chart</i></h3>
           By now, perhaps, you've begun to notice other bubbles border changes when hovering on a movie. That's because those bubbles were found to be clustered together by kMeans clustering. t-SNE, while a clustering algorithm, has the limitation that it only visually clusters data - it does not explicitly define one bubble as being part of a cluster relative to another. Thus, to help aid in finding individual clusters, we ran a 20 kMeans clustering on the 2D t-SNE - identifying 20 clusters of movies somewhat close to one another in space.
         </p>
       </div>
       <div class="statement">
-        Cluster of locations (the ones with Star Wars)
+        <p>
+          An interesing example of how t-SNE clustered some movies has been highlighted for you. Notice a pattern? All of the movies that were clustered together happen to have a keyword in common or their title is about traveling or a location. While t-SNE isn't intelligent enough to know what "Cuba", "Sea", or "Space" means, we can still look at clusters to draw these higher level conclusions the algorithm can't. What other similarities are present in this cluster?
+        </p>
       </div>
       <div class="statement">
-        g
+        <p>
+         Take notice of the <i>variety</i> found within this decade too. Movies in the 70s started to diverge from themes of Noir and Western. The divergence can be attributed to the release of new genres of music, the height of the Vietnam War, and rising crime rate across the US. Different directors started to emerge (ex. Steven Spielberg) and began producing movies that were new and futuristic. The crime-drama genre was created and multitude of movies about crime and technology were released (ex. Star Wars and The Godfather). 
+        </p>
       </div>
       <div class="statement" id="graph1990">
         <p>
-          Space and Cold War
+          By time it was the 80’s the Soviets and America had been rivals for more than 30 years and relations between the two superpowers continued to deteriorate. While the Cold War was still ramping up, so were the movies - the 80s introducing the idea of ‘high-concept’ films. The Cold War had a huge impact on movies in the 80s causing the cinema to revolve around the troubles and attitudes war brings.
         </p>
       </div>
       <div class="statement">
-        i
+        <p>
+          One of the main themes that can be tied to the Cold War is space - with examples such as E.T and Star Wars. As the United States and Soviet Union continued the Space Race, the theme came to facinate the cinematic realm. The Cold War also brought big name movie such as Rocky IV, which tells the story an American boxer (Rocky) battling a Soviet boxer (Drago). 
+        </p>
       </div>
       <div class="statement">
-        j
+        <p>
+          Movie quality also soared. Film budgets skyrocketed, movie concepts became more complex and the term ‘blockbuster’ was introduced. With Hollywood's searching for a blockbuster movie that they thought everyone needed to see, competition broke out amoung producers, studios and directors. Classics such as Raiders of the Lost Arc, Ghostbusters and Back to the Future are examples of how competition brought some of the best blockbusters we know and love today. 
+        </p>
       </div>
       <div class="statement" id="graph2000">
         <p>
-          Size affected by Rating Cluster of popular Upper Right green thingy
-          (pointer thingy here)
+          Perhaps as a result of competition, the 90s in cinema history is known as the decade of mega-spending and special effects. While the 80s had begun to ramp up how movies were made the 90s took it even further. Ticket prices for movies when up, actors started getting payed more, and movies sold more. The number of blockbusters increased while bleed-edge digital effects dazzled audiences - so much that storylines suffered.
         </p>
       </div>
       <div class="statement">
-        l
+       <p>
+          Have you noticed there's quite a few large bubbles this decade? Before the 90s, the cinema was a theater exclusive with very few homes having a VCR to watch their favorite movies. The 90s, however, introduced DVDs - bringing the entertainment home for everyone to enjoy. Movie sales boosted, and with it the number of viewers and ratings. Check out the highlighted areas - do you recall owning movies such as Forrest Gump or the Titanic on DVD?
+       </p>
       </div>
       <div class="statement">
-        m
+       <p>
+          The increase in viewership continued to push budgets further. CGI expanded to more and more movies while actors became overnight sensations. With their ever increasing demand, actors began to have a stronger say in parts of the movie and where their name appeared in the credits. Some of the highest paid stars of the 90s included Arnold Schwarzenegger, Tom Cruise, Mel Gibson, Robin Williams, Julia Roberts, Bruce Willis and many more. Many of these actors carry their superstardom to this day - Winona Ryder, for example, now staring in the hit show Stranger things. What other popular actors of today can you spot here? (Hint: there's at least 40 more).
+       </p>
       </div>
       <div class="statement" id="graph2010">
         <p>
-          In the 2000's, one of the most influencial series of this generation was introduced as a movie. "Harry Potter" is a series of fantasy novels written by J.K. Rowling published in 1997. Warner Bro's produced the first Harry Potter movie, "Harry Potter and the Philospher's Stone" in November 2001.
+          In the 2000's, the cinema took a turn towards fantasy with one of the most influencial series of this generation being introduced as a movie. "Harry Potter", the hit series written by J.K. Rowling and published in 1997, had its first movie produced by Warner Bro's. "Harry Potter and the Philospher's Stone" hit cinemas in November of 2001.
         </p>
       </div>
       <div class="statement">
         <p>
-          As you can see that four of the Harry Potter movies are clusterd together: "Harry Potter and the Sorcerer's Stone," "The Prisioner of Azkaban,"
-          "The Chamber of Secrets," and "The Goblet of Fire." Two of the other movies in the series, "The Half-Blood Prince" and "The Order of the Phoenix", however, are clustered together elsewhere in space - perhaps more akin to others than their predecessors. Why might this be?
+          The series permated throughout the decade, but notice how its been clustered. As you can see that four of series installments have been placed together: "Harry Potter and the Sorcerer's Stone," "The Prisioner of Azkaban,"
+          "The Chamber of Secrets," and "The Goblet of Fire." Two of the others, "The Half-Blood Prince" and "The Order of the Phoenix", however, are together elsewhere in space - perhaps more akin to others than their predecessors. Why might this be?
         </p>
       </div>
       <div class="statement">
@@ -182,17 +195,17 @@
       </div>
       <div class="statement" id="graph2020">
         <p>
-          Starting their rise to top of the decade in the late 2000s, super-human cinematography has taken the spotlight of the 2010 decade. With the introduction of cutting-edge special effects pulling viewers from reality, superhero based films have taken their comic-based inspiration to the big screen for the public. With their jaw-dropping cinematography and massive comic backing, its no surprise these film have become increasingly popular.
+          Starting their rise to top of the decade in the late 2000s, super-human cinematography took the spotlight of the 2010 decade. With the introduction of cutting-edge special effects pulling viewers from reality, superheros evolved from their comic-based roots to the big screen for the public. With their jaw-dropping cinematography and massive comic backing, its no surprise these film have become increasingly popular.
         </p>
       </div>
       <div class="statement">
         <p>
-          Cinema spectacles may not be the only reason for their dramatic climb to popularity, however. With dark events crowding recent history - be it the events of 9/11, the Housing Market Crash, or inclement weather catastrophes - perhaps more are looking towards the cinema to provide the hero they need. Although their popularity started beforehand, the reality of events such as these could have pushed more and more for that sense of comfort and thrill a superhero can bring.
+          Cinema spectacles may not be the only reason for their dramatic climb to popularity, however. With dark events crowding recent history - be it the events of 9/11, the Housing Market Crash, or inclement weather catastrophes - perhaps more are looking towards the cinema to provide the hero they need. Although their popularity started beforehand, the reality of events such as these could have pushed more and more to seek that sense of comfort and thrill a superhero can bring.
         </p>
       </div>
       <div class="statement">
         <p>
-          With growing power of computing technology, the cinema has seen the boundaries of our world pushed more and more. The decade has brought hits such as "Gravity", "Mad Max: Fury Road", and more. As computers help us push the boundaries of excitement and realism, creating a more believable and immersive environment, the cinema has seen greater creativity than every before. The technological growth has certainly been exponential, leaving us - the viewers - on the edge of our seats for what cinema has to offer next.
+          With the growing power of computing technology, the cinema has seen the boundaries of our world pushed more and more. The decade has brought hits such as "Gravity", "Mad Max: Fury Road", and more. As computers help us revolutionise excitement and realism, the cinema has seen greater creativity than every before. The technological growth has certainly been exponential and continues full steam ahead, leaving us - the viewers - on the edge of our seats for what cinema has to offer next.
         </p>
       </div>
     </div>
@@ -202,22 +215,17 @@
   <div id="conclusion_container"> 
     <div id="summary-text"> 
       <h1>Conclusion</h1>
-      ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-      Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-      Citations:
-      https://en.wikipedia.org/wiki/Sergio_Leone
-      https://en.wikipedia.org/wiki/Spaghetti_Western
-      https://en.wikipedia.org/wiki/Harry_Potter
-      https://www.nyfa.edu/student-resources/the-rise-of-superhero-films/
-      http://highschool.latimes.com/orange-county-school-of-the-arts/post-911-world-what-caused-the-rise-of-superhero-movies/  
+      <div id="closingblurb">
+        <p>
+          We hope you've enjoyed our exploration into cinematography with t-SNE. If you'd like to learn more about some of the topics we highlighted, feel free to visit some of our references on <a href="https://en.wikipedia.org/wiki/Sergio_Leone">Sergio Leone</a>, <a href="https://en.wikipedia.org/wiki/Spaghetti_Western">Spaghetti Westerns</a>, <a href="http://www.filmsite.org/filmh.html">a meadly of decades</a>, <a href="https://en.wikipedia.org/wiki/Harry_Potter">Harry Potter</a>, or <a href="http://highschool.latimes.com/orange-county-school-of-the-arts/post-911-world-what-caused-the-rise-of-superhero-movies/ ">the rise</a> of <a href="https://www.nyfa.edu/student-resources/the-rise-of-superhero-films/">superhero movies</a>. 
+        </p>
+        <p>
+          If you found some of the novel techniques used in this visualization interesting, be sure to checkout the work of Laurens van der Maaten with <a href="https://github.com/lvdmaaten/bhtsne">bht-SNE</a>, Kyle McDonald's work on <a href="https://github.com/kylemcdonald/Coloring-t-SNE">coloring t-SNE</a>, and <a href="https://en.wikipedia.org/wiki/K-means_clustering">kMeans</a> clustering.
+        </p>
+        <p>
+          If you'd like to revisit a decade, click one of the summaries below!
+        </p>
+      </div>
     </div>
     <div class="summary-container">
       <div class="summary-item" onclick="returnToDecade(1950)">
