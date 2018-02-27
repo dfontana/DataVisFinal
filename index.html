@@ -39,7 +39,7 @@
       </div>
     </div> 
   </div>
-
+  
   <!-- Year Overlay -->
   <div id="container">
     <div id="year_container" class="stickme">
@@ -63,10 +63,10 @@
         </div>
       </div>
       <div id="footer" class="stickme">
-          <div class="progress" id="p1"></div>
-          <div class="progress" id="p2"></div>
-          <div class="progress" id="p3"></div>
-        </div>
+        <div class="progress" id="p1"></div>
+        <div class="progress" id="p2"></div>
+        <div class="progress" id="p3"></div>
+      </div>
     </div>
     <!-- Wall of Text (no, literally...) -->
     <div id="narration">
@@ -79,41 +79,31 @@
         </p>     
       </div>
       <div class="statement" id="graph1950">
-        <p> In the center of the page is a visualization made with t-SNE clustering. t-SNE (t-Distributed Stochastic Neighbor Embedding)
-         is an algorithm used to reduce dimensionality in a  high-dimensional dataset. T-SNE allows us to create this three dimensional
-         visualization form a multi-dimensional dataset.
+        <p> 
+          This is a t-SNE (t-Distributed Stochastic Neighbor Embedding) cluster chart. t-SNE is an algorithm used for dimensionality reduction of high-dimension data into two or three dimensions. These reduced dimensions can then be plotted in a scatterplot space, where similar points are near one another and dissimilar points are apart. 
         </p>
-        <p>Each bubble in the visualization represents a movie that was released in the current decade. N features were extracted from these movies (ie. Director, genera, and runtime) and these features were used by t-SNE to cluster similar movies together.
-           Our visualization is a three dimensional t-SNE, the first two dimensions being X and Y locations and the third color. 
+        <p>
+          Each movie's data (features) was built from the Director, Title, Runtime, Genre, Top 3 Lead Actors, Production Studio, and the presence of the top keywords for the bin. These features were then run through a two-dimensional t-SNE, reducing them down to single pairs of coordinates. By hovering over a movie, you'll be able to view these features. What patterns and similarities can you find within this scatter?
         </p>
-      </div>
-      <div class="statement">
-         <p>
-            If you hover over a movie you can view information about the movie including it’s title,
-             genera, and runtime. As you hover over the visualization you can begin to use the tooltips and
-            keywords to notice patterns among the clusters and similarities among the movies, you may even find some Disney movies in the mix.
-         </p>
-         <p>
-            The Horse in Motion was created in 1878 this was a motion photography created by taking a bunch of simultaneous pictures. Roundhay Garden Scene was then created in 1888 this was only 2.1 seconds long but is still classified as a movie. The third movie ever created was Arrival of a Train in 1895 this movie shows a train being pulled into a station. 
-            If you type “Arrival” you will be able to find where this movie is located in the visualization.
-            <!-- Potentially do the search for them -->
-         </p>
       </div>
       <div class="statement">
         <p>
-            In the beginning movies were only black and white and primarily silent films. 
-            Before there was sound in films musicians sat below the screen and would play music along with the movie.
-            The first move with sound was the The Jazz Singer made in 1927. While some movies before 1950 had sound it was 
-            not popular until the 50s. Search “silent film” while in this decade and then again when you move onto the 50s and see how movies changed.
+          There's many movies of interest hidden throughout the clusters - some of which might be of particular interest. For example, "The Horse in Motion" is an example of 1878 motion photography, created by taking a series of simultaneous pictures. "Roundhay Garden Scene" was then created in 1888 - 2.1 seconds long movie. The third movie ever created was "Arrival of a Train" in 1895. This movie shows a train being pulled into a station.
+          <!-- TODO Issue pointer events to these three movies-->
+        </p>
+        <p>
+          Finding specific movies can be hard. In this case we've pointed to specific movies for you, but if you'd like, try searching the movies using the search box in the bottom right. You can search by any of the names, studios, or keywords found in the movies - try finding movies from "Disney" (pressing 'Enter' to submit your query). To clear your search, simply clear the search box of text and press 'Enter'.
+        </p>
+      </div>
+      <div class="statement">
+        <p>
+          In the beginning movies were only black and white and primarily silent films. Before there was sound in films musicians sat below the screen and would play music along with the movie. The first move with sound was the The Jazz Singer made in 1927. While some movies before 1950 had sound it was not popular until the 50s. Search “silent film” while in this decade and then again when you move onto the 50s and see how movies changed.
         </p>
       </div>
       <div class="statement" id="graph1960">
         <p>
-          t-SNE has clustered the data on three axis X, Y and Z. The X and Y axis appear as they would on a normal
-           graph but the Z axis is represented by the color. The Z axis is portrayed by color in order to make a 3 
-           dimensional graph a 2 dimensional graph, you can picture for example that in a 3D graph all of the green points
-            would be in the same spot on the Z axis.
-          </p>
+          Coloring t-SNE charts can be done in a variety of ways, the method choosen for this visualization being particularly interesting. While a 2 Dimensional t-SNE was used to plot the individual movies, a seperate 3 Dimensional t-SNE was ran to color them. Each coordinate in the 3D space was translated to an RGB Triplet (as in, X-Coordinates determine 'redness', Y-Coordinates 'greenness', and Z-Coordintes 'blueness'. Points of similar locality and colors, then, would share a similarity in a three dimensional space.
+        </p>
       </div>
       <div class="statement">
         <p>
@@ -125,35 +115,27 @@
       </div>
       <div class="statement" id="graph1970">
         <p>
-          Because this visualization is a 3D graph flattened into a 2D graph the physical distance between movies does not indicate anything 
-          about the two movies. Just because the two highlighted clusters of movies are on opposite sides of the visualization does not mean 
-          these two clusters are that they are extremely different from each other.
+          It's important to note the distance between any two points in t-SNE is virtually meaningless. A point an inch away from another means nothing more than one six inches away. What's important are that points can be close together, or they can be far apart, representing whether or not they are similar. Nothing more can be said about their spatial position.
         </p>
       </div>
       <div class="statement">
         <p>
-            Spaghetti Western, also known as Italian Western or Macaroni Western
-            are western movie that emerged in the mid of the 1960's due to Sergio Leone's
-            success in the film industry. As seen in the top keywords, it's the top
-            keyword for this year. 
+          As for the 1970's - well that's Spaghetti Western, at least according to the most popularly weighted keyterm for the decade. Spaghetti Western, also known as Italian Western or Macaroni Western, are a variety of the Western genre that emerged in the mid-1960's due to Sergio Leone's success in the film industry.
         </p>
       </div>
       <div class="statement">
         <p>
-          However, after performing a search on the term, you can observe that most of
-          them did not have good rankings or seem to cluster together. 
-          These movies tended to have a style that allowed for low budgets in Europe
-          and American Genres were rapidly changing. The Western started evolving from 
-          here until a rougher form, and some critics believe Sergio Leone influenced it.
+          Notice the size of the bubbles for movies containing "Spaghetti Western", however. Bubble size correlates to the popularity of a movie - that is it's rating multiplied by the number of ratings it recieved. This might be attributed to the fact these movies tended to have a style that allowed for low budgets in Europe and American genres were rapidly changing. The classic Western started evolving from here until a rougher form was made, with some critics believing Sergio Leone influenced it.
+          <!-- TODO do search for them -->
         </p>
       </div>
       <div class="statement" id="graph1980">
         <p>
-          Cluster of locations (the ones with Star Wars)
+          By now, perhaps, you've begun to notice other bubbles border changes when hovering on a movie. That's because those bubbles were found to be clustered together by kMeans clustering. t-SNE, while a clustering algorithm, has the limitation that it only visually clusters data - it does not explicitly define one bubble as being part of a cluster relative to another. Thus, to help aid in finding individual clusters, we ran a 20 kMeans clustering on the 2D t-SNE - identifying 20 clusters of movies somewhat close to one another in space.
         </p>
       </div>
       <div class="statement">
-        f
+        Cluster of locations (the ones with Star Wars)
       </div>
       <div class="statement">
         g
@@ -183,56 +165,45 @@
       </div>
       <div class="statement" id="graph2010">
         <p>
-          In the 2000's, one of the most influencial series of this generation was introduced as a movie.
-          Harry Potter is a series of fantasy novels that began as a novel
-          published in 1997. Warner Bro's produced the first Harry Potter movie in November 2001.  
+          In the 2000's, one of the most influencial series of this generation was introduced as a movie. "Harry Potter" is a series of fantasy novels written by J.K. Rowling published in 1997. Warner Bro's produced the first Harry Potter movie, "Harry Potter and the Sourcer's Stone" in November 2001.
+          <!-- TODO point to the movie in the vis. -->
         </p>
       </div>
       <div class="statement">
         <p>
-          As you notice when you search "Harry Potter", you can see that four of the Harry Potter
-          movies were clusterd together: Harry Potter and the Sorcerer's Stone, The Prisioner of Azkaban,
-          The Chamber of Secrets, and The Goblet of Fire. On the other cluster, is the Half-Blood Prince
-          the Order of the Phoenix.
+          As you can see that four of the Harry Potter movies are clusterd together: "Harry Potter and the Sorcerer's Stone," "The Prisioner of Azkaban,"
+          "The Chamber of Secrets," and "The Goblet of Fire." Two of the other movies in the series, "The Half-Blood Prince" and "The Order of the Phoenix", however, are clustered together elsewhere in space - perhaps more akin to others than their predecessors. Why might this be?
+          <!-- TODO do the search for them -->
         </p>
       </div>
       <div class="statement">
         <p>
-         This powerful novel created not only an escape of reality to a magical world, but created
-         a movement filled with fans. The success of the novels led to a website called
-         Pottermore being created in which you can find yourself in a journey
-         through the story with more access that was not revealed in the books and
-         allowing fans to be in a wizardry land.
+          This powerful series has not only created an escape to a magical world, but spawned a movement filled with fans. The success of the novels has led to the creation of "Pottermore" - a website dedicated to brining fans beyond the story of the books, engrossing users in the world of wizardry.
+        </p>
+        <p>
+          While we've highlighted one blockbuster series, what other series can you find and what are their relations to Harry Potter? How might this have compared to the Spaghetti Western's of the past? Hint: We've pointed to one to help you get started.
+          <!-- TODO Point to Iron-man or some superhero trilogy to setup the next decade -->
         </p>
       </div>
       <div class="statement" id="graph2020">
         <p>
-          From animated movies to science fiction, heroes have been rising in the past
-          decade as depicted by the Top Keywords. With the rise of cutting-edge special effects,
-          the spectacular scenes that allow to escape your own world, and fans of the comic-books,
-          it is no surprise that super heroes movies have become increasingly popular.
+          Starting their rise to top of the decade in the late 2000s, super-human cinematography has taken the spotlight of the 2010 decade. With the introduction of cutting-edge special effects pulling viewers from reality, superhero based films have taken their comic-based inspiration to the big screen for the public. With their jaw-dropping cinematography and massive comic backing, its no surprise these film have become increasingly popular.
+          <!-- TODO Search Superhero -->
         </p>
       </div>
       <div class="statement">
         <p>
-          However, there may be a more discrete reasoning behind the rise of super hero movies.
-          Dark events in U.S. history such as 9/11 and the House Market Crash could have influenced
-          the population towards hero movies. Although they were popular beforehand,
-          the reality of the situation could have pushed people towards the sense
-          of comfort that super heroes can bring.
+          Cinema spectacles may not be the only reason for their dramatic climb to popularity, however. With dark events crowding recent history - be it the events of 9/11, the Housing Market Crash, or inclement weather catastrophes - perhaps more are looking towards the cinema to provide the hero they need. Although their popularity started beforehand, the reality of events such as these could have pushed more and more for that sense of comfort and thrill a superhero can bring.
         </p>
       </div>
       <div class="statement">
-          <p>
-            Finally, the rise of computers and special effects, have added layers of
-            excitement as movies have become more realistic and believable. The growth in
-            technology in the past years has been exponential, and leaves us curious for the future
-            of the cinema.
-          </p>
+        <p>
+          With growing power of computing technology, the cinema has seen the boundaries of our world pushed more and more. The decade has brought hits such as "Gravity", "Mad Max: Fury Road", and "Beauty and the Beast". As computers help us push the boundaries of excitement and realism, creating a more believable and immersive environment, the cinema has seen greater creativity than every before. The technological growth has certainly been exponential, leaving us - the viewers - on the edge of our seats for what cinema has to offer next.
+        </p>
       </div>
     </div>
   </div>
-
+  
   <!-- Conclusion begins -->
   <div id="conclusion_container"> 
     <div id="summary-text"> 
@@ -247,13 +218,13 @@
       Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
       Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
       Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-    Citations:
-    https://en.wikipedia.org/wiki/Sergio_Leone
-    https://en.wikipedia.org/wiki/Spaghetti_Western
-    https://en.wikipedia.org/wiki/Harry_Potter
-    https://www.nyfa.edu/student-resources/the-rise-of-superhero-films/
-    http://highschool.latimes.com/orange-county-school-of-the-arts/post-911-world-what-caused-the-rise-of-superhero-movies/  
-  </div>
+      Citations:
+      https://en.wikipedia.org/wiki/Sergio_Leone
+      https://en.wikipedia.org/wiki/Spaghetti_Western
+      https://en.wikipedia.org/wiki/Harry_Potter
+      https://www.nyfa.edu/student-resources/the-rise-of-superhero-films/
+      http://highschool.latimes.com/orange-county-school-of-the-arts/post-911-world-what-caused-the-rise-of-superhero-movies/  
+    </div>
     <div class="summary-container">
       <div class="summary-item" onclick="returnToDecade(1950)">
         <svg id="summ-1950" width="100%" height="100%"></svg>
@@ -296,109 +267,109 @@
   let SCROLLINGTO = null;
   let DOMAIN = 'http://localhost:8000/'
   let dispatch = d3.dispatch('decade-update', 'point-to', 'stop-force', 'filter')
-
+  
   // Keywords list:
   let keywords;
   let keywordSummary;
-
+  
   // Prep the scrolly
   d3.graphScroll()
-    .graph(d3.selectAll('.stickme'))
-    .container(d3.select('#container'))
-    .sections(d3.selectAll('.statement, #conclusion_container'))
-    .on('active', function(i) {
-      let active_id = d3.select(`.graph-scroll-active`).attr('id');
-
-      // If at the conclusion, stop all forces and prepare to jump.
-      if(active_id === 'conclusion_container'){
-        dispatch.call('stop-force', null)
+  .graph(d3.selectAll('.stickme'))
+  .container(d3.select('#container'))
+  .sections(d3.selectAll('.statement, #conclusion_container'))
+  .on('active', function(i) {
+    let active_id = d3.select(`.graph-scroll-active`).attr('id');
+    
+    // If at the conclusion, stop all forces and prepare to jump.
+    if(active_id === 'conclusion_container'){
+      dispatch.call('stop-force', null)
+      SCROLLINGTO = null
+      return
+    }
+    
+    // Fill progress bar
+    if(i > 0){
+      setProgress(i)
+    }else{
+      d3.selectAll('.progress-made').classed('progress-made', false)
+    }
+    
+    // Check if decade has changed. (Changes every 3, starting @ 1)
+    if(i > 0 && (i-1)%3 == 0){
+      let decade = 1950 + (i-1)/3 * 10;
+      let prevDecade = ((i-1)/3) === 0 ? 1880 : 1950 + (((i-1)/3)-1) * 10
+      d3.select('#year').html(`${prevDecade} - ${decade}`);
+      
+      // Determine if target bin hit, then send updates (else skip).
+      if(active_id === SCROLLINGTO){
         SCROLLINGTO = null
-        return
       }
-
-      // Fill progress bar
-      if(i > 0){
-        setProgress(i)
-      }else{
-        d3.selectAll('.progress-made').classed('progress-made', false)
+      if(SCROLLINGTO === null){
+        transitionDecade(decade, keywords)
       }
-
-      // Check if decade has changed. (Changes every 3, starting @ 1)
-      if(i > 0 && (i-1)%3 == 0){
-        let decade = 1950 + (i-1)/3 * 10;
-        let prevDecade = ((i-1)/3) === 0 ? 1880 : 1950 + (((i-1)/3)-1) * 10
-        d3.select('#year').html(`${prevDecade} - ${decade}`);
-        
-        // Determine if target bin hit, then send updates (else skip).
-        if(active_id === SCROLLINGTO){
-          SCROLLINGTO = null
-        }
-        if(SCROLLINGTO === null){
-          transitionDecade(decade, keywords)
-        }
-      }
-
-      // Dispatch pointer events (clear old ones)
-      d3.selectAll('.story-pointer').remove()
-      if(i === 3){
-        dispatch.call('point-to', this, {points: [{x: 100, y: 100, r: 20}], classed:"story-pointer"})
-      }
-
-      if(i == 9) {
-        searchForUser('Spaghetti Western');
-      }
-
-      if(i == 20) {
-        searchForUser('Harry Potter');
-      }
-
-      if(i == 23) {
-       searchForUser('Hero');
-      }
-    })
-
+    }
+    
+    // Dispatch pointer events (clear old ones)
+    d3.selectAll('.story-pointer').remove()
+    if(i === 3){
+      dispatch.call('point-to', this, {points: [{x: 100, y: 100, r: 20}], classed:"story-pointer"})
+    }
+    
+    if(i == 9) {
+      searchForUser('Spaghetti Western');
+    }
+    
+    if(i == 20) {
+      searchForUser('Harry Potter');
+    }
+    
+    if(i == 23) {
+      searchForUser('Hero');
+    }
+  })
+  
   // Build the TSNE chart, nothing will draw until dispatch
   buildTSNE(d3.select('#mainVis'))
- 
+  
   // Build conclusions
   let bins = [1950,1960,1970,1980,1990,2000,2010,2020]
   bins.map(b => {
     d3.queue()
-      .defer(d3.json, `${DOMAIN}data/final/tSNE/coords/${b}.json`)
-      .defer(d3.json, `${DOMAIN}data/final/tSNE/colors/${b}.json`)
-      .awaitAll(function(err, res){
-        if(err) { console.error(err); return }
-        buildHex(d3.select(`#summ-${b}`), res[0], res[1])
-      })
+    .defer(d3.json, `${DOMAIN}data/final/tSNE/coords/${b}.json`)
+    .defer(d3.json, `${DOMAIN}data/final/tSNE/colors/${b}.json`)
+    .awaitAll(function(err, res){
+      if(err) { console.error(err); return }
+      buildHex(d3.select(`#summ-${b}`), res[0], res[1])
+    })
   })
-
+  
   // Build the keyword summary list
   d3.json(`${DOMAIN}data/final/topkeywords.json`, (err, data) => {
     if(err) { console.error(err); return }
     keywords = data;
   })
-
+  
   function search(ele) {
     if(event.key === 'Enter') {
       let term = ele.value.toLowerCase();
       filterByTerm(term);
     }
   }
-
+  
   function filterByTerm(term) {
     if(term === "") {
       // Clear the filter
-        dispatch.call('filter', null, null)
-      }else{
-        // Set the filter
-        dispatch.call('filter', null, term)
-      }
+      dispatch.call('filter', null, null)
+    }else{
+      // Set the filter
+      dispatch.call('filter', null, term)
+    }
   }
-
+  
   function searchForUser(term) {
     document.getElementById('searchbox').value = term;
     let finalWord = term.toLowerCase();
     filterByTerm(finalWord);
   }
-
+  
 </script>

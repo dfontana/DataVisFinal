@@ -8,7 +8,7 @@ function topNForBin(movies, N){
   // Get frequency mapping of keyword -> count for all movies supplied.
   let frequencies = movies.reduce((acc, m) => {
     m.keywords.forEach((k) => {
-      if(k === 179431 || k.name == 179430){ return } // 'duringcreditstinger' and 'aftercreditstringer'
+      if(k === 179431 || k === 179430){ return } // 'duringcreditstinger' and 'aftercreditstringer'
       acc[k] = (acc[k] || 0) + parseFloat(m.vote_average) * parseFloat(m.vote_count); 
     })
     return acc
