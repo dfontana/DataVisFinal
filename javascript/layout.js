@@ -118,8 +118,22 @@ function takeAction(i, callback){
       points = [ findCoordinatesOf("Arrival of a Train") ]
       dispatch.call('point-to', this, {points: points, classed:"story-pointer"})
       break;
+    case 5:
+      searchForUser('World War');
+      break;
     case 9:
       searchForUser('Spaghetti Western');
+      break;
+    case 11:
+      points = [ findCoordinatesOf("The Godfather: Part II") ]
+      dispatch.call('point-to', this, {points: points, classed:"story-pointer"})
+      break;
+    case 14:
+      searchForUser('Space');
+      break;
+    case 16:
+      points = [ findCoordinatesOf("Men In Black") ]
+      dispatch.call('point-to', this, {points: points, classed:"story-pointer"})
       break;
     case 19:
       searchForUser("Harry Potter and the Philosopher's stone");
