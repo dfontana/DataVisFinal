@@ -315,7 +315,11 @@
       }
     }
     
-    takeAction(i, ()=>{})
+    // Still check this, to prevent reverse or forward scrolling errors
+    // with the quick jumps
+    if(SCROLLINGTO === null){
+      takeAction(i, ()=>{})
+    }
   })
   
   // Build the TSNE chart, nothing will draw until dispatch
