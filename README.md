@@ -16,3 +16,19 @@ Through our wesbsite, you will be able to explore cinematography data originatin
 ![](docs/img/Intro.PNG)
 ![](docs/img/vis.PNG)
 ![](docs/img/conclusion.PNG)
+
+## References
+
+- Facts and such:
+ - [Sergio Leone](https://en.wikipedia.org/wiki/Sergio_Leone)
+ - [Spaghetti Westerns](https://en.wikipedia.org/wiki/Spaghetti_Western)
+ - [A meadly of decades](http://www.filmsite.org/filmh.html)
+ - [Harry Potter](https://en.wikipedia.org/wiki/Harry_Potter)
+ - [Superheros 1](http://highschool.latimes.com/orange-county-school-of-the-arts/post-911-world-what-caused-the-rise-of-superhero-movies/) and [Superheros 2](https://www.nyfa.edu/student-resources/the-rise-of-superhero-films/)
+- tSNE and Clustering:
+ - [BH t-SNE](https://github.com/lvdmaaten/bhtsne)
+ - [t-SNE](https://github.com/karpathy/tsnejs)
+ - [t-SNE coloring](https://github.com/kylemcdonald/Coloring-t-SNE)
+ - [k-Means](https://github.com/solzimer/skmeans)
+- Scrolling
+ - [A slightly modified version of Graph-Scroll](https://github.com/1wheel/graph-scroll)
