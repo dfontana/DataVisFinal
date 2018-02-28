@@ -1,0 +1,23 @@
+{
+  "name": "movienight",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "buildOld": "node data/makeTopKeywords.js && node data/old/makeNetworkNodes.js && node data/old/makeNetworkLinks.js && node data/old/makeClusters.js && node data/old/MakeMultiLine.js",
+    "untardata": "tar -zxf data/buffer/raw_csv.tar.gz -C data/buffer/",
+    "csvs2jsons": "node --max-old-space-size=4096 data/utilities/csvs2json.js",
+    "exportBins": "node data/utilities/exportBins.js",
+    "buildTSNEBinary": "g++ deps/bhtsne-master/sptree.cpp deps/bhtsne-master/tsne.cpp deps/bhtsne-master/tsne_main.cpp -o deps/bhtsne-master/bh_tsne -O2",
+    "TSNE": "node data/buildBHTSNE.js",
+    "build": "npm run untardata && npm run csvsjsons && npm run exportBins && npm run buildTSNEBinary && npm run TSNE"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "d3": "^4.13.0",
+    "express": "^4.16.2",
+    "json5": "^0.5.1",
+    "skmeans": "^0.9.7"
+  }
+}

@@ -5,6 +5,10 @@ const Keywords = require('./makeTopKeywords')
 const fs = require('fs')
 let WordMap;
 
+const path = require('path')
+const DATA_OUT = path.join(__dirname, 'final');
+const BINARY_ROOT = path.join(__dirname, '../deps/bhtsne-master')
+
 /**
 * Makes the details for each node that corresponds to the coords.
 * This includes:
@@ -117,7 +121,7 @@ function makeFeatures(movies, keywords) {
 }
 
 function runBHTSNE(bin, dim, perp) {
-  const bhTSNE = spawnSync('python',["../deps/bhtsne-master/bhtsne.py", '-d', ""+dim, '-p', ""+perp, '-i', `final/tSNE/features/${bin}.tsv`]);
+  const bhTSNE = spawnSync('python',[`${BINARY_ROOT}/bhtsne.py`, '-d', ""+dim, '-p', ""+perp, '-i', `${DATA_OUT}/tSNE/features/${bin}.tsv`]);
   console.log(String(bhTSNE.stderr))
   let coords = String(bhTSNE.stdout).split('\n').map(pair => pair.split('\t').map(n => Number(n)))
   coords.pop() // The extra newline at the end builds a bad coordinate, trim it.
@@ -131,17 +135,17 @@ bins.map(bin =>{
 
   let binned = Bin(bin[0], bin[1])
   let keywords = Keywords(binned, 3)
-  WordMap = require('../final/wordMap.json')
+  WordMap = require(`${DATA_OUT}/wordMap.json`)
 
   let features = makeFeatures(binned, keywords)
-  fs.writeFileSync(`final/tSNE/features/${bin[1]}.tsv`, features, 'utf8', ()=>{});
+  fs.writeFileSync(`${DATA_OUT}/tSNE/features/${bin[1]}.tsv`, features, 'utf8', ()=>{});
 
   let coords = runBHTSNE(bin[1], 2, 70)
   let colors = runBHTSNE(bin[1], 3, 70)
   let nodeDetails = buildDetails(binned, keywords, coords)
 
-  fs.writeFileSync(`final/tSNE/coords/${bin[1]}.json`, JSON.stringify(coords), 'utf8', ()=>{});
-  fs.writeFileSync(`final/tSNE/details/${bin[1]}.json`, JSON.stringify(nodeDetails), 'utf8', ()=>{});
-  fs.writeFileSync(`final/tSNE/colors/${bin[1]}.json`, JSON.stringify(colors), 'utf8', ()=>{});
+  fs.writeFileSync(`${DATA_OUT}/tSNE/coords/${bin[1]}.json`, JSON.stringify(coords), 'utf8', ()=>{});
+  fs.writeFileSync(`${DATA_OUT}/tSNE/details/${bin[1]}.json`, JSON.stringify(nodeDetails), 'utf8', ()=>{});
+  fs.writeFileSync(`${DATA_OUT}/tSNE/colors/${bin[1]}.json`, JSON.stringify(colors), 'utf8', ()=>{});
   console.timeEnd("tSNE")
 })

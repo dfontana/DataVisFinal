@@ -6,8 +6,13 @@
 const d3 = require('d3')
 const fs = require('fs')
 const JSON5 = require('json5');
+const path = require('path')
 
-const DATA_ROOT = __dirname+'/buffer';
+const DATA_ROOT = path.join(__dirname, '../buffer');
+
+if(!fs.existsSync(DATA_ROOT+'/raw_json')){
+  fs.mkdirSync(DATA_ROOT+'/raw_json')
+}
 
 let credits = d3.csvParse(fs.readFileSync(DATA_ROOT+'/raw_csv/credits.csv', 'utf8'), function(d) {
   d.cast = JSON5.parse(d.cast.replace(/None\b/g, '""').replace(/\\xad|\\xa0|\\x92/g, ''));
