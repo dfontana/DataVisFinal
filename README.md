@@ -7,6 +7,6 @@ Through our wesbsite, you will be able to explore cinematography data originatin
 # [Process Book](docs/Process_Book.pdf)
 # [Video](https://youtu.be/J7GKU_4xL7w)
 # Screenshots
-![](data/img/Intro.PNG)
-![](data/img/vis.PNG)
-![](data/img/conclusion.PNG)
+![](docs/img/Intro.PNG)
+![](docs/img/vis.PNG)
+![](docs/img/conclusion.PNG)
