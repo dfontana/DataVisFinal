@@ -17,6 +17,19 @@
 </head>
 
 <body>
+  <!-- About Modal -->
+  <button id="aboutButton">About</button>
+  <div id="aboutModal">
+    <div id="aboutContainer">
+      <div id="aboutLeft">
+        <p>The data used to make this visualization comes from Kaggle: <a href="https://www.kaggle.com/rounakbanik/the-movies-dataset">The Movies</a>. Learn more about the development of this site in our <a href="docs/Process_Book.pdf">Process Book</a></p>
+        <p>A visualization created to satisfy final requirements for CS4802, made by Dylan Fontana, Kenedi Heather, and Aura Velarde.</p>
+      </div>
+      <div id="aboutRight">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/J7GKU_4xL7w?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
   
   <!-- Intro Begins -->
   <div id="intro_container"> 
@@ -265,6 +278,17 @@
 </body>
 
 <script>
+  // Modal Controls
+  let modal = d3.select('#aboutModal');
+  d3.select('#aboutButton').on('click', function(){
+    modal.style('display', 'flex')
+  })
+  window.onclick = function(event) {
+    if (event.target == modal.node()) {
+      modal.style('display', 'none');
+    }
+  }
+
   // Globals
   let SCROLLINGTO = null;
   let DOMAIN = ''; //'http://localhost:8000/'

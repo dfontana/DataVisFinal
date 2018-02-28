@@ -189,3 +189,59 @@ ol > li:before {
   content: counter(li-counter);
   counter-increment: li-counter;
 }
+
+
+/** About Modal */
+#aboutModal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#aboutContainer {
+  background-color: #471717;
+  width: 60%;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#aboutContainer a {
+  color: gold;
+  text-decoration: none;
+}
+
+#aboutLeft, #aboutRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 10px;
+}
+
+#aboutButton {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  border: none;
+  background: none;
+  color: #e1e1e1;
+  font-size: 18pt;
+  font-family: 'Raleway', sans-serif;
+}
+
+#aboutButton:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

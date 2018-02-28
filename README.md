@@ -5,6 +5,7 @@ Through our wesbsite, you will be able to explore cinematography data originatin
 
 # [Github pages](https://dfontana.github.io/DataVisFinal/)
 # [Process Book](docs/Process_Book.pdf)
+# [Data](https://www.kaggle.com/rounakbanik/the-movies-dataset)
 # [Video](https://youtu.be/J7GKU_4xL7w)
 # Screenshots
 ![](data/img/Intro.PNG)

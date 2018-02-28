@@ -10,7 +10,8 @@
     "exportBins": "node data/utilities/exportBins.js",
     "buildTSNEBinary": "g++ deps/bhtsne-master/sptree.cpp deps/bhtsne-master/tsne.cpp deps/bhtsne-master/tsne_main.cpp -o deps/bhtsne-master/bh_tsne -O2",
     "TSNE": "node data/buildBHTSNE.js",
-    "build": "npm run untardata && npm run csvsjsons && npm run exportBins && npm run buildTSNEBinary && npm run TSNE"
+    "build": "npm run untardata && npm run csvsjsons && npm run exportBins && npm run buildTSNEBinary && npm run TSNE",
+    "server": "node server/server.js"
   },
   "author": "",
   "license": "ISC",
