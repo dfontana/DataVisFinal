@@ -1,5 +1,7 @@
 # Introduction
 
+### Created by: Dylan Fontana, Kenedi Heather, Aura Velarde
+
 Welcome to Movie Night.
 Through our wesbsite, you will be able to explore cinematography data originating from 1880 and onwards, making for a total of around 28,000 films after data cleaning. Within the site you'll get to explore data by the decade, learning how themes formed within each bin and how they may have changed across decades. Below are some sample screen shots of what you'll find inside!
 
